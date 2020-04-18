@@ -1,511 +1,1344 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Reservations | HMS Group3Inc.</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-	<script src="https://kit.fontawesome.com/8f4261c3af.js" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-	<script src="../js/nav.js"></script>
-	<script src="../js/auth.js"></script>
+    <title>Reservations | HMS Group3Inc.</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/8f4261c3af.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/auth.js"></script>
 </head>
 <body>
 <!-------------Navigation Bar---------------------------->
 <section id="nav-bar">
-	<nav class="navbar navbar-expand-lg navbar-light">
-		<a class="navbar-brand" href="home.html"><img src="../photos/g3logo.png"></a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a class="nav-link" href="../pages/reservations.html">Reservations</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="../pages/billing.html">Billing</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="../pages/management.html">Management</a>
-				</li>
-				<li class="nav-item admin-item">
-					<a class="nav-link" href="../pages/admin.html">Admin</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" onclick="logout()">Log Out</a>
-				</li>
-			</ul>
-		</div>
-		<div id="nav-info">
-			<span id="nav-info-text"></span>
-		</div>
-	</nav>
-	<hr class="nav-rule">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="home.html"><img src="../photos/g3logo.png"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/reservations.html">Reservations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/billing.html">Billing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../pages/management.html">Management</a>
+                </li>
+                <li class="nav-item admin-item">
+                    <a class="nav-link" href="../pages/admin.html">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="logout()">Log Out</a>
+                </li>
+            </ul>
+        </div>
+        <div id="nav-info">
+            <span id="nav-info-text"></span>
+        </div>
+    </nav>
+    <hr class="nav-rule">
 </section>
 <!-------------------Availability--------------------->
 <section id="available">
-<div class="container">
-<h1>GUEST CRITERIA</h1>
-<div class="row five-cols ml-auto">
-	<div class="col-md-3">
-	<input type="date" id="indate">
-	<h5>Check In</h5>
-	</div>
-	<div class="col-md-3">
-	<input type="date" id="outdate">
-	<h5>Check Out</h5>
-	</div>
-	<div class="col-md-2">
-		<select id="adult"style="width:150px;height:45px;">
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-		</select>
-		<h5>Adults</h5>
-	</div>
-	<div class="col-md-2">
-		<select id="child"style="width:150px;height:45px;">
-		<option value="0">0</option>
-		<option value="1">1</option>
-		<option value="2">2</option>
-		<option value="3">3</option>
-		<option value="4">4</option>
-		<option value="5">5</option>
-		</select>
-		<h5>Child</h5>
-	</div>
-	<div class="col-md-2">
-		<button class="button">SEARCH
-		</button>
-	</div>
-</div>
-</div>
+    <div class="container">
+        <h1>GUEST CRITERIA</h1>
+        <div class="row five-cols ml-auto">
+            <div class="col-md-3">
+                <input type="date" id="indate">
+                <h5>Check In</h5>
+            </div>
+            <div class="col-md-3">
+                <input type="date" id="outdate">
+                <h5>Check Out</h5>
+            </div>
+            <div class="col-md-2">
+                <select id="adult" style="width:150px;height:45px;">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <h5>Adults</h5>
+            </div>
+            <div class="col-md-2">
+                <select id="child" style="width:150px;height:45px;">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <h5>Child</h5>
+            </div>
+            <div class="col-md-2">
+                <button class="button" value="showRooms" onclick="showRooms()">SEARCH
+                    <script>
+                        function showRooms() {
+                            document.getElementById('rooms').style.display = "block";
+                        }
+                    </script>
+                </button>
+            </div>
+        </div>
+    </div>
 </section>
 <!----------------------Rooms------------------------->
-<section id="rooms">
-<!------------------- King Room----------------------->
-<section id="king">
-	<div class="container">
-	<br/>
-		<div class="row">
-		<br/>
-				<div class="col-md-4">
-				<img src="../photos/king-bed.jpg" class="img-responsive" style="width:100%">
-				</div>
+<section id="rooms" style="display:none">
+    <!------------------- King Room----------------------->
+    <section id="king">
+        <div class="container">
+            <br/>
+            <div class="row">
+                <br/>
+                <div class="col-md-4">
+                    <img src="../photos/kingRoom.jpg" class="img-responsive" style="width:100%">
+                </div>
 
-				<div class="col-md-4">
-				<div class="room">
-				<h2> King </h2>
-				<h6><i class="fas fa-smoking-ban"style="font-size:20px;color: #D00000;"></i> <font color="#D00000">  NON-SMOKING</font></h6>
-					<h5><i class="fas fa-bed"></i>  Bed Count: 1</h5>
-					<h5><i class="fas fa-user-friends"></i>  Max Occupancy: 2</h5>
-				</div>
-				</div>
+                <div class="col-md-4">
+                    <div class="room">
+                        <h2> King </h2>
+                        <h6><i class="fas fa-smoking-ban" style="font-size:20px;color: #D00000;"></i> <font
+                                color="#D00000"> NON-SMOKING</font></h6>
+                        <h5><i class="fas fa-bed"></i> Bed Count: 1</h5>
+                        <h5><i class="fas fa-user-friends"></i> Max Occupancy: 2</h5>
+                    </div>
+                </div>
 
-				<div class="col-md-4">
-				<div class="rates">
-				<h6>(USD-$)</h6>
-				<h6>Nightly rate excluding tax</h6>
-				<h4>$79.99</h4>
-				<a href="#bookking"><input type="button" onclick="checkinfunc();checkoutfunc();adultfunc();childfunc();subtract()" class="king-button" value="BOOK NOW"></a>
-				</div>
-				</div>
-		</div>
-	</div>
-</section>
-<hr>
-<!------------------ Queen Room----------------------->
-<section id="queen">
-	<div class="container">
-		<div class="row">
-				<div class="col-md-4">
-				<img src="../photos/queen-bed.jpg" class="img-responsive" style="width:100%">
-				</div>
+                <div class="col-md-4">
+                    <div class="rates">
+                        <h6>(USD-$)</h6>
+                        <h6>Nightly rate excluding tax</h6>
+                        <h4>$79.99</h4>
+                        <a href="#bookKing"><input type="button"
+                                                   onclick="kingCheckinfunc();kingCheckoutfunc();kingNumFunc();kingAdultfunc();kingChildfunc();"
+                                                   class="king-button" value="BOOK NOW"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <!------------------ Queen Room----------------------->
+    <section id="queen">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="../photos/queen-bed.jpg" class="img-responsive" style="width:100%">
+                </div>
 
-				<div class="col-md-4">
-				<div class="room">
-				<h2> Queen </h2>
-				<h6><i class="fas fa-smoking-ban"style="font-size:20px;color: #D00000;"></i> <font color="#D00000">  NON-SMOKING</font></h6>
-					<h5><i class="fas fa-bed"></i>  Bed Count: 2</h5>
-					<h5><i class="fas fa-user-friends"></i>  Max Occupancy: 4</h5>
-				</div>
-				</div>
-				<div class="col-md-4">
-				<div class="rates">
-				<h6>(USD-$)</h6>
-				<h6>Nightly rate excluding tax</h6>
-				<h4>$89.99</h4>
-				<a href="#bookqueen"><input type="button" onclick="checkinfunc();checkoutfunc();adultfunc();childfunc();subtract()" class="queen-button" value="BOOK NOW"></a>
-				</div>
-				</div>
-		</div>
-	</div>
-</section>
-<!-------------------BOOK King----------- ------------>
-<section id="bookking" class="overlay">
-	<div class="popup">
-	<a class="close" href="#">&times;</a>
-	<div class="container" style="text-align:center">
+                <div class="col-md-4">
+                    <div class="room">
+                        <h2>Double Queen </h2>
+                        <h6><i class="fas fa-smoking-ban" style="font-size:20px;color: #D00000;"></i> <font
+                                color="#D00000"> NON-SMOKING</font></h6>
+                        <h5><i class="fas fa-bed"></i> Bed Count: 2</h5>
+                        <h5><i class="fas fa-user-friends"></i> Max Occupancy: 4</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="rates">
+                        <h6>(USD-$)</h6>
+                        <h6>Nightly rate excluding tax</h6>
+                        <h4>$89.99</h4>
+                        <a href="#bookQueen"><input type="button"
+                                                    onclick="queenCheckinfunc();queenCheckoutfunc();queenNumFunc();queenAdultfunc();queenChildfunc();"
+                                                    class="queen-button" value="BOOK NOW"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <!------------------- King Suite----------------------->
+    <section id="kingSuite">
+        <div class="container">
+            <br/>
+            <div class="row">
+                <br/>
+                <div class="col-md-4">
+                    <img src="../photos/king.jpg" class="img-responsive" style="width:100%">
+                </div>
 
-<!----------------------------------Booking Details------------------------------------------->
-<section class="bookingdetails">
-	<div class="bookingdetails" style="text-align:center">
-		<div class="container">
-		<hr>
-		<h2>Booking Details</h2>
-		<hr>
-		<div class="row">
-		<div class="col-md-2">
-			<img src="../photos/king-bed.jpg" class="img-responsive" style="width:100%">
-		</div>
-		<div class="col-md-5" style="text-align:left">
-			<p><b>Room:</b> King</p>
-			<p><b>Check-In-Out:</b> <span id="checkin"></span> - <span id="checkout"></span></p>
-			<p><b>Adults:</b> <span id="numadult"></span></p>
-			<p><b>Child:</b> <span id="numchild"></span></p>
-			<script>
-			function checkinfunc() {
-				var x = document.getElementById("indate").value;
-				document.getElementById("checkin").innerHTML = x;
-			}
-			</script>
-			<script>
-			function checkoutfunc() {
-				var x = document.getElementById("outdate").value;
-				document.getElementById("checkout").innerHTML = x;
-			}
-			</script>
-			<script>
-			function adultfunc() {
-				var x = document.getElementById("adult").value;
-				document.getElementById("numadult").innerHTML = x;
-			}
-			</script>
-			<script>
-			function childfunc() {
-				var x = document.getElementById("child").value;
-				document.getElementById("numchild").innerHTML = x;
-			}
-			</script>
-			</div>
-		<div class="col-md-5" style="text-align:left">
-			<table>
-				<tr>
-					<th>Price($)</th>
-					<th>Tax($)</th>
-					<th>Total($)</th>
-				</tr>
-				<tr>
-					<td>(Room/night)
-					</td>
-					<td>6.625%</td>
-					<td>Price+Tax</td>
-				</tr>
-			</table>
-		</div>
-		</div>
-		</div>
-	</div>
-<!-----------------------------Guest Details------------------------------------------->
-<section class="guest" style="text-align:center">
-			<hr>
-			<h2>Guest Details</h2>
-			<hr>
-			<div class="row">
-			<div class="col-md-6">
-			<span style="color: red">* </span><input type="text" name="FirstName" size="24" placeholder="First Name"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="Email" size="24" placeholder="Email"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="Address" size="24" placeholder="Address"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="State" size="24" placeholder="State"><br/>
-			<br/>
-			</div>
+                <div class="col-md-4">
+                    <div class="room">
+                        <h2> King Suite</h2>
+                        <h4>With Pull Out Couch</h4>
+                        <h6><i class="fas fa-smoking-ban" style="font-size:20px;color: #D00000;"></i> <font
+                                color="#D00000"> NON-SMOKING</font></h6>
+                        <h5><i class="fas fa-bed"></i> Bed Count: 2</h5>
+                        <h5><i class="fas fa-user-friends"></i> Max Occupancy: 4</h5>
+                    </div>
+                </div>
 
-			<div class="col-md-6">
-			<span style="color: red">* </span><input type="text" name="LastName" size="24" placeholder="Last Name"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="Phone" size="24" placeholder="Phone Number"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="City" size="24" placeholder="City"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="ZipCode" size="24" placeholder="Zip Code"><br/>
-			<br/>
-			</div>
-			</div>
-</section>
-<!-----------------------------Payment Details------------------------------------------->
-<section class="payment" style="text-align:center">
-	<div class="container">
-			<hr>
-			<h2>Payment Details</h2>
-			<hr>
-			<div class="row">
-			<div class="col-md-6">
-			<span style="color: red;">* </span><label for="payment" style="color:#555;padding-right:100px;">Payment Method</label><br/>
-				<select id="payment"style="width:210px;">
-				<option value="Credit">Credit Card</option>
-				<option value="Credit">Pay At Check In</option>
-				</select><br/><br/>
-			<span style="color: red">* </span><input type="text" name="CardNumber" size="24" placeholder="Card Number"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="NameOnCard" size="24" placeholder="Name on Card"><br/>
-			<br/>
-			</div>
-			<div class="col-md-6">
-			<span style="color: red">* </span><label for="cardtype" style="color:#555">Card Type</label><br/>
-				<select id="cardtype" style="width:200px">
-				<option value="Visa">Visa</option>
-				<option value="Master Card">Master Card</option>
-				<option value="American Express">American Express</option>
-				<option value="Discover">Discover</option>
-				</select>
-				<br/>
-				<label for="exp" style="color:#555"><br/>Expiration</label><br/>
-				<div class="row">
-				<div class="col-md-6">
-					<span style="color: red">* </span><label for="exp" style="color:#555">Month</label><br/>
-						<select id="exp"style="width:200px">
-						<option value="JANUARY">JANUARY</option>
-						<option value="FEBRUARY">FEBRUARY</option>
-						<option value="MARCH">MARCH</option>
-						<option value="APRIL">APRIL</option>
-						<option value="MAY">MAY</option>
-						<option value="JUNE">JUNE</option>
-						<option value="JULY">JULY</option>
-						<option value="AUGUST">AUGUST</option>
-						<option value="SEPTEMBER">SEPTEMBER</option>
-						<option value="OCTOBER">OCTOBER</option>
-						<option value="NOVEMBER">NOVEMBER</option>
-						<option value="DECEMBER">DECEMBER</option>
-						</select>
-						<br/>
-						<br/>
-						</div>
-				<div class="col-md-6">
-					<span style="color: red">* </span><label for="exp" style="color:#555">Year</label><br/>
-						<select id="exp"style="width:200px">
-						<option value="2020">2020</option>
-						<option value="2021">2021</option>
-						<option value="2022">2022</option>
-						<option value="2023">2023</option>
-						<option value="2024">2024</option>
-						<option value="2025">2025</option>
-						<option value="2026">2026</option>
-						<option value="2027">2027</option>
-						<option value="2028">2028</option>
-						<option value="2029">2029</option>
-						</select>
-						</div>
-				</div>
-			</div>
-		</div>
-		</div>
-</section>
-<!-----------------------------Comments------------------------------------------------------->
-<section class="comment" style="text-align:center">
-	<div class="container">
-	<hr/>
-	<h5>Comments</h5>
-	<textarea rows="4" cols="100" name="comment" form="usrform">Enter text here...</textarea>
-</section>
-<br/>
-<section class="confirm">
-	<div class="booked">
-		<button class="confirmbooking" style="width:200px">CONFIRM BOOKING</button>
-	</div>
-</section>
+                <div class="col-md-4">
+                    <div class="rates">
+                        <h6>(USD-$)</h6>
+                        <h6>Nightly rate excluding tax</h6>
+                        <h4>$99.99</h4>
+                        <a href="#bookKingSuite"><input type="button"
+                                                        onclick="kingSuiteCheckinfunc();kingSuiteCheckoutfunc();ksNumFunc();kingSuiteAdultfunc();kingSuiteChildfunc();"
+                                                        class="ks-button" value="BOOK NOW"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <!------------------- Queen Suite----------------------->
+    <section id="queenSuite">
+        <div class="container">
+            <br/>
+            <div class="row">
+                <br/>
+                <div class="col-md-4">
+                    <img src="../photos/queen-suite.jpg" class="img-responsive" style="width:100%">
+                </div>
 
-</div>
-</div>
-</section>
-</div>
-</section>
-<!-------------------BOOK QUEEN----------- ------------>
-<section id="bookqueen" class="overlay">
-	<div class="popup">
-	<a class="close" href="#">&times;</a>
-	<div class="container" style="text-align:center">
+                <div class="col-md-4">
+                    <div class="room">
+                        <h2>Double Queen Suite</h2>
+                        <h4>With Pull Out Couch</h4>
+                        <h6><i class="fas fa-smoking-ban" style="font-size:20px;color: #D00000;"></i> <font
+                                color="#D00000"> NON-SMOKING</font></h6>
+                        <h5><i class="fas fa-bed"></i> Bed Count: 3</h5>
+                        <h5><i class="fas fa-user-friends"></i> Max Occupancy: 6</h5>
+                    </div>
+                </div>
 
-<!----------------------------------Booking Details------------------------------------------->
-<section class="bookingdetails">
-	<div class="bookingdetails" style="text-align:center">
-		<div class="container">
-		<hr>
-		<h2>Booking Details</h2>
-		<hr>
-		<div class="row">
-		<div class="col-md-2">
-			<img src="../photos/queen-bed.jpg" class="img-responsive" style="width:100%">
-		</div>
-		<div class="col-md-5" style="text-align:left">
-			<p><b>Room:</b> Queen</p>
-			<p><b>Check-In-Out:</b> <span id="checkin"></span> - <span id="checkout"></span></p>
-			<p><b>Adults:</b> <span id="numadult"></span></p>
-			<p><b>Child:</b> <span id="numchild"></span></p>
-			<script>
-			function checkinfunc() {
-				var x = document.getElementById("indate").value;
-				document.getElementById("checkin").innerHTML = x;
-			}
-			</script>
-			<script>
-			function checkoutfunc() {
-				var x = document.getElementById("outdate").value;
-				document.getElementById("checkout").innerHTML = x;
-			}
-			</script>
-			<script>
-			function adultfunc() {
-				var x = document.getElementById("adult").value;
-				document.getElementById("numadult").innerHTML = x;
-			}
-			</script>
-			<script>
-			function childfunc() {
-				var x = document.getElementById("child").value;
-				document.getElementById("numchild").innerHTML = x;
-			}
-			</script>
-			</div>
-		<div class="col-md-5" style="text-align:left">
-			<table>
-				<tr>
-					<th>Price($)</th>
-					<th>Tax($)</th>
-					<th>Total($)</th>
-				</tr>
-				<tr>
-					<td>(Room/night)
-					</td>
-					<td>6.625%</td>
-					<td>Price+Tax</td>
-				</tr>
-			</table>
-		</div>
-		</div>
-		</div>
-	</div>
-<!-----------------------------Guest Details------------------------------------------->
-<section class="guest" style="text-align:center">
-			<hr>
-			<h2>Guest Details</h2>
-			<hr>
-			<div class="row">
-			<div class="col-md-6">
-			<span style="color: red">* </span><input type="text" name="FirstName" size="24" placeholder="First Name"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="Email" size="24" placeholder="Email"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="Address" size="24" placeholder="Address"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="State" size="24" placeholder="State"><br/>
-			<br/>
-			</div>
+                <div class="col-md-4">
+                    <div class="rates">
+                        <h6>(USD-$)</h6>
+                        <h6>Nightly rate excluding tax</h6>
+                        <h4>$109.99</h4>
+                        <a href="#bookQueenSuite"><input type="button"
+                                                         onclick="queenSuiteCheckinfunc();queenSuiteCheckoutfunc();qsNumFunc();queenSuiteAdultfunc();queenSuiteChildfunc();"
+                                                         class="qs-button" value="BOOK NOW"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <!------------------- King Room with Jacuzzi----------------------->
+    <section id="kingJacuzzi">
+        <div class="container">
+            <br/>
+            <div class="row">
+                <br/>
+                <div class="col-md-4">
+                    <img src="../photos/jacuzzi.jpg" class="img-responsive" style="width:100%">
+                </div>
 
-			<div class="col-md-6">
-			<span style="color: red">* </span><input type="text" name="LastName" size="24" placeholder="Last Name"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="Phone" size="24" placeholder="Phone Number"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="City" size="24" placeholder="City"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="ZipCode" size="24" placeholder="Zip Code"><br/>
-			<br/>
-			</div>
-			</div>
-</section>
-<!-----------------------------Payment Details------------------------------------------->
-<section class="payment" style="text-align:center">
-	<div class="container">
-			<hr>
-			<h2>Payment Details</h2>
-			<hr>
-			<div class="row">
-			<div class="col-md-6">
-			<span style="color: red;">* </span><label for="payment" style="color:#555;padding-right:100px;">Payment Method</label><br/>
-				<select id="payment"style="width:210px;">
-				<option value="Credit">Credit Card</option>
-				<option value="Credit">Pay At Check In</option>
-				</select><br/><br/>
-			<span style="color: red">* </span><input type="text" name="CardNumber" size="24" placeholder="Card Number"><br/>
-			<br/>
-			<span style="color: red">* </span><input type="text" name="NameOnCard" size="24" placeholder="Name on Card"><br/>
-			<br/>
-			</div>
-			<div class="col-md-6">
-			<span style="color: red">* </span><label for="cardtype" style="color:#555">Card Type</label><br/>
-				<select id="cardtype" style="width:200px">
-				<option value="Visa">Visa</option>
-				<option value="Master Card">Master Card</option>
-				<option value="American Express">American Express</option>
-				<option value="Discover">Discover</option>
-				</select>
-				<br/>
-				<label for="exp" style="color:#555"><br/>Expiration</label><br/>
-				<div class="row">
-				<div class="col-md-6">
-					<span style="color: red">* </span><label for="exp" style="color:#555">Month</label><br/>
-						<select id="exp"style="width:200px">
-						<option value="JANUARY">JANUARY</option>
-						<option value="FEBRUARY">FEBRUARY</option>
-						<option value="MARCH">MARCH</option>
-						<option value="APRIL">APRIL</option>
-						<option value="MAY">MAY</option>
-						<option value="JUNE">JUNE</option>
-						<option value="JULY">JULY</option>
-						<option value="AUGUST">AUGUST</option>
-						<option value="SEPTEMBER">SEPTEMBER</option>
-						<option value="OCTOBER">OCTOBER</option>
-						<option value="NOVEMBER">NOVEMBER</option>
-						<option value="DECEMBER">DECEMBER</option>
-						</select>
-						<br/>
-						<br/>
-						</div>
-				<div class="col-md-6">
-					<span style="color: red">* </span><label for="exp" style="color:#555">Year</label><br/>
-						<select id="exp"style="width:200px">
-						<option value="2020">2020</option>
-						<option value="2021">2021</option>
-						<option value="2022">2022</option>
-						<option value="2023">2023</option>
-						<option value="2024">2024</option>
-						<option value="2025">2025</option>
-						<option value="2026">2026</option>
-						<option value="2027">2027</option>
-						<option value="2028">2028</option>
-						<option value="2029">2029</option>
-						</select>
-						</div>
-				</div>
-			</div>
-		</div>
-		</div>
-</section>
-<!-----------------------------Comments------------------------------------------------------->
-<section class="comment" style="text-align:center">
-	<div class="container">
-	<hr/>
-	<h5>Comments</h5>
-	<textarea rows="4" cols="100" name="comment" form="usrform">Enter text here...</textarea>
-</section>
-<br/>
-<section class="confirm">
-	<div class="booked">
-		<button class="confirmbooking" style="width:200px">CONFIRM BOOKING</button>
-	</div>
-</section>
+                <div class="col-md-4">
+                    <div class="room">
+                        <h2> King Suite</h2>
+                        <h4>With Jacuzzi</h4>
+                        <h6><i class="fas fa-smoking-ban" style="font-size:20px;color: #D00000;"></i> <font
+                                color="#D00000"> NON-SMOKING</font></h6>
+                        <h5><i class="fas fa-bed"></i> Bed Count: 1</h5>
+                        <h5><i class="fas fa-user-friends"></i> Max Occupancy: 2</h5>
+                    </div>
+                </div>
 
-</div>
-</div>
-</section>
-</div>
+                <div class="col-md-4">
+                    <div class="rates">
+                        <h6>(USD-$)</h6>
+                        <h6>Nightly rate excluding tax</h6>
+                        <h4>$129.99</h4>
+                        <a href="#bookKingJacuzzi"><input type="button"
+                                                          onclick="kingJacuzziCheckinfunc();kingJacuzziCheckoutfunc();kjNumFunc();kingJacuzziAdultfunc();kingJacuzziChildfunc();"
+                                                          class="kj-button" value="BOOK NOW"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <!-------------------BOOK King----------- ------------>
+    <section id="bookKing" class="overlay">
+        <div class="popup">
+            <a class="close" href="#">&times;</a>
+            <div class="container" style="text-align:center">
+
+                <!----------------------------------Booking Details------------------------------------------->
+                <section class="bookKingDetails">
+                    <div class="King" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Booking Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="../photos/kingRoom.jpg" class="img-responsive" style="width:100%">
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <p><b>Room:</b> King</p>
+                                    <p><b>Check-In-Out:</b> <span id="checkinKing"></span> - <span
+                                            id="checkoutKing"></span></p>
+                                    <p><b>Nights:</b> <span id="kingNights"></span></p>
+                                    <p><b>Adults:</b> <span id="adultKing"></span></p>
+                                    <p><b>Child:</b> <span id="childKing"></span></p>
+                                    <script>
+                                        function kingCheckinfunc() {
+                                            const x = document.getElementById("indate").value;
+                                            document.getElementById("checkinKing").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingCheckoutfunc() {
+                                            const x = document.getElementById("outdate").value;
+                                            document.getElementById("checkoutKing").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingAdultfunc() {
+                                            const x = document.getElementById("adult").value;
+                                            document.getElementById("adultKing").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingChildfunc() {
+                                            const x = document.getElementById("child").value;
+                                            document.getElementById("childKing").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingNumFunc() {
+                                            var dat1 = document.getElementById("indate").value;
+                                            var date1 = new Date(dat1)
+                                            var dat2 = document.getElementById("outdate").value;
+                                            var date2 = new Date(dat2)
+                                            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                                            var diffDays = Math.abs((date1.getTime() - date2.getTime()) / (oneDay));
+                                            document.getElementById("kingNights").innerHTML = diffDays;
+                                            var price = diffDays * 79.99;
+                                            var p = price.toFixed(2);
+                                            document.getElementById("kingPrice").innerHTML = p;
+                                            var tax = 0.06625;
+                                            var total = price + (price * tax);
+                                            var t = total.toFixed(2);
+                                            document.getElementById("kingTotal").innerHTML = t;
+                                        }
+                                    </script>
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <table>
+                                        <tr>
+                                            <th>Price($)</th>
+                                            <th>Tax($)</th>
+                                            <th>Total($)</th>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="kingPrice"></span></td>
+                                            </td>
+                                            <td>6.625%</td>
+                                            <td><span id="kingTotal"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------------Guest Details------------------------------------------->
+                    <section class="guest" style="text-align:center">
+                        <hr>
+                        <h2>Guest Details</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="FirstName" size="24"
+                                                                         placeholder="First Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Email" size="24"
+                                                                         placeholder="Email"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Address" size="24"
+                                                                         placeholder="Address"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="State" size="24"
+                                                                         placeholder="State"><br/>
+                                <br/>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="LastName" size="24"
+                                                                         placeholder="Last Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Phone" size="24"
+                                                                         placeholder="Phone Number"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="City" size="24"
+                                                                         placeholder="City"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="ZipCode" size="24"
+                                                                         placeholder="Zip Code"><br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Payment Details------------------------------------------->
+                    <section class="payment" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Payment Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span style="color: red;">* </span><label for="paymentKing"
+                                                                              style="color:#555;padding-right:100px;">Payment
+                                    Method</label><br/>
+                                    <select id="paymentKing" style="width:210px;">
+                                        <option value="Credit">Credit Card</option>
+                                        <option value="Credit">Pay At Check In</option>
+                                    </select><br/><br/>
+                                    <span style="color: red">* </span><input type="text" name="CardNumber" size="24"
+                                                                             placeholder="Card Number"><br/>
+                                    <br/>
+                                    <span style="color: red">* </span><input type="text" name="NameOnCard" size="24"
+                                                                             placeholder="Name on Card"><br/>
+                                    <br/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span style="color: red">* </span><label for="cardTypeKing" style="color:#555">Card
+                                    Type</label><br/>
+                                    <select id="cardTypeKing" style="width:200px">
+                                        <option value="Visa">Visa</option>
+                                        <option value="Master Card">Master Card</option>
+                                        <option value="American Express">American Express</option>
+                                        <option value="Discover">Discover</option>
+                                    </select>
+                                    <br/>
+                                    <label for="expKing" style="color:#555"><br/>Expiration</label><br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expKing"
+                                                                                     style="color:#555">Month</label><br/>
+                                            <select id="expKing" style="width:200px">
+                                                <option value="JANUARY">JANUARY</option>
+                                                <option value="FEBRUARY">FEBRUARY</option>
+                                                <option value="MARCH">MARCH</option>
+                                                <option value="APRIL">APRIL</option>
+                                                <option value="MAY">MAY</option>
+                                                <option value="JUNE">JUNE</option>
+                                                <option value="JULY">JULY</option>
+                                                <option value="AUGUST">AUGUST</option>
+                                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                                <option value="OCTOBER">OCTOBER</option>
+                                                <option value="NOVEMBER">NOVEMBER</option>
+                                                <option value="DECEMBER">DECEMBER</option>
+                                            </select>
+                                            <br/>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expYearKing"
+                                                                                     style="color:#555">Year</label><br/>
+                                            <select id="expYearKing" style="width:200px">
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Comments------------------------------------------------------->
+                    <section class="comment" style="text-align:center">
+                        <div class="container">
+                            <hr/>
+                            <h5>Comments</h5>
+                            <textarea rows="4" cols="100" name="comment">Enter text here...</textarea>
+                        </div>
+                    </section>
+                    <br/>
+                    <section class="confirm">
+                        <div class="booked">
+                            <button class="confirmbooking" style="width:200px">CONFIRM BOOKING</button>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
+    <!-------------------BOOK QUEEN----------- ------------>
+    <section id="bookQueen" class="overlay">
+        <div class="popup">
+            <a class="close" href="#">&times;</a>
+            <div class="container" style="text-align:center">
+
+                <!----------------------------------Booking Details------------------------------------------->
+                <section class="bookQueenDetails">
+                    <div class="Queen" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Booking Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="../photos/queen-bed.jpg" class="img-responsive" style="width:100%">
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <p><b>Room:</b> Double Queen</p>
+                                    <p><b>Check-In-Out:</b> <span id="checkinQueen"></span> - <span
+                                            id="checkoutQueen"></span></p>
+                                    <p><b>Nights:</b> <span id="queenNights"></span></p>
+                                    <p><b>Adults:</b> <span id="adultQueen"></span></p>
+                                    <p><b>Child:</b> <span id="childQueen"></span></p>
+                                    <script>
+                                        function queenCheckinfunc() {
+                                            const x = document.getElementById("indate").value;
+                                            document.getElementById("checkinQueen").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function queenCheckoutfunc() {
+                                            const x = document.getElementById("outdate").value;
+                                            document.getElementById("checkoutQueen").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function queenAdultfunc() {
+                                            const x = document.getElementById("adult").value;
+                                            document.getElementById("adultQueen").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function queenChildfunc() {
+                                            const x = document.getElementById("child").value;
+                                            document.getElementById("childQueen").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function queenNumFunc() {
+                                            var dat1 = document.getElementById("indate").value;
+                                            var date1 = new Date(dat1)
+                                            var dat2 = document.getElementById("outdate").value;
+                                            var date2 = new Date(dat2)
+                                            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                                            var diffDays = Math.abs((date1.getTime() - date2.getTime()) / (oneDay));
+                                            document.getElementById("queenNights").innerHTML = diffDays;
+                                            var price = diffDays * 89.99;
+                                            var p = price.toFixed(2);
+                                            document.getElementById("queenPrice").innerHTML = p;
+                                            var tax = 0.06625;
+                                            var total = price + (price * tax);
+                                            var t = total.toFixed(2);
+                                            document.getElementById("queenTotal").innerHTML = t;
+                                        }
+                                    </script>
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <table>
+                                        <tr>
+                                            <th>Price($)</th>
+                                            <th>Tax($)</th>
+                                            <th>Total($)</th>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="queenPrice"></span></td>
+                                            </td>
+                                            <td>6.625%</td>
+                                            <td><span id="queenTotal"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------------Guest Details------------------------------------------->
+                    <section class="guest" style="text-align:center">
+                        <hr>
+                        <h2>Guest Details</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="FirstName" size="24"
+                                                                         placeholder="First Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Email" size="24"
+                                                                         placeholder="Email"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Address" size="24"
+                                                                         placeholder="Address"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="State" size="24"
+                                                                         placeholder="State"><br/>
+                                <br/>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="LastName" size="24"
+                                                                         placeholder="Last Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Phone" size="24"
+                                                                         placeholder="Phone Number"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="City" size="24"
+                                                                         placeholder="City"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="ZipCode" size="24"
+                                                                         placeholder="Zip Code"><br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Payment Details------------------------------------------->
+                    <section class="payment" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Payment Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span style="color: red;">* </span><label for="paymentQueen"
+                                                                              style="color:#555;padding-right:100px;">Payment
+                                    Method</label><br/>
+                                    <select id="paymentQueen" style="width:210px;">
+                                        <option value="Credit">Credit Card</option>
+                                        <option value="Credit">Pay At Check In</option>
+                                    </select><br/><br/>
+                                    <span style="color: red">* </span><input type="text" name="CardNumber" size="24"
+                                                                             placeholder="Card Number"><br/>
+                                    <br/>
+                                    <span style="color: red">* </span><input type="text" name="NameOnCard" size="24"
+                                                                             placeholder="Name on Card"><br/>
+                                    <br/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span style="color: red">* </span><label for="cardTypeQueen" style="color:#555">Card
+                                    Type</label><br/>
+                                    <select id="cardTypeQueen" style="width:200px">
+                                        <option value="Visa">Visa</option>
+                                        <option value="Master Card">Master Card</option>
+                                        <option value="American Express">American Express</option>
+                                        <option value="Discover">Discover</option>
+                                    </select>
+                                    <br/>
+                                    <label for="expMonthQueen" style="color:#555"><br/>Expiration</label><br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expMonthQueen"
+                                                                                     style="color:#555">Month</label><br/>
+                                            <select id="expMonthQueen" style="width:200px">
+                                                <option value="JANUARY">JANUARY</option>
+                                                <option value="FEBRUARY">FEBRUARY</option>
+                                                <option value="MARCH">MARCH</option>
+                                                <option value="APRIL">APRIL</option>
+                                                <option value="MAY">MAY</option>
+                                                <option value="JUNE">JUNE</option>
+                                                <option value="JULY">JULY</option>
+                                                <option value="AUGUST">AUGUST</option>
+                                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                                <option value="OCTOBER">OCTOBER</option>
+                                                <option value="NOVEMBER">NOVEMBER</option>
+                                                <option value="DECEMBER">DECEMBER</option>
+                                            </select>
+                                            <br/>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expYearQueen"
+                                                                                     style="color:#555">Year</label><br/>
+                                            <select id="expYearQueen" style="width:200px">
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Comments------------------------------------------------------->
+                    <section class="comment" style="text-align:center">
+                        <div class="container">
+                            <hr/>
+                            <h5>Comments</h5>
+                            <textarea rows="4" cols="100" name="comment">Enter text here...</textarea>
+                        </div>
+                    </section>
+                    <br/>
+                    <section class="confirm">
+                        <div class="booked">
+                            <button class="confirmbooking" style="width:200px">CONFIRM BOOKING</button>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <!-------------------BOOK King Suite----------- ------------>
+    <section id="bookKingSuite" class="overlay">
+        <div class="popup">
+            <a class="close" href="#">&times;</a>
+            <div class="container" style="text-align:center">
+
+                <!----------------------------------Booking Details------------------------------------------->
+                <section class="bookKingSuiteDetails">
+                    <div class="KingSuite" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Booking Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="../photos/king.jpg" class="img-responsive" style="width:100%">
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <p><b>Room:</b> King Suite</p>
+                                    <p><b>Check-In-Out:</b> <span id="ksCheckin"></span> - <span id="ksCheckout"></span>
+                                    </p>
+                                    <p><b>Nights:</b> <span id="ksNights"></span></p>
+                                    <p><b>Adults:</b> <span id="ksAdult"></span></p>
+                                    <p><b>Child:</b> <span id="ksChild"></span></p>
+                                    <script>
+                                        function kingSuiteCheckinfunc() {
+                                            const x = document.getElementById("indate").value;
+                                            document.getElementById("ksCheckin").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingSuiteCheckoutfunc() {
+                                            const x = document.getElementById("outdate").value;
+                                            document.getElementById("ksCheckout").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingSuiteAdultfunc() {
+                                            const x = document.getElementById("adult").value;
+                                            document.getElementById("ksAdult").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingSuiteChildfunc() {
+                                            const x = document.getElementById("child").value;
+                                            document.getElementById("ksChild").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function ksNumFunc() {
+                                            var dat1 = document.getElementById("indate").value;
+                                            var date1 = new Date(dat1)
+                                            var dat2 = document.getElementById("outdate").value;
+                                            var date2 = new Date(dat2)
+                                            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                                            var diffDays = Math.abs((date1.getTime() - date2.getTime()) / (oneDay));
+                                            document.getElementById("ksNights").innerHTML = diffDays;
+                                            var price = diffDays * 99.99;
+                                            var p = price.toFixed(2);
+                                            document.getElementById("ksPrice").innerHTML = p;
+                                            var tax = 0.06625;
+                                            var total = price + (price * tax);
+                                            var t = total.toFixed(2);
+                                            document.getElementById("ksTotal").innerHTML = t;
+                                        }
+                                    </script>
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <table>
+                                        <tr>
+                                            <th>Price($)</th>
+                                            <th>Tax($)</th>
+                                            <th>Total($)</th>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="ksPrice"></span></td>
+                                            </td>
+                                            <td>6.625%</td>
+                                            <td><span id="ksTotal"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------------Guest Details------------------------------------------->
+                    <section class="guest" style="text-align:center">
+                        <hr>
+                        <h2>Guest Details</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="FirstName" size="24"
+                                                                         placeholder="First Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Email" size="24"
+                                                                         placeholder="Email"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Address" size="24"
+                                                                         placeholder="Address"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="State" size="24"
+                                                                         placeholder="State"><br/>
+                                <br/>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="LastName" size="24"
+                                                                         placeholder="Last Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Phone" size="24"
+                                                                         placeholder="Phone Number"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="City" size="24"
+                                                                         placeholder="City"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="ZipCode" size="24"
+                                                                         placeholder="Zip Code"><br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Payment Details------------------------------------------->
+                    <section class="payment" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Payment Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span style="color: red;">* </span><label for="paymentKS"
+                                                                              style="color:#555;padding-right:100px;">Payment
+                                    Method</label><br/>
+                                    <select id="paymentKS" style="width:210px;">
+                                        <option value="Credit">Credit Card</option>
+                                        <option value="Credit">Pay At Check In</option>
+                                    </select><br/><br/>
+                                    <span style="color: red">* </span><input type="text" name="CardNumber" size="24"
+                                                                             placeholder="Card Number"><br/>
+                                    <br/>
+                                    <span style="color: red">* </span><input type="text" name="NameOnCard" size="24"
+                                                                             placeholder="Name on Card"><br/>
+                                    <br/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span style="color: red">* </span><label for="cardTypeKS" style="color:#555">Card
+                                    Type</label><br/>
+                                    <select id="cardTypeKS" style="width:200px">
+                                        <option value="Visa">Visa</option>
+                                        <option value="Master Card">Master Card</option>
+                                        <option value="American Express">American Express</option>
+                                        <option value="Discover">Discover</option>
+                                    </select>
+                                    <br/>
+                                    <label for="expMonthKS" style="color:#555"><br/>Expiration</label><br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expMonthKS"
+                                                                                     style="color:#555">Month</label><br/>
+                                            <select id="expMonthKS" style="width:200px">
+                                                <option value="JANUARY">JANUARY</option>
+                                                <option value="FEBRUARY">FEBRUARY</option>
+                                                <option value="MARCH">MARCH</option>
+                                                <option value="APRIL">APRIL</option>
+                                                <option value="MAY">MAY</option>
+                                                <option value="JUNE">JUNE</option>
+                                                <option value="JULY">JULY</option>
+                                                <option value="AUGUST">AUGUST</option>
+                                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                                <option value="OCTOBER">OCTOBER</option>
+                                                <option value="NOVEMBER">NOVEMBER</option>
+                                                <option value="DECEMBER">DECEMBER</option>
+                                            </select>
+                                            <br/>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expYearKS"
+                                                                                     style="color:#555">Year</label><br/>
+                                            <select id="expYearKS" style="width:200px">
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Comments------------------------------------------------------->
+                    <section class="comment" style="text-align:center">
+                        <div class="container">
+                            <hr/>
+                            <h5>Comments</h5>
+                            <textarea rows="4" cols="100" name="comment">Enter text here...</textarea>
+                        </div>
+                    </section>
+                    <br/>
+                    <section class="confirm">
+                        <div class="booked">
+                            <button class="confirmbooking" style="width:200px">CONFIRM BOOKING</button>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <!-------------------BOOK Queen Suite----------- ------------>
+    <section id="bookQueenSuite" class="overlay">
+        <div class="popup">
+            <a class="close" href="#">&times;</a>
+            <div class="container" style="text-align:center">
+
+                <!----------------------------------Booking Details------------------------------------------->
+                <section class="bookQueenSuiteDetails">
+                    <div class="QueenSuite" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Booking Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="../photos/queen-suite.jpg" class="img-responsive" style="width:100%">
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <p><b>Room:</b> Double Queen Suite</p>
+                                    <p><b>Check-In-Out:</b> <span id="qsCheckin"></span> - <span id="qsCheckout"></span>
+                                    </p>
+                                    <p><b>Nights:</b> <span id="qsNights"></span></p>
+                                    <p><b>Adults:</b> <span id="qsAdult"></span></p>
+                                    <p><b>Child:</b> <span id="qsChild"></span></p>
+                                    <script>
+                                        function queenSuiteCheckinfunc() {
+                                            const x = document.getElementById("indate").value;
+                                            document.getElementById("qsCheckin").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function queenSuiteCheckoutfunc() {
+                                            const x = document.getElementById("outdate").value;
+                                            document.getElementById("qsCheckout").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function queenSuiteAdultfunc() {
+                                            const x = document.getElementById("adult").value;
+                                            document.getElementById("qsAdult").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function queenSuiteChildfunc() {
+                                            const x = document.getElementById("child").value;
+                                            document.getElementById("qsChild").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function qsNumFunc() {
+                                            var dat1 = document.getElementById("indate").value;
+                                            var date1 = new Date(dat1)
+                                            var dat2 = document.getElementById("outdate").value;
+                                            var date2 = new Date(dat2)
+                                            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                                            var diffDays = Math.abs((date1.getTime() - date2.getTime()) / (oneDay));
+                                            document.getElementById("qsNights").innerHTML = diffDays;
+                                            var price = diffDays * 109.99;
+                                            var p = price.toFixed(2);
+                                            document.getElementById("qsPrice").innerHTML = p;
+                                            var tax = 0.06625;
+                                            var total = price + (price * tax);
+                                            var t = total.toFixed(2);
+                                            document.getElementById("qsTotal").innerHTML = t;
+                                        }
+                                    </script>
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <table>
+                                        <tr>
+                                            <th>Price($)</th>
+                                            <th>Tax($)</th>
+                                            <th>Total($)</th>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="qsPrice"></span></td>
+                                            <td>6.625%</td>
+                                            <td><span id="qsTotal"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------------Guest Details------------------------------------------->
+                    <section class="guest" style="text-align:center">
+                        <hr>
+                        <h2>Guest Details</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="FirstName" size="24"
+                                                                         placeholder="First Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Email" size="24"
+                                                                         placeholder="Email"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Address" size="24"
+                                                                         placeholder="Address"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="State" size="24"
+                                                                         placeholder="State"><br/>
+                                <br/>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="LastName" size="24"
+                                                                         placeholder="Last Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Phone" size="24"
+                                                                         placeholder="Phone Number"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="City" size="24"
+                                                                         placeholder="City"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="ZipCode" size="24"
+                                                                         placeholder="Zip Code"><br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Payment Details------------------------------------------->
+                    <section class="payment" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Payment Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span style="color: red;">* </span><label for="paymentQS"
+                                                                              style="color:#555;padding-right:100px;">Payment
+                                    Method</label><br/>
+                                    <select id="paymentQS" style="width:210px;">
+                                        <option value="Credit">Credit Card</option>
+                                        <option value="Credit">Pay At Check In</option>
+                                    </select><br/><br/>
+                                    <span style="color: red">* </span><input type="text" name="CardNumber" size="24"
+                                                                             placeholder="Card Number"><br/>
+                                    <br/>
+                                    <span style="color: red">* </span><input type="text" name="NameOnCard" size="24"
+                                                                             placeholder="Name on Card"><br/>
+                                    <br/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span style="color: red">* </span><label for="cardTypeQS" style="color:#555">Card
+                                    Type</label><br/>
+                                    <select id="cardTypeQS" style="width:200px">
+                                        <option value="Visa">Visa</option>
+                                        <option value="Master Card">Master Card</option>
+                                        <option value="American Express">American Express</option>
+                                        <option value="Discover">Discover</option>
+                                    </select>
+                                    <br/>
+                                    <label for="expMonthQS" style="color:#555"><br/>Expiration</label><br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expMonthQS"
+                                                                                     style="color:#555">Month</label><br/>
+                                            <select id="expMonthQS" style="width:200px">
+                                                <option value="JANUARY">JANUARY</option>
+                                                <option value="FEBRUARY">FEBRUARY</option>
+                                                <option value="MARCH">MARCH</option>
+                                                <option value="APRIL">APRIL</option>
+                                                <option value="MAY">MAY</option>
+                                                <option value="JUNE">JUNE</option>
+                                                <option value="JULY">JULY</option>
+                                                <option value="AUGUST">AUGUST</option>
+                                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                                <option value="OCTOBER">OCTOBER</option>
+                                                <option value="NOVEMBER">NOVEMBER</option>
+                                                <option value="DECEMBER">DECEMBER</option>
+                                            </select>
+                                            <br/>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expYearQS"
+                                                                                     style="color:#555">Year</label><br/>
+                                            <select id="expYearQS" style="width:200px">
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Comments------------------------------------------------------->
+                    <section class="comment" style="text-align:center">
+                        <div class="container">
+                            <hr/>
+                            <h5>Comments</h5>
+                            <textarea rows="4" cols="100" name="comment">Enter text here...</textarea>
+                        </div>
+                    </section>
+                    <br/>
+                    <section class="confirm">
+                        <div class="booked">
+                            <button class="confirmbooking" style="width:200px">CONFIRM BOOKING</button>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
+
+    <!-------------------BOOK King Jacuzzi----------- ------------>
+    <section id="bookKingJacuzzi" class="overlay">
+        <div class="popup">
+            <a class="close" href="#">&times;</a>
+            <div class="container" style="text-align:center">
+
+                <!----------------------------------Booking Details------------------------------------------->
+                <section class="bookKingJacuzziDetails">
+                    <div class="KingJacuzzi" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Booking Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="../photos/jacuzzi.jpg" class="img-responsive" style="width:100%">
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <p><b>Room:</b> King Suite With Jacuzzi</p>
+                                    <p><b>Check-In-Out:</b> <span id="kjCheckin"></span> - <span id="kjCheckout"></span>
+                                    </p>
+                                    <p><b>Nights:</b> <span id="kjNights"></span></p>
+                                    <p><b>Adults:</b> <span id="kjAdult"></span></p>
+                                    <p><b>Child:</b> <span id="kjChild"></span></p>
+                                    <script>
+                                        function kingJacuzziCheckinfunc() {
+                                            const x = document.getElementById("indate").value;
+                                            document.getElementById("kjCheckin").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingJacuzziCheckoutfunc() {
+                                            const x = document.getElementById("outdate").value;
+                                            document.getElementById("kjCheckout").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingJacuzziAdultfunc() {
+                                            const x = document.getElementById("adult").value;
+                                            document.getElementById("kjAdult").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kingJacuzziChildfunc() {
+                                            const x = document.getElementById("child").value;
+                                            document.getElementById("kjChild").innerHTML = x;
+                                        }
+                                    </script>
+                                    <script>
+                                        function kjNumFunc() {
+                                            var dat1 = document.getElementById("indate").value;
+                                            var date1 = new Date(dat1)
+                                            var dat2 = document.getElementById("outdate").value;
+                                            var date2 = new Date(dat2)
+                                            var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+                                            var diffDays = Math.abs((date1.getTime() - date2.getTime()) / (oneDay));
+                                            document.getElementById("kjNights").innerHTML = diffDays;
+                                            var price = diffDays * 129.99;
+                                            var p = price.toFixed(2);
+                                            document.getElementById("kjPrice").innerHTML = p;
+                                            var tax = 0.06625;
+                                            var total = price + (price * tax);
+                                            var t = total.toFixed(2);
+                                            document.getElementById("kjTotal").innerHTML = t;
+                                        }
+                                    </script>
+                                </div>
+                                <div class="col-md-5" style="text-align:left">
+                                    <table>
+                                        <tr>
+                                            <th>Price($)</th>
+                                            <th>Tax($)</th>
+                                            <th>Total($)</th>
+                                        </tr>
+                                        <tr>
+                                            <td><span id="kjPrice"></span></td>
+                                            <td>6.625%</td>
+                                            <td><span id="kjTotal"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-----------------------------Guest Details------------------------------------------->
+                    <section class="guest" style="text-align:center">
+                        <hr>
+                        <h2>Guest Details</h2>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="FirstName" size="24"
+                                                                         placeholder="First Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Email" size="24"
+                                                                         placeholder="Email"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Address" size="24"
+                                                                         placeholder="Address"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="State" size="24"
+                                                                         placeholder="State"><br/>
+                                <br/>
+                            </div>
+
+                            <div class="col-md-6">
+                                <span style="color: red">* </span><input type="text" name="LastName" size="24"
+                                                                         placeholder="Last Name"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="Phone" size="24"
+                                                                         placeholder="Phone Number"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="City" size="24"
+                                                                         placeholder="City"><br/>
+                                <br/>
+                                <span style="color: red">* </span><input type="text" name="ZipCode" size="24"
+                                                                         placeholder="Zip Code"><br/>
+                                <br/>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Payment Details------------------------------------------->
+                    <section class="payment" style="text-align:center">
+                        <div class="container">
+                            <hr>
+                            <h2>Payment Details</h2>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span style="color: red;">* </span><label for="paymentKJ"
+                                                                              style="color:#555;padding-right:100px;">Payment
+                                    Method</label><br/>
+                                    <select id="paymentKJ" style="width:210px;">
+                                        <option value="Credit">Credit Card</option>
+                                        <option value="Credit">Pay At Check In</option>
+                                    </select><br/><br/>
+                                    <span style="color: red">* </span><input type="text" name="CardNumber" size="24"
+                                                                             placeholder="Card Number"><br/>
+                                    <br/>
+                                    <span style="color: red">* </span><input type="text" name="NameOnCard" size="24"
+                                                                             placeholder="Name on Card"><br/>
+                                    <br/>
+                                </div>
+                                <div class="col-md-6">
+                                    <span style="color: red">* </span><label for="cardTypeKJ" style="color:#555">Card
+                                    Type</label><br/>
+                                    <select id="cardTypeKJ" style="width:200px">
+                                        <option value="Visa">Visa</option>
+                                        <option value="Master Card">Master Card</option>
+                                        <option value="American Express">American Express</option>
+                                        <option value="Discover">Discover</option>
+                                    </select>
+                                    <br/>
+                                    <label for="expMonthKJ" style="color:#555"><br/>Expiration</label><br/>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expMonthKJ"
+                                                                                     style="color:#555">Month</label><br/>
+                                            <select id="expMonthKJ" style="width:200px">
+                                                <option value="JANUARY">JANUARY</option>
+                                                <option value="FEBRUARY">FEBRUARY</option>
+                                                <option value="MARCH">MARCH</option>
+                                                <option value="APRIL">APRIL</option>
+                                                <option value="MAY">MAY</option>
+                                                <option value="JUNE">JUNE</option>
+                                                <option value="JULY">JULY</option>
+                                                <option value="AUGUST">AUGUST</option>
+                                                <option value="SEPTEMBER">SEPTEMBER</option>
+                                                <option value="OCTOBER">OCTOBER</option>
+                                                <option value="NOVEMBER">NOVEMBER</option>
+                                                <option value="DECEMBER">DECEMBER</option>
+                                            </select>
+                                            <br/>
+                                            <br/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span style="color: red">* </span><label for="expYearKJ"
+                                                                                     style="color:#555">Year</label><br/>
+                                            <select id="expYearKJ" style="width:200px">
+                                                <option value="2020">2020</option>
+                                                <option value="2021">2021</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                                <option value="2027">2027</option>
+                                                <option value="2028">2028</option>
+                                                <option value="2029">2029</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-----------------------------Comments------------------------------------------------------->
+                    <section class="comment" style="text-align:center">
+                        <div class="container">
+                            <hr/>
+                            <h5>Comments</h5>
+                            <textarea rows="4" cols="100" name="comment">Enter text here...</textarea>
+                        </div>
+                    </section>
+                    <br/>
+                    <section class="confirm">
+                        <div class="booked">
+                            <button class="confirmbooking" style="width:200px">CONFIRM BOOKING</button>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </div>
+    </section>
 </section>
 </body>
 </html>
