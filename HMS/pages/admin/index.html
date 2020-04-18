@@ -1,21 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-  <title>Billing | HMS Group3Inc.</title>
-  <link rel="stylesheet" type="text/css" href="../styles/style.css">
+  <title>Admin | HMS Group3Inc.</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link href="../../styles/admin.style.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/8f4261c3af.js" crossorigin="anonymous"></script>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-  <script src="../js/nav.js"></script>
-  <script src="../js/auth.js"></script>
+  <script src="../../js/nav.js"></script>
+  <script src="../../js/auth.js"></script>
+  <script src="../../js/admin.js"></script>
 </head>
 <body>
-<!--
-  Be sure to change href urls and the active nav link
--->
-<!------------------------ COPY THIS SECTION ------------------->
+<!------------------------ NAV BAR ------------------->
 <section id="nav-bar">
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid m-0">
@@ -49,7 +47,42 @@
   </nav>
   <hr class="nav-rule">
 </section>
-<!---------------------- END COPY SECTION -------------------->
-
+<!---------------------- END NAV BAR -------------------->
+<!---------------------- SIDE BAR ----------------------->
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="home"></span>
+              Dashboard <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              Users
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="shopping-cart"></span>
+              Database
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="users"></span>
+              Logs
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>
+<!------------------------ END SIDE BAR ------------------>
 </body>
 </html>

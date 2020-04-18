@@ -21,7 +21,7 @@ var appPort = 8080;
 var apiPort = 3000;
 
 const excludedAppPaths = [
-    /\S*\/login.html/,
+    /\S*\/login/,
     /\S*\.css/,/photos\/\S*/,
     /js\/\S*/,
     /\S*\/timeout.html/,
@@ -42,7 +42,7 @@ app.use(cors({
 .use(parser.urlencoded({extended: false}))
 .use(parser.json())
 .use(cookieParser())
-.use(/\S*\/login.html/, function(req, res, next) {
+.use(/\S*\/login/, function(req, res, next) {
   // redirect to home if already logged in
   serverUtils.loggedInRedirect(req, res, next);
 })
@@ -51,7 +51,7 @@ app.use(cors({
       credentialsRequired: true,
       getToken: function(req) { return req.cookies.auth; }
     }).unless({ path: excludedAppPaths }))
-.use('/pages/admin.html', adminGuard.check(['admin']))
+.use(/\/pages\/admin\/\S*/, adminGuard.check(['admin']))
 .use(function(err, req, res, next) {
   // ERROR HANDLER
   if(err.code === 'permission_denied') {
@@ -60,14 +60,17 @@ app.use(cors({
     if(err.inner.name === 'TokenExpiredError') {
       res.redirect('/pages/timeout.html');
     } else {
-      res.redirect('/pages/login.html');
+      res.redirect('/pages/login');
     }
   } else {
     console.log(err);
     res.status(500).send("Internal Server Error");
   }
 })
-.use(express.static('HMS'));
+.use(express.static('HMS'))
+.use(function(req, res, next) {
+  res.redirect('/pages/login');
+});
 
 
 ///////////////////////// Configure API \\\\\\\\\\\\\\\\\\\\\\\\\\\

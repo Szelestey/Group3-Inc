@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Billing | HMS Group3Inc.</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/styles/billing.style.css">
+</head>
+<body>
+<!-------------Navigation Bar---------------------------->
+<section id="nav-bar">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid m-0">
+      <a class="navbar-brand" href="../home.html"><img src="../../photos/g3logo.png" alt="HMS logo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../reservations">Reservations</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Billing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../management">Management</a>
+          </li>
+          <li class="nav-item admin-item">
+            <a class="nav-link" href="../admin">Admin</a>
+          </li>
+          <li class="nav-item" id="logout-button">
+            <a class="nav-link" href="#" onclick="logout()">Log Out</a>
+          </li>
+        </ul>
+      </div>
+      <div id="nav-info">
+        <span id="nav-info-text" class=""></span>
+      </div>
+    </div>
+  </nav>
+  <hr class="nav-rule">
+</section>
+<!---------------- END NAV BAR ----------------------------->
+<div class="container-fluid search p-0">
+  <div class="row justify-content-center m-3">
+    <div class="col-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <select class="custom-select">
+            <option value="first">First Name</option>
+            <option value="last">Last Name</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+          </select>
+        </div>
+        <input class="form-control" type="text" placeholder="Search...">
+        <div class="input-group-append">
+          <button class="btn btn-primary m-0"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-0 justify-content-center">
+    <div class="col-12 p-0">
+      <hr class="m-0">
+    </div>
+  </div>
+  <div class="row justify-content-center m-0" id="billing-table">
+    <div class="col-11 p-0">
+      <!--Table-->
+      <table class="table">
+        <!--Table head-->
+        <thead>
+        <tr>
+          <th class="sticky-top">#</th>
+          <th class="sticky-top">First Name</th>
+          <th class="sticky-top">Last Name</th>
+          <th class="sticky-top">Email</th>
+          <th class="sticky-top">Phone</th>
+          <th class="sticky-top">Amount Paid</th>
+          <th class="sticky-top">Amount Due</th>
+          <th class="sticky-top">Bill</th>
+          <th class="sticky-top">Receipt</th>
+          <th class="sticky-top">Refund</th>
+        </tr>
+        </thead>
+        <!--Table head-->
+        <!--Table body-->
+        <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>John</td>
+          <td>Doe</td>
+          <td>doe.john@gmail.com</td>
+          <td>240-555-1234</td>
+          <td>100.00</td>
+          <td>23.87</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>@fat</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>@twitter</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">1</th>
+          <td>John</td>
+          <td>Doe</td>
+          <td>doe.john@gmail.com</td>
+          <td>240-555-1234</td>
+          <td>100.00</td>
+          <td>23.87</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>@fat</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>@twitter</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">1</th>
+          <td>John</td>
+          <td>Doe</td>
+          <td>doe.john@gmail.com</td>
+          <td>240-555-1234</td>
+          <td>100.00</td>
+          <td>23.87</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>@fat</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>@twitter</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">1</th>
+          <td>John</td>
+          <td>Doe</td>
+          <td>doe.john@gmail.com</td>
+          <td>240-555-1234</td>
+          <td>100.00</td>
+          <td>23.87</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>@fat</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>@twitter</td>
+          <td>Otto</td>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
+          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
+        </tr>
+        </tbody>
+        <!--Table body-->
+      </table>
+      <!--Table-->
+    </div>
+  </div>
+</div>
+<script src="https://kit.fontawesome.com/8f4261c3af.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
+<script src="../../js/nav.js"></script>
+<script src="../../js/auth.js"></script>
+</body>
+</html>

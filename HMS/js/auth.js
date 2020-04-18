@@ -35,7 +35,7 @@ function logout() {
     }
   }).done(function (data, status, jqXHR) {
     window.localStorage.clear();
-    window.location.replace(baseAppUrl + '/pages/login.html');
+    window.location.replace(baseAppUrl + '/pages');
   }).fail(function(data, status, jqXHR) {
     alert(JSON.stringify(data.responseJSON.message));
   });

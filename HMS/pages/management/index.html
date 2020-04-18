@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<title>Management | HMS Group3Inc.</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link href="../../styles/management.style.css" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/8f4261c3af.js" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="../../js/nav.js"></script>
+	<script src="../../js/auth.js"></script>
+	<script src="../../js/admin.js"></script>
+</head>
+<body>
+<!------------------------ NAV BAR ------------------->
+<section id="nav-bar">
+	<nav class="navbar navbar-expand-lg bg-light">
+		<div class="container-fluid m-0">
+			<a class="navbar-brand" href="../home.html"><img src="../../photos/g3logo.png" alt="HMS logo"></a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="../reservations">Reservations</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="../billing">Billing</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="#">Management</a>
+					</li>
+					<li class="nav-item admin-item">
+						<a class="nav-link" href="../admin">Admin</a>
+					</li>
+					<li class="nav-item" id="logout-button">
+						<a class="nav-link" href="#" onclick="logout()">Log Out</a>
+					</li>
+				</ul>
+			</div>
+			<div id="nav-info">
+				<span id="nav-info-text" class=""></span>
+			</div>
+		</div>
+	</nav>
+	<hr class="nav-rule">
+</section>
+<!---------------------- END NAV BAR -------------------->
+<!---------------------- SIDE BAR ----------------------->
+<div class="container-fluid">
+	<div class="row">
+		<nav class="col-md-2 d-none d-md-block sidebar">
+			<div class="sidebar-sticky">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link active" href="#">
+							<span data-feather="home"></span>
+							Financial Report <span class="sr-only">(current)</span>
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<span data-feather="file"></span>
+							Occupancy Graph
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<span data-feather="shopping-cart"></span>
+							Rooms
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</div>
+<!------------------------ END SIDE BAR ------------------>
+</body>
+</html>
