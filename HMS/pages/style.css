@@ -301,9 +301,10 @@ html, body {
     border: none;
     color: #D00000;
     font-size: 25px;
-    
+
 }
-.button:hover{
+
+.button:hover {
     color: white;
 }
 
