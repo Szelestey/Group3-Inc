@@ -22,7 +22,7 @@ function getTotalRoomsOfEachType() {
       types = roomtypes;
       var roomTypeTotals = {};
       for(var i = 0; i < roomtypes.length; i++) {
-        const query = "SELECT roomtype,COUNT(roomtype) AS num FROM room WHERE roomtype=?";
+        const query = "SELECT roomtype,COUNT(roomtype) AS num FROM ROOM WHERE roomtype=?";
         db.query(query, [roomtypes[i]], function(error, results) {
           (error) ? reject(error) : roomTypeTotals[results[0].roomtype] = results[0].num;
           callback(roomTypeTotals);

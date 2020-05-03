@@ -77,7 +77,7 @@ function getReservationByRoom(room) {
 function calculateCostOfReservation(checkin, checkout, roomtype) {
   var numDays = differenceInCalendarDays(checkout, checkin);
 
-  const query = "SELECT type_base_price FROM roomtype WHERE type_id=?";
+  const query = "SELECT type_base_price FROM ROOMTYPE WHERE type_id=?";
   const values = [roomtype];
   return new Promise((resolve, reject) => {
     db.query(query, values, (error,results) => {
