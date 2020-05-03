@@ -23,8 +23,8 @@ const reservationSelectQuery = "SELECT r.reservation_id AS 'ReservationID', r.ro
     + ", CONCAT(g.guest_lastname, ', ', g.guest_firstname) AS 'FullName'"
     + ", g.guest_email AS 'Email', g.guest_phone AS 'Phone', g.guest_street AS 'Street'"
     + ", g.guest_city AS 'City', g.guest_state AS 'State', g.guest_zip AS 'Zip' "
-    + "FROM reservation AS r "
-    + "INNER JOIN guest AS g "
+    + "FROM RESERVATION AS r "
+    + "INNER JOIN GUEST AS g "
     + "ON r.guest_id=g.guest_id "
     + "WHERE ??.?? = ?";
 
