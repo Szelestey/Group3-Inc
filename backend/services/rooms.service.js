@@ -5,7 +5,8 @@ const roomtypeTable = "ROOMTYPE";
 
 module.exports = {
   getTotalAvailableRoomsOfEachType,
-  getAllRoomTypeInfo
+  getAllRoomTypeInfo,
+  getTotalAvailableRooms
 };
 
 
@@ -22,7 +23,7 @@ function getTotalAvailableRoomsOfEachType() {
       types = roomtypes;
       var roomTypeTotals = {};
       for(var i = 0; i < roomtypes.length; i++) {
-        const query = "SELECT roomtype,COUNT(roomtype) AS num FROM room WHERE roomtype=? AND room_in_service=true";
+        const query = "SELECT roomtype,COUNT(roomtype) AS num FROM ROOM WHERE roomtype=?";
         db.query(query, [roomtypes[i]], function(error, results) {
           (error) ? reject(error) : roomTypeTotals[results[0].roomtype] = results[0].num;
           callback(roomTypeTotals);
@@ -30,6 +31,17 @@ function getTotalAvailableRoomsOfEachType() {
       }
     })
     .catch(err => reject(err));
+  });
+}
+
+
+function getTotalAvailableRooms() {
+  const query = "SELECT COUNT(room_id) AS numRooms FROM ROOM WHERE room_in_service=true";
+  return new Promise((resolve, reject) => {
+    db.query(query, (error, results) => {
+      if(error) reject(error);
+      resolve(results[0].numRooms);
+    });
   });
 }
 

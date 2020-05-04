@@ -78,7 +78,7 @@ function getReservationByRoom(room) {
 function calculateCostOfReservation(checkin, checkout, roomtype) {
   var numDays = differenceInCalendarDays(checkout, checkin);
 
-  const query = "SELECT type_base_price FROM roomtype WHERE type_id=?";
+  const query = "SELECT type_base_price FROM ROOMTYPE WHERE type_id=?";
   const values = [roomtype];
   return new Promise((resolve, reject) => {
     db.query(query, values, (error,results) => {
@@ -119,8 +119,9 @@ function insertReservation(reservation) {
 
 
 function getReservationsInCalendarYear() {
-  const query = "SELECT roomtype_id, check_in_date, check_out_date FROM reservation WHERE Year(check_in_date)=?"
-  const values = [new Date().getFullYear()];
+  const query = "SELECT roomtype_id, status, check_in_date, check_out_date FROM RESERVATION WHERE Year(check_in_date)=? OR Year(check_out_date)=?"
+  const year = new Date().getFullYear();
+  const values = [year, year];
   return new Promise((resolve, reject) => {
     db.query(query, values, (error, results) => {
       if(error) reject(error);
@@ -128,6 +129,9 @@ function getReservationsInCalendarYear() {
     });
   });
 }
+
+
+
 
 
 
