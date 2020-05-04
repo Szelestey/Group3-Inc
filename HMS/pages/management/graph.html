@@ -84,7 +84,7 @@
             <div class="row justify-content-center">
                 <div id="piechart"></div>
                 <br><br>
-                <div class="col-md-11">
+                <div class="col-md">
                     <div id="chart_div" class="chart-container"></div>
                 </div>
             </div>
@@ -96,60 +96,9 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-    google.charts.load('current', {
-        packages: ['line', 'corechart'],
-        callback: drawChart
-    });
-
-    function drawChart() {
-        var data = new google.visualization.DataTable();
-        data.addColumn('number', 'Week of Years');
-        data.addColumn('number', 'Median (2010-2019)');
-        data.addColumn('number', '2020');
-        data.addRows([
-            [1, .45, .50], [2, .50, .51], [3, .55, .52], [4, .56, .53], [5, .57, .54],
-            [6, .58, .25], [7, .59, .20], [8, .60, .10], [9, .60, 0], [10, .61, 0],
-            [11, .62, 0], [12, .63, 0], [13, .64, 0], [14, .65, 0], [15, .65, 0],
-            [16, .65, 0], [17, .65, 0], [18, .65, 0], [19, .65, null], [20, .65, null],
-            [21, .67, null], [22, .68, null], [23, .69, null], [24, .70, null], [25, .70, null],
-            [26, .71, null], [27, .72, null], [28, .73, null], [29, .74, null], [30, .75, null],
-            [31, .76, null], [32, .77, null], [33, .78, null], [34, .79, null], [35, .65, null],
-            [36, .64, null], [37, .63, null], [38, .63, null], [39, .64, null], [40, .65, null],
-            [41, .65, null], [42, .64, null], [43, .65, null], [44, .69, null], [45, .69, null],
-            [46, .66, null], [47, .63, null], [48, .64, null], [49, .64, null], [50, .50, null],
-            [51, .55, null], [52, .54, null],
-        ]);
-
-        var options = {
-            title: 'Hotel Occupancy Rate By Week of Year',
-            hAxis: {
-                title: 'Week of Year'
-            },
-            vAxis: {
-                title: 'Percentage(%)',
-                format: 'percent',
-            },
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-        chart.setSelection([{row: 17, column: 2}]);
-    }
-
-    $(window).resize(function() {
-        if(this.resizeTo) clearTimeout(this.resizeTo);
-        this.resizeTo = setTimeout(function() {
-            $(this).trigger('resizeEnd');
-        }, 500);
-    });
-
-    $(window).on('resizeEnd', function() {
-        drawChart();
-    });
-</script>
 <script src="/js/nav.js"></script>
 <script src="../../js/http-utils.js"></script>
 <script src="/js/auth.js"></script>
+<script src="/js/occupancy-graph.js"></script>
 </body>
 </html>

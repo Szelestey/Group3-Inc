@@ -14,7 +14,8 @@ module.exports = {
   getReservationById,
   getReservationByRoom,
   calculateCostOfReservation,
-  insertReservation
+  insertReservation,
+  getReservationsInCalendarYear
 }
 
 const reservationSelectQuery = "SELECT r.reservation_id AS 'ReservationID', r.room_id AS 'RoomNumber'"
@@ -115,6 +116,22 @@ function insertReservation(reservation) {
     });
   });
 }
+
+
+function getReservationsInCalendarYear() {
+  const query = "SELECT roomtype_id, status, check_in_date, check_out_date FROM RESERVATION WHERE Year(check_in_date)=? OR Year(check_out_date)=?"
+  const year = new Date().getFullYear();
+  const values = [year, year];
+  return new Promise((resolve, reject) => {
+    db.query(query, values, (error, results) => {
+      if(error) reject(error);
+      resolve(results);
+    });
+  });
+}
+
+
+
 
 
 
