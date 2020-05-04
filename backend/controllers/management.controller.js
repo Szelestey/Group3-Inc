@@ -5,7 +5,8 @@ const roomService = require('../services/rooms.service');
 
 
 module.exports = {
-  getOccupancyData
+  getOccupancyData,
+  cancelReservation
 }
 
 
@@ -92,4 +93,15 @@ function getWeekTooltip(actual, projected, week, totalRooms) {
       + "Projected Occupancy: <strong>"+projected+"</strong><br/>"
       + "Actual Occupancy: <strong>"+actual+"</strong>"
       + "</p>";
+}
+
+
+function cancelReservation(req, res, next) {
+  if(Math.random() < 0.5) {
+    res.status(200).send();
+    res.end();
+  } else {
+    res.status(400).json({error: "Error cancelling reservation" + req.body.reservationId});
+    res.end();
+  }
 }
