@@ -71,6 +71,7 @@ function searchByGuest(){
                     "<td>" + state + "</td>" + 
                     "<td>" + street + "</td>" + 
                     "<td>" + zip + "</td>" +
+                    "<td>" + "<button type='button' class='btn btn-secondary' onclick='cancelReservation(&quot;" + reservationId + "&quot;); data-dismiss='modal'>Cancel Reservation</button>" + "</td>" +
                     "</tr>";
                 }
             }
@@ -158,6 +159,7 @@ function searchByRoom(){
                     "<td>" + state + "</td>" + 
                     "<td>" + street + "</td>" + 
                     "<td>" + zip + "</td>" +
+                    "<td>" + "<button type='button' class='btn btn-secondary' onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel Reservation</button>" + "</td>" +
                     "</tr>";
                 }
             }
@@ -245,6 +247,7 @@ function searchById(){
                     "<td>" + state + "</td>" + 
                     "<td>" + street + "</td>" + 
                     "<td>" + zip + "</td>" +
+                    "<td>" + "<button type='button' class='btn btn-secondary' onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel Reservation</button>" + "</td>" +
                     "</tr>";
 
                     console.log("table body now is: ", tableBody.innerHTML);
@@ -255,4 +258,17 @@ function searchById(){
             alert("API Timed Out");
         }
     }, 3000);
+}
+
+function cancelReservation(reservationId){
+    // Concatinating the string
+    var postURL = baseApiUrl + "/management/cancel/";
+
+    var response = sendPostWithCreds(postURL, reservationId);
+
+    // Wait x amount of milliseconds for a response from the API
+    setTimeout(function(){
+        console.log("cancel reservation response is: ", response);
+    }, 3000);
+
 }
