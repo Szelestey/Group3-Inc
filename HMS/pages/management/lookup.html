@@ -97,8 +97,8 @@
             <form>
                 <label class="searchHeader">Search By Guest Last Name</label><br>
                 <label for="lname">Last name:</label><br>
-                <input type="text" id="lname" name="lname" value="Doe"><br><br>
-                <input  onclick="searchByGuest()" id="searchNameButton" class="btn btn-primary" data-toggle="modal" data-target="#nameModalCenter" type="button" value="Submit">
+                <input type="text" id="lname" name="lname" placeholder="Last name"><span class="error-text d-none" id="lname-error"> *</span><br><br>
+                <input  onclick="searchByGuest()" id="searchNameButton" class="btn btn-primary" data-target="#nameModalCenter" type="button" value="Submit">
             </form>
         </div>
         <br>
@@ -106,9 +106,9 @@
             <form>
                 <label class="searchHeader" for="rooms">Search By Room Number</label><br>
                 <label for="rooms">Room Number: </label>
-                <input type="text" id="rooms" name="rooms" value="101"><br><br>
+                <input type="text" id="rooms" name="rooms" placeholder="Room number"><span class="error-text d-none" id="room-error"> *</span><br><br>
                 <br>
-                <input onclick="searchByRoom()" id="searchRoomButton" class="btn btn-primary" data-toggle="modal" data-target="#roomModalCenter" type="button" value="Submit">
+                <input onclick="searchByRoom()" id="searchRoomButton" class="btn btn-primary" data-target="#roomModalCenter" type="button" value="Submit">
             </form>
         </div>
         <br>
@@ -116,9 +116,9 @@
             <form>
                 <label class="searchHeader" for="idNumber">Search By Reservation Id</label><br>
                 <label for="idNumber">Reservation Number: </label>
-                <input type="text" id="idNumber" name="idNumber" value="111111"><br><br>
+                <input type="text" id="idNumber" name="idNumber" placeholder="Reservation number"><span class="error-text d-none" id="id-error"> *</span><br><br>
                 <br>
-                <input onclick="searchById()" id="searchIdButton" class="btn btn-primary" data-toggle="modal" data-target="#idModalCenter" type="button" value="Submit">
+                <input onclick="searchById()" id="searchIdButton" class="btn btn-primary" data-target="#idModalCenter" type="button" value="Submit">
             </form>
         </div>
         <!-- Name Modal -->
