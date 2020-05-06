@@ -1,7 +1,15 @@
 function searchByGuest(){
     // Get the value of the of the last name text box
     var searchedName = document.getElementById("lname").value;
-    
+
+    if(searchedName === "") {
+        $('#lname-error').removeClass('d-none');
+        return;
+    }
+    $('#lname-error').addClass('d-none');
+
+    $('#nameModalCenter').modal('show');
+
     // Concatinating the string
     var searchURL = baseApiUrl + "/reservation/name/" + searchedName;
 
@@ -28,7 +36,26 @@ function searchByGuest(){
             // Else populate a table of rooms reservations
             } else {
                 // Insert a blank table into modal
-                nameModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisNameTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room Number</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th></tr></thead><tbody id='thisNameTableBody'></tbody></table>";
+                nameModal.innerHTML = "<table class='table table-striped table-sm'>"
+                    + "<thead id='thisNameTableHeader'>"
+                    + "<tr>"
+                    + "<th scope='col'>Check In</th>"
+                    + "<th scope='col'>Check Out</th>"
+                    + "<th scope='col'>City</th>"
+                    + "<th scope='col'>Email</th>"
+                    + "<th scope='col'>Full Name</th>"
+                    + "<th scope='col'>Phone</th>"
+                    + "<th scope='col'>Reservation ID</th>"
+                    + "<th scope='col'>Room</th>"
+                    + "<th scope='col'>Room Type</th>"
+                    + "<th scope='col'>State</th>"
+                    + "<th scope='col'>Street</th>"
+                    + "<th scope='col'>Zip</th>"
+                    + "<th scope='col'>Cancel Reservation</th>"
+                    + "</tr>"
+                    + "</thead>"
+                    + "<tbody id='thisNameTableBody'></tbody>"
+                    + "</table>";
 
                 // Store the response as an array
                 var nameJSONArray = response.responseJSON;
@@ -53,25 +80,33 @@ function searchByGuest(){
                     var street = thisReservation.Street;
                     var zip = thisReservation.Zip;
 
+                    if(roomNumber === null) {
+                        roomNumber = 'Not Assigned';
+                    }
+
                     // Store the table body as a variable
                     var tableBody = document.getElementById("thisNameTableBody");
 
+                    var buttonStatus = '';
+                    if(new Date(checkOut) < new Date()) {
+                        buttonStatus = 'disabled';
+                    }
 
                     // Inject the column data for this row into the innerHTML of the row
                     tableBody.innerHTML += "<tr>" +
-                    "<td>" + checkIn + "</td>" + 
-                    "<td>" + checkOut + "</td>" + 
-                    "<td>" + city + "</td>" + 
-                    "<td>" + email + "</td>" + 
-                    "<td>" + fullName + "</td>" + 
-                    "<td>" + phone + "</td>" + 
-                    "<td>" + reservationId + "</td>" + 
-                    "<td>" + roomNumber + "</td>" + 
-                    "<td>" + roomType + "</td>" + 
-                    "<td>" + state + "</td>" + 
-                    "<td>" + street + "</td>" + 
+                    "<td>" + checkIn + "</td>" +
+                    "<td>" + checkOut + "</td>" +
+                    "<td>" + city + "</td>" +
+                    "<td>" + email + "</td>" +
+                    "<td>" + fullName + "</td>" +
+                    "<td>" + phone + "</td>" +
+                    "<td>" + reservationId + "</td>" +
+                    "<td>" + roomNumber + "</td>" +
+                    "<td>" + roomType + "</td>" +
+                    "<td>" + state + "</td>" +
+                    "<td>" + street + "</td>" +
                     "<td>" + zip + "</td>" +
-                    "<td>" + "<button type='button' class='btn btn-secondary' onclick='cancelReservation(&quot;" + reservationId + "&quot;); data-dismiss='modal'>Cancel Reservation</button>" + "</td>" +
+                    "<td>" + "<button type='button' class='btn btn-secondary "+buttonStatus+"' "+buttonStatus+" onclick='cancelReservation(&quot;" + reservationId + "&quot;)' data-dismiss='modal'>Cancel</button>" + "</td>" +
                     "</tr>";
                 }
             }
@@ -86,6 +121,14 @@ function searchByRoom(){
     // Get the value of the room number selected in the dropdown
     var searchedRoom = document.getElementById("rooms").value;
 
+    if(searchedRoom === "") {
+        $('#room-error').removeClass('d-none');
+        return;
+    }
+    $('#room-error').addClass('d-none');
+
+    $('#roomModalCenter').modal('show');
+
     // Concatinating the string
     var searchURL = baseApiUrl + "/reservation/room/" + searchedRoom;
 
@@ -97,7 +140,7 @@ function searchByRoom(){
 
     // Inject text to notify user that its still loading
     roomModal.innerHTML = "<h2>Loading Search Results...</h2>";
-    
+
 
     // Wait x amount of milliseconds for a response from the API
     setTimeout(function(){
@@ -107,7 +150,7 @@ function searchByRoom(){
 
             // If the response was there were no rooms=
             if (response.responseJSON.error) {
-                
+
                 // Inject header notifying that no data was found
                 roomModal.innerHTML = "<h2>No room matching that room number was found</h2>"
 
@@ -116,7 +159,7 @@ function searchByRoom(){
             } else {
 
                 // Insert a blank table into modal
-                roomModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisRoomTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room Number</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th></tr></thead><tbody id='thisRoomTableBody'></tbody></table>";
+                roomModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisRoomTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th><th scope='col'>Cancel</th></tr></thead><tbody id='thisRoomTableBody'></tbody></table>";
 
                 // Store the response as an array
                 var roomJSONArray = response.responseJSON;
@@ -141,25 +184,34 @@ function searchByRoom(){
                     var street = thisReservation.Street;
                     var zip = thisReservation.Zip;
 
+                    if(roomNumber === null) {
+                        roomNumber = 'Not Assigned';
+                    }
+
                     // Store the table body as a variable
                     var tableBody = document.getElementById("thisRoomTableBody");
 
 
+                    var buttonStatus = '';
+                    if(new Date(checkOut) < new Date()) {
+                        buttonStatus = 'disabled';
+                    }
+
                     // Inject the column data for this row into the innerHTML of the row
                     tableBody.innerHTML += "<tr>" +
-                    "<td>" + checkIn + "</td>" + 
-                    "<td>" + checkOut + "</td>" + 
-                    "<td>" + city + "</td>" + 
-                    "<td>" + email + "</td>" + 
-                    "<td>" + fullName + "</td>" + 
-                    "<td>" + phone + "</td>" + 
-                    "<td>" + reservationId + "</td>" + 
-                    "<td>" + roomNumber + "</td>" + 
-                    "<td>" + roomType + "</td>" + 
-                    "<td>" + state + "</td>" + 
-                    "<td>" + street + "</td>" + 
+                    "<td>" + checkIn + "</td>" +
+                    "<td>" + checkOut + "</td>" +
+                    "<td>" + city + "</td>" +
+                    "<td>" + email + "</td>" +
+                    "<td>" + fullName + "</td>" +
+                    "<td>" + phone + "</td>" +
+                    "<td>" + reservationId + "</td>" +
+                    "<td>" + roomNumber + "</td>" +
+                    "<td>" + roomType + "</td>" +
+                    "<td>" + state + "</td>" +
+                    "<td>" + street + "</td>" +
                     "<td>" + zip + "</td>" +
-                    "<td>" + "<button type='button' class='btn btn-secondary' onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel Reservation</button>" + "</td>" +
+                    "<td>" + "<button type='button' class='btn btn-secondary "+buttonStatus+"' "+buttonStatus+" onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel</button>" + "</td>" +
                     "</tr>";
                 }
             }
@@ -168,17 +220,25 @@ function searchByRoom(){
             alert("API Timed Out");
         }
     }, 3000);
-    
+
 }
 
 function searchById(){
     // Get the value of the room number selected in the dropdown
     var searchedId = document.getElementById("idNumber").value;
 
+    if(searchedId === "") {
+        $('#id-error').removeClass('d-none');
+        return;
+    }
+    $('#id-error').addClass('d-none');
+
+    $('#idModalCenter').modal('show');
+
     // Concatinating the string
     var searchURL = baseApiUrl + "/reservation/id/" + searchedId;
 
-    
+
     // Performing http request
     var response = sendGetWithCreds(searchURL);
 
@@ -204,7 +264,7 @@ function searchById(){
             // Else populate a table of rooms reservations
             } else {
                 // Insert a blank table into modal
-                idModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisIdTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room Number</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th></tr></thead><tbody id='thisIdTableBody'></tbody></table>";
+                idModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisIdTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th><th scope='col'>Cancel</th></tr></thead><tbody id='thisIdTableBody'></tbody></table>";
 
                 // Store the response as an array
                 var idJSONArray = response.responseJSON;
@@ -229,25 +289,33 @@ function searchById(){
                     var street = thisReservation.Street;
                     var zip = thisReservation.Zip;
 
+                    if(roomNumber === null) {
+                        roomNumber = 'Not Assigned';
+                    }
+
                     // Store the table body as a variable
                     var tableBody = document.getElementById("thisIdTableBody");
 
+                    var buttonStatus = '';
+                    if(new Date(checkOut) < new Date()) {
+                        buttonStatus = 'disabled';
+                    }
 
                     // Inject the column data for this row into the innerHTML of the row
                     tableBody.innerHTML += "<tr>" +
-                    "<td>" + checkIn + "</td>" + 
-                    "<td>" + checkOut + "</td>" + 
-                    "<td>" + city + "</td>" + 
-                    "<td>" + email + "</td>" + 
-                    "<td>" + fullName + "</td>" + 
-                    "<td>" + phone + "</td>" + 
-                    "<td>" + reservationId + "</td>" + 
-                    "<td>" + roomNumber + "</td>" + 
-                    "<td>" + roomType + "</td>" + 
-                    "<td>" + state + "</td>" + 
-                    "<td>" + street + "</td>" + 
+                    "<td>" + checkIn + "</td>" +
+                    "<td>" + checkOut + "</td>" +
+                    "<td>" + city + "</td>" +
+                    "<td>" + email + "</td>" +
+                    "<td>" + fullName + "</td>" +
+                    "<td>" + phone + "</td>" +
+                    "<td>" + reservationId + "</td>" +
+                    "<td>" + roomNumber + "</td>" +
+                    "<td>" + roomType + "</td>" +
+                    "<td>" + state + "</td>" +
+                    "<td>" + street + "</td>" +
                     "<td>" + zip + "</td>" +
-                    "<td>" + "<button type='button' class='btn btn-secondary' onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel Reservation</button>" + "</td>" +
+                    "<td>" + "<button type='button' class='btn btn-secondary "+buttonStatus+"' "+buttonStatus+" onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel</button>" + "</td>" +
                     "</tr>";
 
                     console.log("table body now is: ", tableBody.innerHTML);
@@ -261,7 +329,7 @@ function searchById(){
 }
 
 function cancelReservation(reservationId){
-    // Concatinating the string
+    // Concatenating the string
     var postURL = baseApiUrl + "/management/cancel/";
 
     var response = sendPostWithCreds(postURL, reservationId);

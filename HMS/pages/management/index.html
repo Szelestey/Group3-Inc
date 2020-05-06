@@ -82,48 +82,49 @@
 <!------------------------ END SIDE BAR ------------------>
 <!----------------------- Report TABLE ---------------------------------->
 		<main role="main" class="col-md-10 ml-sm-auto px-4">
-			<div class="row justify-content-center">
+			<h3 class="mt-4" id="loadingMessage"></h3>
+			<div class="row justify-content-center d-none" id="table-container">
 				<table class="reportTable">
 					<thead>
-					<tr>
-						<th style="border: none">&nbsp;</th>
-						<th style="border: none">
-							<p>2020</p>
-							<p>Today&nbsp;</p>
-						</th>
-						<th style="border: none">
-							<p>&nbsp;</p>
-							<p>WTD&nbsp;</p>
-						</th>
-						<th style="border: none">
-							<p>&nbsp;</p>
-							<p>MTD&nbsp;</p>
-						</th>
-						<th style="border: none">
-							<p>&nbsp;</p>
-							<p>YTD&nbsp;</p>
-						</th>
-						<th style="border: none">
-							<p>&nbsp;2019</p>
-							<p>Today</p>
-						</th>
-						<th style="border: none">
-							<p>&nbsp;</p>
-							<p>WTD&nbsp;</p>
-						</th>
-						<th style="border: none">
-							<p>&nbsp;</p>
-							<p>MTD</p>
-						</th>
-						<th style="border: none">
-							<p>&nbsp;</p>
-							<p>YTD</p>
-						</th>
-					</tr>
+						<tr>
+							<th style="border: none">&nbsp;</th>
+							<th style="border: none">
+								<p id="currentYearHeader"></p>
+								<p>Today&nbsp;</p>
+							</th>
+							<th style="border: none">
+								<p>&nbsp;</p>
+								<p>WTD&nbsp;</p>
+							</th>
+							<th style="border: none">
+								<p>&nbsp;</p>
+								<p>MTD&nbsp;</p>
+							</th>
+							<th style="border: none">
+								<p>&nbsp;</p>
+								<p>YTD&nbsp;</p>
+							</th>
+							<th style="border: none">
+								<p id="previousYearHeader"></p>
+								<p>Today</p>
+							</th>
+							<th style="border: none">
+								<p>&nbsp;</p>
+								<p>WTD&nbsp;</p>
+							</th>
+							<th style="border: none">
+								<p>&nbsp;</p>
+								<p>MTD</p>
+							</th>
+							<th style="border: none">
+								<p>&nbsp;</p>
+								<p>YTD</p>
+							</th>
+						</tr>
 					</thead>
 					<tbody>
-					<tr  style ="background: #CCCCCC">
-						<td style="border: none"><b>&nbsp;Rooms</b></td>
+					<tr class="text-right" style ="background: #CCCCCC">
+						<td style="border: none"><b>Rooms&nbsp;</b></td>
 						<td style="border: none">&nbsp;</td>
 						<td style="border: none">&nbsp;</td>
 						<td style="border: none">&nbsp;</td>
@@ -132,72 +133,6 @@
 						<td style="border: none">&nbsp;</td>
 						<td style="border: none">&nbsp;</td>
 						<td style="border: none">&nbsp;</td>
-					</tr>
-					<tr>
-						<td>&nbsp;King</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;127,9350.00</td>
-						<td>&nbsp;2,132.25</td>
-						<td>&nbsp;14,925.75</td>
-						<td>&nbsp;63,967.50</td>
-						<td>&nbsp;767,610.00</td>
-					</tr>
-					<tr>
-						<td>&nbsp;Queen</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;143,925.00</td>
-						<td>&nbsp;2,398.75</td>
-						<td>&nbsp;16,791.25</td>
-						<td>&nbsp;71,962.50</td>
-						<td>&nbsp;863,550.00</td>
-					</tr>
-					<tr>
-						<td>&nbsp;King Suite/couch</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;159,915.00</td>
-						<td>&nbsp;2,665.25</td>
-						<td>&nbsp;18,656.75</td>
-						<td>&nbsp;79,957.50</td>
-						<td>&nbsp;959,490.00</td>
-					</tr>
-					<tr>
-						<td>&nbsp;Queen Suite/couch</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;175,920.00</td>
-						<td>&nbsp;2,932.00</td>
-						<td>&nbsp;20,524.00</td>
-						<td>&nbsp;87,960.00</td>
-						<td>&nbsp;1,055,520.00</td>
-					</tr>
-					<tr>
-						<td>&nbsp;King Suite/jacuzzi</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;207,900.00</td>
-						<td>&nbsp;3,465.00</td>
-						<td>&nbsp;24,255.00</td>
-						<td>&nbsp;103,950.00</td>
-						<td>&nbsp;1,247,400.00</td>
-					</tr>
-					<tr>
-						<td><b>&nbsp;Total Revenue</b></td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;0.00</td>
-						<td>&nbsp;1,967,010.00</td>
-						<td>&nbsp;13,593.25</td>
-						<td>&nbsp;95,152.75</td>
-						<td>&nbsp;407,797.50</td>
-						<td>&nbsp;4,923,570.00</td>
 					</tr>
 					</tbody>
 				</table>
@@ -213,5 +148,6 @@
 <script src="/js/nav.js"></script>
 <script src="../../js/http-utils.js"></script>
 <script src="/js/auth.js"></script>
+<script src="/js/fin-report.js"></script>
 </body>
 </html>
