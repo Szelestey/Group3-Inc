@@ -26,6 +26,19 @@ body {
 {
   background: #cccccc;
 }
+th, td {
+  font-size: 17px!important;
+  font-weight: lighter!important;
+}
+td
+{
+  padding-top: 4px!important;
+  padding-bottom: 4px!important;
+}
+#table-container
+{
+  max-width: 1000px;
+}
 
 
 /*
@@ -59,6 +72,10 @@ body {
 .capitalize
 {
   text-transform: capitalize;
+}
+#new-user-form-container, #new-user-container
+{
+  max-width: 1200px;
 }
 
 /*
