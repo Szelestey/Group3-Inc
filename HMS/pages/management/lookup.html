@@ -122,11 +122,11 @@
             </form>
         </div>
         <!-- Name Modal -->
-        <div class="modal fade" id="nameModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade ml-2" id="nameModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Search By Name Results</h5>
+                        <h5 class="modal-title">Search By Name Results</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -141,11 +141,11 @@
             </div>
         </div>
        <!-- Room Modal -->
-        <div class="modal fade" id="roomModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade ml-2" id="roomModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Search By Room Results</h5>
+                        <h5 class="modal-title">Search By Room Results</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -160,11 +160,11 @@
             </div>
         </div>
         <!-- Id Modal -->
-        <div class="modal fade" id="idModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade ml-2" id="idModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Search By Reservation Number Results</h5>
+                        <h5 class="modal-title">Search By Reservation Number Results</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -178,7 +178,14 @@
                 </div>
             </div>
         </div>
-
+        <div class="row justify-content-center">
+          <div class="alert alert-success fade in shadow text-center" role="alert" id="cancel-success-alert">
+            Reservation <strong><span id="cancel-success-alert-id"></span></strong> has been cancelled.
+          </div>
+          <div class="alert alert-danger fade in shadow text-center" role="alert" id="cancel-failure-alert">
+            Reservation could not be cancelled.
+          </div>
+        </div>
     </div>
 </section>
 </body>

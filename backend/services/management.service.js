@@ -2,7 +2,8 @@ const db = require('../db/db');
 
 
 module.exports = {
-  getFinancialDataPerRoom
+  getFinancialDataPerRoom,
+  cancelReservation
 };
 
 
@@ -25,5 +26,20 @@ function getFinancialDataPerRoom(currYear, prevYear) {
       resolve(dataRows);
     });
   });
+}
 
+
+function cancelReservation(reservationId) {
+  const query = "UPDATE RESERVATION SET status='cancelled' WHERE reservation_id=?";
+
+  return new Promise((resolve, reject) => {
+    db.query(query, [reservationId], (error, results) => {
+      if(error) reject(error);
+      if(results.affectedRows > 0) {
+        resolve(reservationId);
+      } else {
+        reject("Reservation could not be found");
+      }
+    });
+  });
 }

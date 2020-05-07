@@ -105,15 +105,15 @@ function getWeekTooltip(actual, projected, week, totalRooms) {
 
 
 // Cancels a reservation
-// TODO: finish
-function cancelReservation(req, res, next) {
-  if(Math.random() < 0.5) {
-    res.status(200).send();
-    res.end();
-  } else {
-    res.status(400).json({error: "Error cancelling reservation" + req.body.reservationId});
-    res.end();
-  }
+async function cancelReservation(req, res, next) {
+  reservationId = req.body.id;
+
+  mgmtService.cancelReservation(reservationId).then(result => {
+    res.status(200).json({message: "reservation cancelled"});
+  })
+  .catch(err => {
+    res.status(400).json({error: err});
+  })
 }
 
 

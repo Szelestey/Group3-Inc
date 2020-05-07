@@ -20,7 +20,7 @@ module.exports = {
 
 const reservationSelectQuery = "SELECT r.reservation_id AS 'ReservationID', r.room_id AS 'RoomNumber'"
     + ", r.roomtype_id AS 'RoomType', DATE_FORMAT(r.check_in_date, '%Y-%m-%e') AS 'CheckIn'"
-    + ", DATE_FORMAT(r.check_out_date, '%Y-%m-%e') AS 'CheckOut'"
+    + ", DATE_FORMAT(r.check_out_date, '%Y-%m-%e') AS 'CheckOut', r.status AS Status"
     + ", CONCAT(g.guest_lastname, ', ', g.guest_firstname) AS 'FullName'"
     + ", g.guest_email AS 'Email', g.guest_phone AS 'Phone', g.guest_street AS 'Street'"
     + ", g.guest_city AS 'City', g.guest_state AS 'State', g.guest_zip AS 'Zip' "

@@ -83,3 +83,13 @@ table {
 {
   color: red;
 }
+
+.alert
+{
+  position: fixed;
+  top: -80px;
+  left: 36%;
+  z-index: 5000;
+  margin: auto;
+  min-width: 400px;
+}
