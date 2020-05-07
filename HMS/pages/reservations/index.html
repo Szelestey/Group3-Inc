@@ -191,27 +191,33 @@
 				<div class="col-sm-5 text-center mr-3">
 					<label for="cardType" style="color:#555">Card Type</label><br/>
 					<span class="required">*&nbsp;</span>
-					<select class="cc-item" id="cardType" style="width:200px">
+					<select class="cc-item" id="cardType" style="width:150px">
 						<option value="visa">Visa</option>
 						<option value="mastercard">Master Card</option>
 						<option value="amex">American Express</option>
 						<option value="discover">Discover</option>
 					</select><br/>
-					<label for="expMonth" style="color:#555"><br/>Expiration</label><br/>
 					<div class="row">
 						<div class="col-sm-6">
-							<label for="expMonth" style="color:#555">Month</label><br/>
+							<label class="mb-0 mt-2" for="expMonth" style="color:#555">Month</label><br/>
 							<span class="required">*&nbsp;
-								<select class="cc-item reset-booking" id="expMonth" style="width:130px">
+								<select class="cc-item reset-booking" id="expMonth" style="width:118px">
 								</select>
 							</span>
 						</div>
 						<div class="col-sm-6">
-							<label for="expYear" style="color:#555">Year</label><br/>
+							<label class="mb-0 mt-2" for="expYear" style="color:#555">Year</label><br/>
 							<span class="required">*&nbsp;
-								<select class="cc-item reset-booking" id="expYear" style="width:130px">
+								<select class="cc-item reset-booking" id="expYear" style="width:118px">
 								</select>
 							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col text-center">
+							<label class="mb-0 mt-2" for="cvvCode" style="color:#555;">CVV Code</label><br/>
+							<span class="required">*&nbsp;</span>
+							<input type="text" class="reset-booking cc-item" id="cvvCode" size="6" placeholder="CVV">
 						</div>
 					</div>
 				</div>
@@ -233,7 +239,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">Error</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button type="button" class="close close-styling" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -259,6 +265,24 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="booking-error-modal">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Error</h5>
+				<button type="button" class="close booking-error-close close-styling" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<p id="booking-error-modal-text"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary booking-error-close" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>

@@ -7,6 +7,12 @@ $(document).ready(function () {
     $('body').removeClass('overlay-open');
   });
 
+  $('.booking-error-close').on('click', function (event) {
+    window.location.href="#bookRoom";
+    $('body').addClass('overlay-open');
+  });
+
+
   // disable credit card fields if pay later is chosen
   $('#paymentMethod').change(function(event) {
     ($('#paymentMethod').val() === 'CA') ? disableCC() : enableCC();
@@ -26,6 +32,7 @@ function configureExpSelect() {
   var date = new Date();
   var year = parseInt(date.getFullYear());
   var yearSelect = $('#expYear');
+  var monthSelector = $('#expMonth');
 
   var html = '<option value="">Year...</option>';
   for(var i=0; i<15; i++) {
@@ -36,7 +43,13 @@ function configureExpSelect() {
   // Checks if current year is selected, if so only populates valid months
   yearSelect.change(function() {
     var selectedYear = yearSelect.val();
+    var selectedMonth = monthSelector.val();
     (year === parseInt(selectedYear)) ? populateMonthSelect(new Date().getMonth()) : populateMonthSelect(0);
+    $('#expMonth > option').each(function() {
+      if (selectedMonth === $(this).val()) {
+        monthSelector.val(selectedMonth);
+      }
+    });
   });
 
   populateMonthSelect(0);
@@ -292,8 +305,9 @@ function bookRoom() {
   var reservation = getReservation();
   var err = validateBooking(guest, payment);
   if(err) {
-    showErrorModal(err);
-    return;
+    $('#booking-error-modal-text').text(err);
+    $('#booking-error-modal').modal('show');
+    return false;
   }
 
   var url = baseApiUrl + '/reservation';
@@ -364,6 +378,7 @@ function getPaymentInfo() {
     payment.credit.exp = {};
     payment.credit.exp.month = $('#expMonth').val();
     payment.credit.exp.year = $('#expYear').val();
+    payment.credit.cvv = $('#cvvCode').val();
   }
 
   return payment;
@@ -392,6 +407,7 @@ function validateBooking(guest, payment) {
     if(!payment.credit.name) missingArr.push('Name on card');
     if(!payment.credit.exp.month) missingArr.push('Card expiration month');
     if(!payment.credit.exp.year) missingArr.push('Card expiration year');
+    if(!payment.credit.cvv) missingArr.push('CVV Code');
   }
 
   // Create string if items are missing
@@ -411,6 +427,7 @@ function validateBooking(guest, payment) {
   if(!/^(?!0{5})(\d{5})(?!-?0{4})(|-\d{4})?$/.test(guest.address.zip)) invalidArr.push('Zip invalid');
   if(payment.method === 'CC') {
     if (payment.credit.number.length < 15) invalidArr.push('Card number too short');
+    if(!/^[0-9]{3,4}$/.test(payment.credit.cvv)) invalidArr.push('CVV invalid');
   }
 
   // Create string if items are invalid
