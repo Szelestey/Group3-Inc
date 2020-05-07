@@ -1,10 +1,12 @@
+
+
 function searchByGuest(){
     // Get the value of the of the last name text box
     var searchedName = document.getElementById("lname").value;
 
     if(searchedName === "") {
         $('#lname-error').removeClass('d-none');
-        return;
+        return false;
     }
     $('#lname-error').addClass('d-none');
 
@@ -119,6 +121,8 @@ function searchByGuest(){
             alert("API Timed Out");
         }
     }, 3000);
+
+    return false;
 }
 
 function searchByRoom(){
@@ -127,7 +131,7 @@ function searchByRoom(){
 
     if(searchedRoom === "") {
         $('#room-error').removeClass('d-none');
-        return;
+        return false;
     }
     $('#room-error').addClass('d-none');
 
@@ -163,7 +167,7 @@ function searchByRoom(){
             } else {
 
                 // Insert a blank table into modal
-                roomModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisRoomTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th><th scope='col'>Cancel</th></tr></thead><tbody id='thisRoomTableBody'></tbody></table>";
+                roomModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisRoomTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th><th scope='col'>Status</th><th scope='col'>Cancel</th></tr></thead><tbody id='thisRoomTableBody'></tbody></table>";
 
                 // Store the response as an array
                 var roomJSONArray = response.responseJSON;
@@ -228,6 +232,7 @@ function searchByRoom(){
         }
     }, 3000);
 
+    return false;
 }
 
 function searchById(){
@@ -236,7 +241,7 @@ function searchById(){
 
     if(searchedId === "") {
         $('#id-error').removeClass('d-none');
-        return;
+        return false;
     }
     $('#id-error').addClass('d-none');
 
@@ -271,7 +276,7 @@ function searchById(){
             // Else populate a table of rooms reservations
             } else {
                 // Insert a blank table into modal
-                idModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisIdTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th><th scope='col'>Cancel</th></tr></thead><tbody id='thisIdTableBody'></tbody></table>";
+                idModal.innerHTML = "<table class='table table-striped table-sm'><thead id='thisIdTableHeader'><tr><th scope='col'>Check In</th><th scope='col'>Check Out</th><th scope='col'>City</th><th scope='col'>Email</th><th scope='col'>Full Name</th><th scope='col'>Phone</th><th scope='col'>Reservation ID</th><th scope='col'>Room</th><th scope='col'>Room Type</th><th scope='col'>State</th><th scope='col'>Street</th><th scope='col'>Zip</th><th scope='col'>Status</th><th scope='col'>Cancel</th></tr></thead><tbody id='thisIdTableBody'></tbody></table>";
 
                 // Store the response as an array
                 var idJSONArray = response.responseJSON;
@@ -335,6 +340,8 @@ function searchById(){
             alert("API Timed Out");
         }
     }, 3000);
+
+    return false;
 }
 
 
