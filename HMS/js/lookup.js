@@ -51,6 +51,7 @@ function searchByGuest(){
                     + "<th scope='col'>State</th>"
                     + "<th scope='col'>Street</th>"
                     + "<th scope='col'>Zip</th>"
+                    + "<th scope='col'>Status</th>"
                     + "<th scope='col'>Cancel Reservation</th>"
                     + "</tr>"
                     + "</thead>"
@@ -79,6 +80,8 @@ function searchByGuest(){
                     var state = thisReservation.State;
                     var street = thisReservation.Street;
                     var zip = thisReservation.Zip;
+                    var status = thisReservation.Status;
+                    status = status.charAt(0).toUpperCase() + status.slice(1);
 
                     if(roomNumber === null) {
                         roomNumber = 'Not Assigned';
@@ -88,7 +91,7 @@ function searchByGuest(){
                     var tableBody = document.getElementById("thisNameTableBody");
 
                     var buttonStatus = '';
-                    if(new Date(checkOut) < new Date()) {
+                    if(new Date(checkOut) < new Date() || status === 'Cancelled') {
                         buttonStatus = 'disabled';
                     }
 
@@ -106,6 +109,7 @@ function searchByGuest(){
                     "<td>" + state + "</td>" +
                     "<td>" + street + "</td>" +
                     "<td>" + zip + "</td>" +
+                    "<td>" + status + "</td>" +
                     "<td>" + "<button type='button' class='btn btn-secondary "+buttonStatus+"' "+buttonStatus+" onclick='cancelReservation(&quot;" + reservationId + "&quot;)' data-dismiss='modal'>Cancel</button>" + "</td>" +
                     "</tr>";
                 }
@@ -183,6 +187,8 @@ function searchByRoom(){
                     var state = thisReservation.State;
                     var street = thisReservation.Street;
                     var zip = thisReservation.Zip;
+                    var status = thisReservation.Status;
+                    status = status.charAt(0).toUpperCase() + status.slice(1);
 
                     if(roomNumber === null) {
                         roomNumber = 'Not Assigned';
@@ -193,7 +199,7 @@ function searchByRoom(){
 
 
                     var buttonStatus = '';
-                    if(new Date(checkOut) < new Date()) {
+                    if(new Date(checkOut) < new Date() || status === 'Cancelled') {
                         buttonStatus = 'disabled';
                     }
 
@@ -211,6 +217,7 @@ function searchByRoom(){
                     "<td>" + state + "</td>" +
                     "<td>" + street + "</td>" +
                     "<td>" + zip + "</td>" +
+                    "<td>" + status + "</td>" +
                     "<td>" + "<button type='button' class='btn btn-secondary "+buttonStatus+"' "+buttonStatus+" onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel</button>" + "</td>" +
                     "</tr>";
                 }
@@ -288,6 +295,8 @@ function searchById(){
                     var state = thisReservation.State;
                     var street = thisReservation.Street;
                     var zip = thisReservation.Zip;
+                    var status = thisReservation.Status;
+                    status = status.charAt(0).toUpperCase() + status.slice(1);
 
                     if(roomNumber === null) {
                         roomNumber = 'Not Assigned';
@@ -297,7 +306,7 @@ function searchById(){
                     var tableBody = document.getElementById("thisIdTableBody");
 
                     var buttonStatus = '';
-                    if(new Date(checkOut) < new Date()) {
+                    if(new Date(checkOut) < new Date() || status === 'Cancelled') {
                         buttonStatus = 'disabled';
                     }
 
@@ -315,10 +324,10 @@ function searchById(){
                     "<td>" + state + "</td>" +
                     "<td>" + street + "</td>" +
                     "<td>" + zip + "</td>" +
+                    "<td>" + status + "</td>" +
                     "<td>" + "<button type='button' class='btn btn-secondary "+buttonStatus+"' "+buttonStatus+" onclick='cancelReservation(&quot;" + reservationId + "&quot;);' data-dismiss='modal'>Cancel</button>" + "</td>" +
                     "</tr>";
 
-                    console.log("table body now is: ", tableBody.innerHTML);
                 }
             }
         // Else api timed out
@@ -328,15 +337,39 @@ function searchById(){
     }, 3000);
 }
 
+
 function cancelReservation(reservationId){
     // Concatenating the string
-    var postURL = baseApiUrl + "/management/cancel/";
+    var postURL = baseApiUrl + "/management/cancel";
 
-    var response = sendPostWithCreds(postURL, reservationId);
+    sendPostWithCreds(postURL, { id: reservationId}).then((data, status, jqXHR) => {
+        $('.modal').modal('hide');
+        $('#cancel-success-alert-id').text(reservationId);
+        triggerAlert('#cancel-success-alert');
+    })
+    .fail((data, status, jqXHR) => {
+        $('.modal').modal('hide');
+        triggerAlert('#cancel-failure-alert');
+    });
 
-    // Wait x amount of milliseconds for a response from the API
-    setTimeout(function(){
-        console.log("cancel reservation response is: ", response);
-    }, 3000);
+}
 
+
+// Alert drops in to screen and stops just below nav bar
+// Fades after 5 seconds
+function triggerAlert(alertId) {
+    $(alertId).addClass('show');
+    var x = -20;
+    setInterval(function() {
+        if(x < 140) {
+            $(alertId).css('top', x + 'px');
+        }
+        x += 5;
+    }, 2)
+    setTimeout(function() {
+        $(alertId).removeClass('show');
+    }, 4000);
+    setTimeout(function() {
+        $(alertId).css('top', -80);
+    }, 5000);
 }
