@@ -340,6 +340,13 @@ BEGIN
     WHERE invoice_id = OLD.invoice_id;
 END $$
 
+-- Strip characters from phone numbers
+CREATE TRIGGER strip_chars_from_phone BEFORE INSERT ON GUEST
+    FOR EACH ROW
+BEGIN
+    SET NEW.guest_phone = REPLACE(REPLACE(REPLACE(REPLACE(NEW.guest_phone,' ',''),'-',''),'(',''),')','');
+END $$
+
 DELIMITER ;
 
 
