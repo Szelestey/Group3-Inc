@@ -43,7 +43,6 @@ body {
   overflow-y: scroll;
 }
 table.reportTable {
-  font-family: "Times New Roman", Times, serif;
   border: 1px solid #AAAAAA;
   background-color: #FFFFFF;
   width: 100%;
@@ -91,7 +90,6 @@ table.reportTable thead th:first-child {
   overflow-y: scroll;
 }
 table.roomsTable {
-  font-family: "Times New Roman", Times, serif;
   border: 1px solid #AAAAAA;
   background-color: #FFFFFF;
   width: 100%;
@@ -138,7 +136,6 @@ table.roomsTable thead th:first-child {
   overflow-y: scroll;
 }
 table.modifyTable {
-  font-family: "Times New Roman", Times, serif;
   border: 2px solid #0B98DE;
   background-color: #CCCCCC;
   width: 220px;
