@@ -38,7 +38,7 @@ function getInvoicesInInterval() {
 }
 
 
-
+// Adds a charge to the specified invoice
 async function chargeInvoice(invoiceCharge) {
   var num = await getNumForId(invoiceCharge.invoiceId, 'INVOICECHARGE');
   var charge_Id = invoiceCharge.invoiceId + "-ch" + addLeadingZeros(num.toString(),5);
@@ -72,29 +72,32 @@ async function chargeInvoice(invoiceCharge) {
 
 
 // Adds a cash payment to the specified invoice
-var createCAPayment = function(payment) {
-  var payment_id = "";
-  var invoice_id = "";
+async function createCAPayment(payment) {
+  var num = await getNumForId(payment.invoiceId, 'PAYMENT');
+  var paymentId = payment.invoiceId + "-p" + addLeadingZeros(num.toString(), 5);
 
-  /* You can leave out the accountholder name for the cash payments */
   const query = "INSERT INTO PAYMENT(payment_id, invoice_id, payment_date, payment_type, " +
-      "payment_amount, accountholder_name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "payment_amount) VALUES(?, ?, ?, ?, ?)";
   values = [
-    payment.payment_id,
-    payment.invoice_id,
-    DATE_FORMAT(payment.payment_date, '%Y-%m-%e'),
-    payment.payment_type,
-    payment.payment_amount,
+    paymentId,
+    payment.invoiceId,
+    format(new Date(), 'yyyy-MM-dd'),
+    payment.method,
+    payment.amount
   ];
 
   return new Promise( (resolve, reject) => {
     db.query(query, values,
-        function (error, results, fields) {
+        function (error, results) {
           if(error) {
             console.log(error);
             reject(error);
           } else {
-            resolve(results.affectedRows > 0);
+            if(results.affectedRows > 0) {
+              resolve(paymentId);
+            } else {
+              resolve();
+            }
           }
         });
   });
@@ -105,7 +108,7 @@ var createCAPayment = function(payment) {
 // Adds a credit card payment to the specified invoice
 async function createCCPayment(payment) {
   var num = await getNumForId(payment.invoiceId, 'PAYMENT');
-  var paymentId = payment.invoiceId + "-p" + addLeadingZeros(num, 5);
+  var paymentId = payment.invoiceId + "-p" + addLeadingZeros(num.toString(), 5);
 
   const query = "INSERT INTO PAYMENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
   values = [
@@ -140,6 +143,7 @@ async function createCCPayment(payment) {
 }
 
 
+// Gets the number for a new payment/charge Id based on how many payments/charges already exist
 function getNumForId(invoiceId, tableName) {
   const query = "SELECT COUNT(??) AS num FROM ?? WHERE invoice_id=?"
   var columnName = '';
