@@ -1,6 +1,5 @@
 body {
   font-size: 1.2rem;
-  overflow: hidden;
 }
 
 .feather {
@@ -41,11 +40,9 @@ tr:hover
 
 #billing-table
 {
-
   bottom: 0;
   right: 0;
   left: 0;
-  overflow-y: scroll;
 }
 .table-button
 {
