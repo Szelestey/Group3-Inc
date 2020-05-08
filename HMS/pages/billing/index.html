@@ -2,9 +2,9 @@
 <html>
 <head>
 	<title>Billing | HMS Group3Inc.</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/css/mdb.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="/styles/navbar.style.css">
   <link rel="stylesheet" type="text/css" href="/styles/billing.style.css">
@@ -47,114 +47,225 @@
   <hr class="nav-rule">
 </section>
 <!---------------- END NAV BAR ----------------------------->
-<div class="container-fluid p-0">
-  <div class="row justify-content-center">
-    <div class="col-6 search m-3">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <select class="custom-select">
-            <option value="first">First Name</option>
-            <option value="last">Last Name</option>
-            <option value="email">Email</option>
-            <option value="phone">Phone</option>
-          </select>
+<div class="container-fluid main m-3">
+  <div class="row justify-content-center mb-2">
+    <h2 id="billingHeader">Loading Invoices...</h2>
+  </div>
+  <div class="m-0 p-0" id="billing-wrap">
+    <div class="row m-0 justify-content-center">
+      <div class="col-12 p-0">
+        <hr class="m-0">
+      </div>
+    </div>
+    <div class="row justify-content-center mx-0">
+      <div class="col-6 search m-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <select class="custom-select">
+              <option value="first">First Name</option>
+              <option value="last">Last Name</option>
+              <option value="email">Email</option>
+              <option value="phone">Phone</option>
+            </select>
+          </div>
+          <input class="form-control" type="text" placeholder="Search...">
+          <div class="input-group-append">
+            <button class="btn btn-primary m-0" style="background-color: #0B98DE !important;"><i class="fa fa-search"></i></button>
+          </div>
         </div>
-        <input class="form-control" type="text" placeholder="Search...">
-        <div class="input-group-append">
-          <button class="btn btn-primary m-0" style="background-color: #0B98DE !important;"><i class="fa fa-search"></i></button>
-        </div>
+      </div>
+      <div class="col-2 m-3">
+        <button class="btn btn-primary m-0" id="showCurrent" onclick="populateTable()" style="background: #0B98DE!important;">Show Current</button>
+      </div>
+    </div>
+    <div class="row mx-0 mb-4 justify-content-center">
+      <div class="col-12 p-0">
+        <hr class="m-0">
+      </div>
+    </div>
+    <div class="row justify-content-center m-0" id="billing-table">
+      <div class="col-11 p-0">
+        <!---------------------- TABLE ---------------------------->
+        <table class="table table-striped table-hover">
+          <!--Table head-->
+          <thead>
+          <tr style="color: #FFFFFF">
+            <th class="sticky-top" style="background: #0B98DE">Invoice ID</th>
+            <th class="sticky-top" style="background: #0B98DE">Name</th>
+            <th class="sticky-top" style="background: #0B98DE">Email</th>
+            <th class="sticky-top" style="background: #0B98DE">Phone</th>
+            <th class="sticky-top" style="background: #0B98DE">Amount Paid</th>
+            <th class="sticky-top" style="background: #0B98DE">Amount Due</th>
+            <th class="sticky-top" style="background: #0B98DE">Total Amount</th>
+            <th class="sticky-top" style="background: #0B98DE">Email Bill/Receipt</th>
+            <th class="sticky-top" style="background: #0B98DE">Payment</th>
+            <th class="sticky-top" style="background: #0B98DE">Charge</th>
+          </tr>
+          </thead>
+          <!--Table head-->
+          <!--Table body-->
+          <tbody>
+          </tbody>
+          <!--Table body-->
+        </table>
+        <!----------------------- END TABLE ---------------------------------->
       </div>
     </div>
   </div>
-  <div class="row m-0 justify-content-center">
-    <div class="col-12 p-0">
-      <hr class="m-0">
+  <div class="row justify-content-center">
+    <!------------------- ALERTS ----------------------------------->
+    <div class="alert alert-success fade in shadow text-center" role="alert" id="success-alert">
     </div>
+    <div class="alert alert-danger fade in shadow text-center" role="alert" id="failure-alert">
+    </div>
+    <!------------------- END ALERTS -------------------------------->
   </div>
-  <div class="row justify-content-center m-0" id="billing-table">
-    <div class="col-11 p-0">
-      <!---------------------- TABLE ---------------------------->
-      <table class="table">
-        <!--Table head-->
-        <thead>
-        <tr style="color: #FFFFFF">
-          <th class="sticky-top" style="background: #0B98DE">Invoice ID</th>
-          <th class="sticky-top" style="background: #0B98DE">Name</th>
-          <th class="sticky-top" style="background: #0B98DE">Email</th>
-          <th class="sticky-top" style="background: #0B98DE">Phone</th>
-          <th class="sticky-top" style="background: #0B98DE">Amount Paid</th>
-          <th class="sticky-top" style="background: #0B98DE">Amount Due</th>
-          <th class="sticky-top" style="background: #0B98DE">Bill</th>
-          <th class="sticky-top" style="background: #0B98DE">Receipt</th>
-          <th class="sticky-top" style="background: #0B98DE">Payment</th>
-          <th class="sticky-top" style="background: #0B98DE">Charge</th>
-        </tr>
-        </thead>
-        <!--Table head-->
-        <!--Table body-->
-        <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>John Doe</td>
-          <td>doe.john@gmail.com</td>
-          <td>240-555-1234</td>
-          <td>100.00</td>
-          <td>23.87</td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td>John Doe</td>
-          <td>doe.john@gmail.com</td>
-          <td>240-555-1234</td>
-          <td>100.00</td>
-          <td>23.87</td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td>John Doe</td>
-          <td>doe.john@gmail.com</td>
-          <td>240-555-1234</td>
-          <td>100.00</td>
-          <td>23.87</td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-        </tr>
-        <tr>
-          <th scope="row">1</th>
-          <td>John Doe</td>
-          <td>doe.john@gmail.com</td>
-          <td>240-555-1234</td>
-          <td>100.00</td>
-          <td>23.87</td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-          <td><button class="btn m-0"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-        </tr>
-        </tbody>
-        <!--Table body-->
-      </table>
-      <!----------------------- END TABLE ---------------------------------->
+</div>
+<!-------------------------- PAYMENT MODAL ---------------------->
+<div class="modal fade" id="makePaymentModal" tabindex="-1" role="dialog" aria-labelledby="makePaymentModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Add payment towards invoice: <br/>
+          <strong><span id="modalTitleName"></span>:&emsp;<span id="modalTitleId"></span></strong>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col text-center mr-3">
+            <label for="paymentAmount">Amount</label><br/>
+            <label for="paymentAmount">$</label>
+            <input id="paymentAmount" type="text" size="8">
+          </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col-sm-5 text-center">
+            <label for="paymentMethod">Payment Method</label><br/>
+            <select id="paymentMethod">
+              <option value="CC">Credit Card</option>
+              <option value="CA">Cash</option>
+            </select>
+          </div>
+          <div class="col-sm-5 text-center">
+            <label for="cardType">Card Type</label><br/>
+            <select class="cc-item" id="cardType">
+              <option value="visa">Visa</option>
+              <option value="mastercard">Master Card</option>
+              <option value="amex">American Express</option>
+              <option value="discover">Discover</option>
+            </select>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col-sm-5 text-center">
+            <label for="accountNum">Card Number</label><br/>
+            <input type="text" class="reset-booking cc-item" id="accountNum" size="18" placeholder="Card Number">
+          </div>
+          <div class="col-sm-5 text-center">
+            <label for="accountHolder">Name on Card</label><br/>
+            <input type="text" class="reset-booking cc-item" id="accountHolder" size="18" placeholder="Name on Card">
+          </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col-sm-5">
+            <div class="row justify-content-center">
+              <div class="col text-center p-0">
+                <label for="expMonth">Month</label><br/>
+                <select class="cc-item reset-booking small-select" id="expMonth">
+                </select>
+              </div>
+              <div class="col text-center p-0">
+                <label for="expYear">Year</label><br/>
+                <select class="cc-item reset-booking small-select" id="expYear">
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-5 text-center">
+            <label for="cvvCode">CVV Code</label><br/>
+            <input type="text" class="reset-booking cc-item" id="cvvCode" size="6" placeholder="CVV">
+          </div>
+        </div>
+        <span class="d-none" id="hiddenAmountOwed"></span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="changeSubmit" onclick="addPayment()">Add Payment</button>
+      </div>
     </div>
   </div>
 </div>
+<!-------------------------- END PAYMENT MODAL ---------------------->
+<!------------------- CHARGE INVOICE MODAL -------------------->
+<div class="modal fade" id="addChargeModal" tabindex="-1" role="dialog" aria-labelledby="addChargeModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Add charge towards invoice: <br/>
+          <strong><span id="modalChargeTitleName"></span>:&emsp;<span id="modalChargeTitleId"></span></strong>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row justify-content-center">
+          <div class="col text-center mr-3">
+            <label for="chargeAmount">Amount</label><br/>
+            <label for="chargeAmount">$</label>
+            <input id="chargeAmount" type="text" size="8">
+          </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col text-center">
+            <label for="chargeReason">Reason</label><br/>
+            <textarea id="chargeReason" rows="2" maxlength="100"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="addCharge()">Add Charge</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------- END CHARGE INVOICE MODAL ------------------>
+
+<!------------------- ERROR MODAL ------------------------------->
+<div class="modal" tabindex="-1" role="dialog" id="error-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Error</h5>
+        <button type="button" id="modalCloseX" class="close close-styling" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="error-modal-text"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="modalCloseButton" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!------------------- END ERROR MODAL -------------------------->
+
 <script src="https://kit.fontawesome.com/8f4261c3af.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.16.0/js/mdb.min.js"></script>
-<script src="../../js/nav.js"></script>
-<script src="../../js/http-utils.js"></script>
-<script src="../../js/auth.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/http-utils.js"></script>
+<script src="/js/auth.js"></script>
+<script src="/js/billing.js"></script>
 </body>
 </html>

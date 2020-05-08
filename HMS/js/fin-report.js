@@ -5,6 +5,7 @@ $(document).ready(function() {
 
   getFinancialData();
 
+
 });
 
 
@@ -29,7 +30,7 @@ function getFinancialData() {
     setTimeout(function() {
 
       addFinancialDataToTable(data);
-      $('#loadingMessage').text('');
+      $('#loadingMessage').text('Financial Report');
       $('#table-container').removeClass('d-none');
 
     }, 2000);
@@ -89,14 +90,14 @@ function addFinancialDataToTable(data) {
 
   tableHtml += '<tr class="text-right">'
       + '<td><b>Total Revenue&nbsp;</b></td>'
-      + '<td>'+formatToLocaleCurrency(currTodayTotal)+'&nbsp;</td>'
-      + '<td>&nbsp;'+formatToLocaleCurrency(currWeekTotal)+'&nbsp;</td>'
-      + '<td>&nbsp;'+formatToLocaleCurrency(currMonthTotal)+'&nbsp;</td>'
-      + '<td>&nbsp;'+formatToLocaleCurrency(currYearTotal)+'&nbsp;</td>'
-      + '<td>&nbsp;'+formatToLocaleCurrency(prevTodayTotal)+'&nbsp;</td>'
-      + '<td>&nbsp;'+formatToLocaleCurrency(prevWeekTotal)+'&nbsp;</td>'
-      + '<td>&nbsp;'+formatToLocaleCurrency(prevMonthTotal)+'&nbsp;</td>'
-      + '<td>&nbsp;'+formatToLocaleCurrency(prevYearTotal)+'&nbsp;</td>'
+      + '<td><b>'+formatToLocaleCurrency(currTodayTotal)+'&nbsp;</b></td>'
+      + '<td><b>&nbsp;'+formatToLocaleCurrency(currWeekTotal)+'&nbsp;</b></td>'
+      + '<td><b>&nbsp;'+formatToLocaleCurrency(currMonthTotal)+'&nbsp;</b></td>'
+      + '<td><b>&nbsp;'+formatToLocaleCurrency(currYearTotal)+'&nbsp;</b></td>'
+      + '<td><b>&nbsp;'+formatToLocaleCurrency(prevTodayTotal)+'&nbsp;</b></td>'
+      + '<td><b>&nbsp;'+formatToLocaleCurrency(prevWeekTotal)+'&nbsp;</b></td>'
+      + '<td><b>&nbsp;'+formatToLocaleCurrency(prevMonthTotal)+'&nbsp;</b></td>'
+      + '<td><b>&nbsp;'+formatToLocaleCurrency(prevYearTotal)+'&nbsp;</b></td>'
       + '</tr>';
 
   $('table').find('tbody').append(tableHtml);

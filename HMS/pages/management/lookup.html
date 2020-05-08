@@ -94,16 +94,16 @@
 <section id="searchGrid">
     <div class="container">
         <div class="row" id="nameSearch">
-            <form>
+            <form onsubmit="return searchByGuest()">
                 <label class="searchHeader">Search By Guest Last Name</label><br>
                 <label for="lname">Last name:</label><br>
                 <input type="text" id="lname" name="lname" placeholder="Last name"><span class="error-text d-none" id="lname-error"> *</span><br><br>
-                <input  onclick="searchByGuest()" id="searchNameButton" class="btn btn-primary" data-target="#nameModalCenter" type="button" value="Submit">
+                <input onclick="searchByGuest()" id="searchNameButton" class="btn btn-primary" data-target="#nameModalCenter" type="button" value="Submit">
             </form>
         </div>
         <br>
         <div class="row" id="roomSearch">
-            <form>
+            <form onsubmit="return searchByRoom()">
                 <label class="searchHeader" for="rooms">Search By Room Number</label><br>
                 <label for="rooms">Room Number: </label>
                 <input type="text" id="rooms" name="rooms" placeholder="Room number"><span class="error-text d-none" id="room-error"> *</span><br><br>
@@ -113,7 +113,7 @@
         </div>
         <br>
         <div class="row" id="idSearch">
-            <form>
+            <form onsubmit="return searchById()">
                 <label class="searchHeader" for="idNumber">Search By Reservation Id</label><br>
                 <label for="idNumber">Reservation Number: </label>
                 <input type="text" id="idNumber" name="idNumber" placeholder="Reservation number"><span class="error-text d-none" id="id-error"> *</span><br><br>
@@ -178,14 +178,12 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-          <div class="alert alert-success fade in shadow text-center" role="alert" id="cancel-success-alert">
-            Reservation <strong><span id="cancel-success-alert-id"></span></strong> has been cancelled.
-          </div>
-          <div class="alert alert-danger fade in shadow text-center" role="alert" id="cancel-failure-alert">
-            Reservation could not be cancelled.
-          </div>
-        </div>
+      <div class="alert alert-success fade in shadow text-center" role="alert" id="cancel-success-alert">
+        Reservation <strong><span id="cancel-success-alert-id"></span></strong> has been cancelled.
+      </div>
+      <div class="alert alert-danger fade in shadow text-center" role="alert" id="cancel-failure-alert">
+        Reservation could not be cancelled.
+      </div>
     </div>
 </section>
 </body>

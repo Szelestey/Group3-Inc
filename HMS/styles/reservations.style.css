@@ -142,7 +142,7 @@ tr:nth-child(odd) {
   font-family: Times;
 }
 
-.close {
+.close, .close-styling {
   position: absolute;
   top: 5px;
   right: 30px;
@@ -178,7 +178,7 @@ tr:nth-child(odd) {
   width: 100%;
 }
 
-#error-modal-text
+#error-modal-text, #booking-error-modal-text
 {
   white-space: pre-wrap;
 }

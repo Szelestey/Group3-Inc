@@ -10,6 +10,7 @@ const usersRoutes = require('./users.routes');
 const adminRoutes = require('./admin.routes');
 const reservationRoutes = require('./reservation.route');
 const managementRoutes = require('./management.routes');
+const billingRoutes = require('./billing.routes');
 
 module.exports = {
   authRoutes,
@@ -17,7 +18,8 @@ module.exports = {
   usersRoutes,
   adminRoutes,
   reservationRoutes,
-  managementRoutes
+  managementRoutes,
+  billingRoutes
 };
 
 

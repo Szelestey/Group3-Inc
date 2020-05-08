@@ -1,6 +1,5 @@
 body {
   font-size: 1.2rem;
-  overflow: hidden;
 }
 
 .feather {
@@ -20,19 +19,30 @@ table {
 td, th {
   border: 1px solid #dddddd;
   text-align: center;
-  padding: 8px;
+  font-size: 16px!important;
+  font-weight: normal!important;
+  vertical-align: middle!important;
+  padding: 0.75rem!important;
 }
-tr:nth-child(odd) {
-  background-color: #c3c3c3;
+tr:hover
+{
+  background-color: #DDDDDD!important;
 }
-#billing-table
+.main
 {
   position: absolute;
-  top: 199px;
+  top: 128px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+
+#billing-table
+{
   bottom: 0;
   right: 0;
   left: 0;
-  overflow-y: scroll;
 }
 .table-button
 {
@@ -42,10 +52,29 @@ tr:nth-child(odd) {
 .sticky-top
 {
   background: #cccccc;
-  font-weight: bold;
+  font-weight: bold!important;
 }
-.search
+
+.small-select
 {
-  position: absolute;
-  top: 128px;
+  min-width: 117px;
 }
+#error-modal-text
+{
+  white-space: pre-wrap;
+
+}
+#chargeReason
+{
+  width: 350px;
+  resize: none;
+}
+.alert
+{
+  position: fixed;
+  top: -80px;
+  z-index: 5000;
+  margin: auto;
+  min-width: 400px;
+}
+
