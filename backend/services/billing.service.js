@@ -1,8 +1,12 @@
+const format = require('date-fns/format');
 const db = require('../db/db');
 
 
 module.exports = {
-  getInvoicesInInterval
+  getInvoicesInInterval,
+  chargeInvoice,
+  createCAPayment,
+  createCCPayment
 };
 
 
@@ -31,4 +35,135 @@ function getInvoicesInInterval() {
     });
   });
 
+}
+
+
+
+async function chargeInvoice(invoiceCharge) {
+  var num = await getNumForId(invoiceCharge.invoiceId, 'INVOICECHARGE');
+  var charge_Id = invoiceCharge.invoiceId + "-ch" + addLeadingZeros(num.toString(),5);
+
+  // Creates an invoice charge
+  const query = "INSERT INTO INVOICECHARGE VALUES(?, ?, ?, ?, ?)";
+  values = [
+      charge_Id,
+      invoiceCharge.invoiceId,
+      format(new Date(), 'yyyy-MM-dd'),
+      invoiceCharge.amount,
+      invoiceCharge.reason
+  ];
+
+  return new Promise( (resolve, reject) => {
+    db.query(query, values,
+        function (error, results) {
+          if(error) {
+            console.log(error);
+            reject(error);
+          } else {
+            if(results.affectedRows > 0) {
+              resolve(charge_Id);
+            } else {
+              resolve();
+            }
+          }
+        });
+  });
+}
+
+
+// Adds a cash payment to the specified invoice
+var createCAPayment = function(payment) {
+  var payment_id = "";
+  var invoice_id = "";
+
+  /* You can leave out the accountholder name for the cash payments */
+  const query = "INSERT INTO PAYMENT(payment_id, invoice_id, payment_date, payment_type, " +
+      "payment_amount, accountholder_name) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  values = [
+    payment.payment_id,
+    payment.invoice_id,
+    DATE_FORMAT(payment.payment_date, '%Y-%m-%e'),
+    payment.payment_type,
+    payment.payment_amount,
+  ];
+
+  return new Promise( (resolve, reject) => {
+    db.query(query, values,
+        function (error, results, fields) {
+          if(error) {
+            console.log(error);
+            reject(error);
+          } else {
+            resolve(results.affectedRows > 0);
+          }
+        });
+  });
+}
+
+
+
+// Adds a credit card payment to the specified invoice
+async function createCCPayment(payment) {
+  var num = await getNumForId(payment.invoiceId, 'PAYMENT');
+  var paymentId = payment.invoiceId + "-p" + addLeadingZeros(num, 5);
+
+  const query = "INSERT INTO PAYMENT VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+  values = [
+      paymentId,
+      payment.invoiceId,
+      format(new Date(), 'yyyy-MM-dd'),
+      payment.method,
+      payment.amount,
+      payment.credit.name,
+      payment.credit.number,
+      payment.credit.exp.month,
+      payment.credit.exp.year,
+      payment.credit.cvv,
+      payment.credit.type
+  ];
+
+  return new Promise( (resolve, reject) => {
+    db.query(query, values,
+        function (error, results) {
+          if(error) {
+            console.log(error);
+            reject(error);
+          } else {
+            if(results.affectedRows > 0) {
+              resolve(paymentId);
+            } else {
+              resolve();
+            }
+          }
+        });
+  });
+}
+
+
+function getNumForId(invoiceId, tableName) {
+  const query = "SELECT COUNT(??) AS num FROM ?? WHERE invoice_id=?"
+  var columnName = '';
+
+  if(tableName === 'PAYMENT') columnName = 'payment_id';
+  if(tableName === 'INVOICECHARGE') columnName = 'charge_id';
+
+  const values = [columnName, tableName, invoiceId];
+
+  return new Promise((resolve, reject) => {
+    db.query(query, values, (error, results) => {
+      if(error) reject(error);
+      resolve(results[0].num+1);
+    });
+  });
+}
+
+
+function addLeadingZeros(string, totalLength) {
+  var zeros = '';
+  if(string.length < totalLength) {
+    for(var i=string.length; i < totalLength; i++) {
+      zeros += '0';
+    }
+  }
+  return zeros + string;
 }
