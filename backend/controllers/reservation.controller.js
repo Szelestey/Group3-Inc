@@ -1,5 +1,6 @@
 const dateFns = require('date-fns');
 const guestService = require('../services/guest.service');
+const roomService = require('../services/rooms.service');
 const reservationService = require('../services/reservation.service');
 const availabilityService = require('../services/availability.service');
 const emailer = require('../services/email.service');
@@ -76,15 +77,20 @@ async function createReservation(req, res, next) {
   }
 
 
+  var roomtypeInfo = await roomService.getRoomTypeInfo(reservation.roomtype);
+  var amountPaid = (payment.method === 'CC') ? payment.amount : 0;
+  var amountOwed = cost - amountPaid;
 
   // Compile email info with payment details
-  // TODO: finish adding required fields
   var emailInfo = {
     reservation_id: reservationId,
     checkin: reservation.checkin,
-    checkout: reservation.checkout
+    checkout: reservation.checkout,
+    roomtypeName: roomtypeInfo.type_name,
+    total: cost,
+    amountPaid: amountPaid.toFixed(2),
+    amountOwed: amountOwed.toFixed(2)
   };
-
 
   emailer.sendConfirmationEmail(guest.email, emailInfo);
 }

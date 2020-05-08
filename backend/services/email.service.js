@@ -55,7 +55,11 @@ function sendConfirmationEmail(receiverEmail, confirmInfo){
         firstname: 'Logan',
         reservationId: confirmInfo.reservation_id,
         checkin: format(new Date(confirmInfo.checkin+" EST"), 'MMMM d, yyyy'),
-        checkout: format(new Date(confirmInfo.checkout+" EST"), 'MMMM d, yyyy')
+        checkout: format(new Date(confirmInfo.checkout+" EST"), 'MMMM d, yyyy'),
+        roomtypeName: confirmInfo.roomtypeName,
+        total: confirmInfo.total,
+        amountPaid: confirmInfo.amountPaid,
+        amountOwed: confirmInfo.amountOwed
       }
   })
   .catch(console.error);
