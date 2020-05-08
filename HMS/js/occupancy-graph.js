@@ -12,10 +12,13 @@ $(document).ready(function() {
     drawChart();
   });
 
-  google.charts.load('current', {
-    packages: ['line', 'corechart'],
-    callback: drawChart
-  });
+  setTimeout(function() {
+    google.charts.load('current', {
+      packages: ['line', 'corechart'],
+      callback: drawChart
+    });
+
+  }, 2000);
 
 });
 
@@ -51,6 +54,6 @@ function drawChart() {
     chart.setSelection([{row: 17, column: 2}]);
   });
 
-
+  $('#graphPageHeader').text('Occupancy Data By Week');
 }
 
