@@ -5,7 +5,12 @@ const billingService = require('../services/billing.service');
 module.exports = {
   getCurrentInvoices,
   createInvoiceCharge,
-  insertPayment
+  insertPayment,
+  getDataByFirstName,
+  getDataByLastName,
+  getDataByEmail,
+  getDataByPhone,
+  getDataById
 }
 
 
@@ -62,3 +67,47 @@ async function insertPayment(req, res, next) {
       res.status(400).json({message: "Error applying payment to invoice"});
   });
 }
+
+
+
+function getDataByFirstName(req, res, next) {
+  const firstname = req.params.firstname.toLowerCase();
+  getDataByParam(res, 'g', 'guest_firstname', firstname);
+}
+
+
+function getDataByLastName(req, res, next) {
+  const lastname = req.params.lastname.toLowerCase();
+  getDataByParam(res, 'g', 'guest_lastname', lastname);
+}
+
+
+function getDataByEmail(req, res, next) {
+  const email = req.params.email.toLowerCase();
+  getDataByParam(res, 'g',  'guest_email', email);
+}
+
+
+function getDataByPhone(req, res, next) {
+  var phone = req.params.phone;
+  phone = phone.replace(/\D/g, '');
+  getDataByParam(res, 'g', 'guest_phone', phone);
+}
+
+
+function getDataById(req, res, next) {
+  var id = req.params.id.replace(' ','').toLowerCase();
+  getDataByParam(res, 'i', 'invoice_id', id);
+}
+
+
+async function getDataByParam(res, tableChar, paramName, paramValue) {
+  billingService.getDataByParam(tableChar, paramName, paramValue).then(results => {
+    (results) ? res.status(200).json(results) : res.status(404).json({error: "No invoices found"});
+  })
+  .catch(err => {
+    res.status(400).json({error: "Error searching for invoice"});
+  });
+}
+
+

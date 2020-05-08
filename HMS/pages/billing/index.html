@@ -61,16 +61,17 @@
       <div class="col-6 search m-3">
         <div class="input-group">
           <div class="input-group-prepend">
-            <select class="custom-select">
+            <select class="custom-select" id="searchParam">
               <option value="first">First Name</option>
               <option value="last">Last Name</option>
               <option value="email">Email</option>
               <option value="phone">Phone</option>
+              <option value="id">Invoice ID</option>
             </select>
           </div>
-          <input class="form-control" type="text" placeholder="Search...">
+          <input id="searchValue" class="form-control" type="text" placeholder="Search...">
           <div class="input-group-append">
-            <button class="btn btn-primary m-0" style="background-color: #0B98DE !important;"><i class="fa fa-search"></i></button>
+            <button class="btn btn-primary m-0" id="searchButton" onclick="searchForInvoices()" style="background-color: #0B98DE !important;"><i class="fa fa-search"></i></button>
           </div>
         </div>
       </div>

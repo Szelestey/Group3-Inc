@@ -6,7 +6,8 @@ module.exports = {
   getInvoicesInInterval,
   chargeInvoice,
   createCAPayment,
-  createCCPayment
+  createCCPayment,
+  getDataByParam
 };
 
 
@@ -171,3 +172,35 @@ function addLeadingZeros(string, totalLength) {
   }
   return zeros + string;
 }
+
+
+
+function getDataByParam(tableChar, paramName, paramValue) {
+
+  const query = "SELECT i.invoice_id AS invoiceId, CONCAT(g.guest_firstname,' ',g.guest_lastname) AS name, g.guest_email AS email, g.guest_phone AS phone, i.amount_paid AS amountPaid, i.total_amount AS totalAmount, (i.total_amount - i.amount_paid) AS amountOwed "
+      + "FROM RESERVATION AS r "
+      + "INNER JOIN INVOICE AS i ON r.reservation_id=i.invoice_id "
+      + "INNER JOIN GUEST AS g ON r.guest_id=g.guest_id "
+      + "WHERE LOWER(??.??) = ?";
+
+  const values = [tableChar, paramName, paramValue];
+
+  return new Promise((resolve, reject) => {
+    db.query(query, values, (error, results) => {
+      if(error) reject(error);
+
+      var dataArr = [];
+      if(results.length > 0) {
+        results.forEach(row => {
+          dataArr.push(row);
+        });
+        resolve(dataArr);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+
+
