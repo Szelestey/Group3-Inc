@@ -137,8 +137,8 @@ INSERT INTO USER VALUES ('kelinkowski', '$2b$10$hf2WwnBkhwjXNwturHMPTuasjCipC3R3
 INSERT INTO USER VALUES ('emusk', '$2b$10$hf2WwnBkhwjXNwturHMPTuasjCipC3R3GbB9ERtkSCmMRDy.OcpZe','elon','musk','user');
 
 -- ROOMTYPE DATA
-INSERT INTO ROOMTYPE VALUES ('KI', 'King','Non-smoking room with king-size bed', 79.99, 1, 3, '/photos/kingRoom.jpg');
-INSERT INTO ROOMTYPE VALUES ('QD', 'Double Queen', 'Non-smoking room with two queen-size beds', 89.99, 2, 5, '/photos/queen-bed.jpg');
+INSERT INTO ROOMTYPE VALUES ('KI', 'Standard King','Non-smoking room with king-size bed', 79.99, 1, 3, '/photos/kingRoom.jpg');
+INSERT INTO ROOMTYPE VALUES ('QD', 'Standard Double Queen', 'Non-smoking room with two queen-size beds', 89.99, 2, 5, '/photos/queen-bed.jpg');
 INSERT INTO ROOMTYPE VALUES ('KS', 'King Suite', 'Non-smoking suite with king-size bed and pull-out couch', 99.99, 2, 5, '/photos/king.jpg');
 INSERT INTO ROOMTYPE VALUES ('QS', 'Double Queen Suite', 'Non-smoking room with two queen-size beds and a pull-out couch', 109.99, 3, 7, '/photos/queen-suite.jpg');
 INSERT INTO ROOMTYPE VALUES ('KJ', 'King Jacuzzi Suite', 'Non-smoking room with a king-size bed and a jacuzzi tub', 129.99, 1, 3, '/photos/jacuzzi.jpg');
@@ -338,6 +338,13 @@ BEGIN
     UPDATE INVOICE
     SET amount_paid = amount_paid - OLD.payment_amount
     WHERE invoice_id = OLD.invoice_id;
+END $$
+
+-- Strip characters from phone numbers
+CREATE TRIGGER strip_chars_from_phone BEFORE INSERT ON GUEST
+    FOR EACH ROW
+BEGIN
+    SET NEW.guest_phone = REPLACE(REPLACE(REPLACE(REPLACE(NEW.guest_phone,' ',''),'-',''),'(',''),')','');
 END $$
 
 DELIMITER ;

@@ -5,6 +5,13 @@ $(document).ready(function() {
   let chargeModal = $('#addChargeModal');
 
 
+  $("#searchValue").keyup(function(event) {
+    if(event.key === "Enter") {
+      $("#searchButton").click();
+    }
+  });
+
+
   // disable credit card fields if pay later is chosen
   $('#paymentMethod').change(function(event) {
     ($('#paymentMethod').val() === 'CA') ? disableCC() : enableCC();
@@ -115,13 +122,15 @@ function enableCC() {
 
 // Shows the error modal with the provided message
 function showErrorModal(text, returnModalClass) {
-  var modalClose = $('#modalCloseButton');
-  modalClose.removeClass();
-  modalClose.addClass('btn btn-primary '+returnModalClass);
+  if(returnModalClass) {
+    var modalClose = $('#modalCloseButton');
+    modalClose.removeClass();
+    modalClose.addClass('btn btn-primary ' + returnModalClass);
 
-  var modalX = $('#modalCloseX');
-  modalX.removeClass();
-  modalX.addClass('close close-styling '+returnModalClass);
+    var modalX = $('#modalCloseX');
+    modalX.removeClass();
+    modalX.addClass('close close-styling ' + returnModalClass);
+  }
 
   $('#error-modal-text').text(text);
   $('#error-modal').modal('show');
@@ -144,7 +153,7 @@ function addPayment() {
     $('#success-alert').append(getPaymentSuccessHTML(payment));
     triggerAlert('#success-alert');
     $('#makePaymentModal').modal('hide');
-    populateTable();
+    repopulate();
   })
   .fail(data => {
     $('#failure-alert').append('Payment could not be processed at this time');
@@ -179,7 +188,7 @@ function addCharge() {
     $('#success-alert').append(getChargeSuccessHTML(charge));
     triggerAlert('#success-alert');
     $('#addChargeModal').modal('hide');
-    populateTable();
+    repopulate();
   })
   .fail(data => {
     $('#failure-alert').append('Charge could not be processed at this time');
@@ -332,6 +341,9 @@ function populateTable() {
   $('#billingHeader').text('Loading Invoices...');
 
   sendGetWithCreds(url).then((data, status, jqXHR) => {
+    window.localStorage.setItem('invsearchval', '');
+    window.localStorage.setItem('invsearchpar', 'current');
+
     var html = '';
     data.forEach(row => {
       html += buildTableRow(row);
@@ -347,16 +359,22 @@ function populateTable() {
 }
 
 
-// TODO: FINISH
+
 function buildTableRow(data) {
   var disable = (data.amountOwed == 0) ? 'disabled' : '';
   var splitInvoiceId = data.invoiceId.slice(0,10) + " " + data.invoiceId.slice(10);
+  var phone;
+  if(data.phone.length === 10) {
+    phone = data.phone.slice(0,3)+"-"+data.phone.slice(3,6)+"-"+data.phone.slice(6);
+  } else {
+    phone = data.phone;
+  }
 
   return html = '<tr>'
       + '<td>'+splitInvoiceId+'</td>'
       + '<td>'+data.name+'</td>'
       + '<td>'+data.email+'</td>'
-      + '<td>'+data.phone+'</td>'
+      + '<td>'+phone+'</td>'
       + '<td>$&nbsp;'+data.amountPaid.toFixed(2)+'</td>'
       + '<td>$&nbsp;'+data.amountOwed.toFixed(2)+'</td>'
       + '<td>$&nbsp;'+data.totalAmount.toFixed(2)+'</td>'
@@ -387,5 +405,67 @@ function triggerAlert(alertId) {
     $(alertId).css('top', -80);
     $(alertId).empty();
   }, 5000);
+}
+
+
+function searchForInvoices(param, val) {
+  var searchParam;
+  var searchValue;
+
+  if(!param) {
+    searchParam = $('#searchParam').val();
+    searchValue = $('#searchValue').val().trim();
+    if(!searchValue) return;
+  } else {
+    searchParam = param;
+    searchValue = val;
+  }
+
+  var url = baseApiUrl + '/billing';
+
+  switch (searchParam) {
+    case 'first': url += '/fname/'; break;
+    case 'last': url += '/lname/'; break;
+    case 'email': url += '/email/'; break;
+    case 'phone': url += '/phone/'; break;
+    case 'id': url += '/id/'; break;
+  }
+
+  url += searchValue;
+
+  sendGetWithCreds(url).then((data, status, jqXHR) => {
+    window.localStorage.setItem('invsearchval', searchValue);
+    window.localStorage.setItem('invsearchpar', searchParam);
+    populateWithSearchResults(data);
+  })
+  .fail((data, status, jqXHR) => {
+    showErrorModal(data.responseJSON.error);
+  });
+
+}
+
+
+function populateWithSearchResults(results) {
+  var html = '';
+  results.forEach(row => {
+    html += buildTableRow(row);
+  });
+
+  $('#billing-table').find('tbody').empty();
+  $('#billing-table').find('tbody').append(html);
+  $('#showCurrent').prop("disabled", false);
+}
+
+
+function repopulate() {
+  var searchParam = window.localStorage.getItem('invsearchpar');
+  var searchValue = window.localStorage.getItem('invsearchval');
+
+  if(searchValue && searchParam) {
+    searchForInvoices(searchParam, searchValue);
+  } else {
+    populateTable();
+  }
+
 }
 

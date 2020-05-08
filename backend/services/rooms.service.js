@@ -3,10 +3,13 @@ const async = require('async');
 
 const roomtypeTable = "ROOMTYPE";
 
+var inMemoryRoomTypeData = [];
+
 module.exports = {
   getTotalAvailableRoomsOfEachType,
   getAllRoomTypeInfo,
-  getTotalAvailableRooms
+  getTotalAvailableRooms,
+  getRoomTypeInfo
 };
 
 
@@ -54,8 +57,23 @@ function getAllRoomTypeInfo() {
       if(error) reject(error);
       resolve(results);
     });
-  })
+  });
 }
+
+
+function getRoomTypeInfo(roomtype) {
+  const query = "SELECT * FROM ROOMTYPE WHERE type_id=?";
+  return new Promise((resolve, reject) => {
+    db.query(query, [roomtype], (error, results) => {
+      if(error) reject(error);
+      if(results.length > 0)
+        resolve(results[0]);
+      else
+        resolve();
+    });
+  });
+}
+
 
 
 function getRoomTypes() {
