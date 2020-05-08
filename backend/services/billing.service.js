@@ -37,7 +37,7 @@ function getInvoicesInInterval() {
 
 }
 
-
+// Expecting {invoiceId, amount, reason}
 // Adds a charge to the specified invoice
 async function chargeInvoice(invoiceCharge) {
   var num = await getNumForId(invoiceCharge.invoiceId, 'INVOICECHARGE');
