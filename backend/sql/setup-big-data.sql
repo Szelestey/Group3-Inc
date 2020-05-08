@@ -331,6 +331,14 @@ BEGIN
     WHERE invoice_id = new.invoice_id;
 END $$
 
+-- Updates amount paid when payment is deleted
+CREATE TRIGGER upd_invoice_after_del_payment AFTER DELETE ON PAYMENT
+    FOR EACH ROW
+BEGIN
+    UPDATE INVOICE
+    SET amount_paid = amount_paid - OLD.payment_amount
+    WHERE invoice_id = OLD.invoice_id;
+END $$
 
 DELIMITER ;
 
