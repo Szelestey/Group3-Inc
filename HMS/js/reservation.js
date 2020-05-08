@@ -322,7 +322,7 @@ function bookRoom() {
     $('body').removeClass('overlay-open');
     resetDatePickers();
     resetBookingPopup();
-    showBookedModal(data.id);
+    showBookedModal(data);
   })
   .fail((data, status, jqXHR) => {
     showErrorModal(JSON.stringify(data));
@@ -330,11 +330,13 @@ function bookRoom() {
 }
 
 // show modal with Booked! title and reservation and payment IDs
-function showBookedModal(reservationID) {
+function showBookedModal(ids) {
   $('#success-modal-title').text('Booked!');
   var html = "<strong>Reservation Complete</strong><br/>"
-      + "<span>Reservation ID: " + reservationID + "</span><br/>"
-      + "<span>Payment ID: </span>";
+      + "<span>Reservation ID: " + ids.reservationId + "</span><br/>";
+  if(ids.paymentId) {
+    html += "<span>Payment ID: " + ids.paymentId + "</span>";
+  }
   $('#success-modal-body').append(html);
   $('#success-modal').modal('show');
 }
