@@ -30,6 +30,7 @@ $(document).ready(function() {
     modal.find('#modalTitleId').text(invoiceId);
     modal.find('#modalTitleName').text(name);
     modal.find('#paymentAmount').val(amount);
+    modal.find('#hiddenAmountOwed').val(amount);
   });
 
   chargeModal.on('show.bs.modal', function(event) {
@@ -42,6 +43,7 @@ $(document).ready(function() {
   });
 
   configureExpSelect();
+  populateTable();
 
 });
 
@@ -262,6 +264,8 @@ function validatePayment(payment) {
   }
 
   // Validate applicable fields
+  var amountOwed = $('#hiddenAmountOwed').val()
+  if(payment.amount > amountOwed) invalidArr.push('Payment amount greater than amount owed');
   if(!/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9])?$/.test(payment.amount)) invalidArr.push('Amount invalid');
   if(payment.method === 'CC') {
     if (payment.credit.number.length < 15) invalidArr.push('Card number too short');
@@ -329,22 +333,25 @@ function populateTable() {
   .fail((data, status, jqXHR) => {
     $('#billing-wrap').addClass('d-none');
     $('#billingHeader').text('Error loading invoices');
-  })
+  });
 }
 
 
 // TODO: FINISH
 function buildTableRow(data) {
+  var disable = (data.amountOwed == 0) ? 'disabled' : '';
+  var splitInvoiceId = data.invoiceId.slice(0,10) + " " + data.invoiceId.slice(10);
+
   return html = '<tr>'
-      + '<td>'+data.invoiceId+'</td>'
+      + '<td>'+splitInvoiceId+'</td>'
       + '<td>'+data.name+'</td>'
       + '<td>'+data.email+'</td>'
       + '<td>'+data.phone+'</td>'
-      + '<td>$ '+data.amountPaid+'</td>'
-      + '<td>$ '+data.amountOwed+'</td>'
-      + '<td>$ '+data.totalAmount+'</td>'
+      + '<td>$ '+data.amountPaid.toFixed(2)+'</td>'
+      + '<td>$ '+data.amountOwed.toFixed(2)+'</td>'
+      + '<td>$ '+data.totalAmount.toFixed(2)+'</td>'
       + '<td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>'
-      + '<td><button class="btn m-0" data-toggle="modal" data-target="#makePaymentModal" data-inv="'+data.invoiceId+'" data-amount="'+data.amountOwed+'" data-name="'+data.name+'"><i class="fas fa-hand-holding-usd table-button"></i></button></td>'
+      + '<td><button class="btn m-0" '+ disable +' data-toggle="modal" data-target="#makePaymentModal" data-inv="'+data.invoiceId+'" data-amount="'+data.amountOwed+'" data-name="'+data.name+'"><i class="fas fa-hand-holding-usd table-button"></i></button></td>'
       + '<td><button class="btn m-0" data-toggle="modal" data-target="#addChargeModal" data-inv="'+data.invoiceId+'" data-name="'+data.name+'"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>'
       + '</tr>';
 }
