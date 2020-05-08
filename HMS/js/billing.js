@@ -1,5 +1,3 @@
-var currentSearch = '';
-
 
 $(document).ready(function() {
 
@@ -131,6 +129,7 @@ function showErrorModal(text, returnModalClass) {
 
 
 // TODO: Send request to backend, handle response
+// Attempts to apply a payment to the specified invoice
 function addPayment() {
   var payment = getPaymentInfo();
   var err = validatePayment(payment);
@@ -139,28 +138,30 @@ function addPayment() {
     return;
   }
 
-  var success = true;
+  var url = baseApiUrl + '/billing/payment';
 
-  // if successful
-  if(success) {
+  sendPostWithCreds(url, {payment}).then((data,status,jqXHR) => {
     $('#success-alert').append(getPaymentSuccessHTML(payment));
     triggerAlert('#success-alert');
     $('#makePaymentModal').modal('hide');
-    console.log(payment);
-  } else {
+    populateTable();
+  })
+  .fail(data => {
     $('#failure-alert').append('Payment could not be processed at this time');
     triggerAlert('#failure-alert');
     $('#makePaymentModal').modal('hide');
-  }
-
+  });
 }
+
 
 function getPaymentSuccessHTML(payment) {
   return 'Payment of <b>$'+ payment.amount +'</b> applied to '
       + '&emsp;<b>' + $("#modalTitleName").text() + ':&nbsp;' + payment.invoiceId + '</b>';
 }
 
-// TODO: Send request to backend, handle response
+
+
+// Attempts to apply a charge to the specified invoice
 function addCharge() {
   var charge = getChargeInfo();
   var err = validateCharge(charge);
@@ -169,19 +170,22 @@ function addCharge() {
     return;
   }
 
-  var success = true;
+  var url = baseApiUrl + '/billing/charge';
+  var payload = {
+    charge
+  };
 
-  // if successful
-  if(success) {
+  sendPostWithCreds(url, payload).then((data, status, jqXHR) => {
     $('#success-alert').append(getChargeSuccessHTML(charge));
     triggerAlert('#success-alert');
     $('#addChargeModal').modal('hide');
-    console.log(charge);
-  } else {
+    populateTable();
+  })
+  .fail(data => {
     $('#failure-alert').append('Charge could not be processed at this time');
     triggerAlert('#failure-alert');
     $('#addChargeModal').modal('hide');
-  }
+  });
 }
 
 function getChargeSuccessHTML(charge) {
@@ -324,10 +328,8 @@ function validateCharge(charge) {
 
 function populateTable() {
   var url = baseApiUrl + '/billing/current';
-
-  if(currentSearch === 'current') {
-    return false;
-  }
+  $('#billing-table').find('tbody').empty();
+  $('#billingHeader').text('Loading Invoices...');
 
   sendGetWithCreds(url).then((data, status, jqXHR) => {
     var html = '';
@@ -336,7 +338,6 @@ function populateTable() {
     });
     $('#billing-table').find('tbody').append(html);
     $('#billingHeader').text('Current Invoices');
-    currentSearch = 'current';
     $('#showCurrent').prop("disabled", true);
   })
   .fail((data, status, jqXHR) => {
@@ -356,9 +357,9 @@ function buildTableRow(data) {
       + '<td>'+data.name+'</td>'
       + '<td>'+data.email+'</td>'
       + '<td>'+data.phone+'</td>'
-      + '<td>$ '+data.amountPaid.toFixed(2)+'</td>'
-      + '<td>$ '+data.amountOwed.toFixed(2)+'</td>'
-      + '<td>$ '+data.totalAmount.toFixed(2)+'</td>'
+      + '<td>$&nbsp;'+data.amountPaid.toFixed(2)+'</td>'
+      + '<td>$&nbsp;'+data.amountOwed.toFixed(2)+'</td>'
+      + '<td>$&nbsp;'+data.totalAmount.toFixed(2)+'</td>'
       + '<td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>'
       + '<td><button class="btn m-0" '+ disable +' data-toggle="modal" data-target="#makePaymentModal" data-inv="'+data.invoiceId+'" data-amount="'+data.amountOwed+'" data-name="'+data.name+'"><i class="fas fa-hand-holding-usd table-button"></i></button></td>'
       + '<td><button class="btn m-0" data-toggle="modal" data-target="#addChargeModal" data-inv="'+data.invoiceId+'" data-name="'+data.name+'"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>'
