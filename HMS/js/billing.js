@@ -1,3 +1,6 @@
+var currentSearch = '';
+
+
 $(document).ready(function() {
 
   let paymentModal = $('#makePaymentModal');
@@ -322,6 +325,10 @@ function validateCharge(charge) {
 function populateTable() {
   var url = baseApiUrl + '/billing/current';
 
+  if(currentSearch === 'current') {
+    return false;
+  }
+
   sendGetWithCreds(url).then((data, status, jqXHR) => {
     var html = '';
     data.forEach(row => {
@@ -329,6 +336,8 @@ function populateTable() {
     });
     $('#billing-table').find('tbody').append(html);
     $('#billingHeader').text('Current Invoices');
+    currentSearch = 'current';
+    $('#showCurrent').prop("disabled", true);
   })
   .fail((data, status, jqXHR) => {
     $('#billing-wrap').addClass('d-none');
