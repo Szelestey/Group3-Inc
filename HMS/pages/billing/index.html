@@ -93,8 +93,8 @@
             <th class="sticky-top" style="background: #0B98DE">Phone</th>
             <th class="sticky-top" style="background: #0B98DE">Amount Paid</th>
             <th class="sticky-top" style="background: #0B98DE">Amount Due</th>
-            <th class="sticky-top" style="background: #0B98DE">Total</th>
-            <th class="sticky-top" style="background: #0B98DE">Bill/Receipt</th>
+            <th class="sticky-top" style="background: #0B98DE">Total Amount</th>
+            <th class="sticky-top" style="background: #0B98DE">Email Bill/Receipt</th>
             <th class="sticky-top" style="background: #0B98DE">Payment</th>
             <th class="sticky-top" style="background: #0B98DE">Charge</th>
           </tr>
@@ -102,54 +102,6 @@
           <!--Table head-->
           <!--Table body-->
           <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>doe.john@gmail.com</td>
-            <td>240-555-1234</td>
-            <td>$ 100.00</td>
-            <td>$ 23.87</td>
-            <td>$ 123.87</td>
-            <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-            <td><button class="btn m-0" data-toggle="modal" data-target="#makePaymentModal" data-inv="123413245KI1234" data-amount="23.87" data-name="John Doe"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-            <td><button class="btn m-0" data-toggle="modal" data-target="#addChargeModal" data-inv="123413245KI1234" data-name="John Doe"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>doe.john@gmail.com</td>
-            <td>240-555-1234</td>
-            <td>100.00</td>
-            <td>23.87</td>
-            <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>doe.john@gmail.com</td>
-            <td>240-555-1234</td>
-            <td>100.00</td>
-            <td>23.87</td>
-            <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>John Doe</td>
-            <td>doe.john@gmail.com</td>
-            <td>240-555-1234</td>
-            <td>100.00</td>
-            <td>23.87</td>
-            <td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-receipt table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-hand-holding-usd table-button"></i></button></td>
-            <td><button class="btn m-0"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>
-          </tr>
           </tbody>
           <!--Table body-->
         </table>
@@ -192,7 +144,7 @@
             <label for="paymentMethod">Payment Method</label><br/>
             <select id="paymentMethod">
               <option value="CC">Credit Card</option>
-              <option value="CA">Pay At Check In</option>
+              <option value="CA">Cash</option>
             </select>
           </div>
           <div class="col-sm-5 text-center">
@@ -235,6 +187,7 @@
             <input type="text" class="reset-booking cc-item" id="cvvCode" size="6" placeholder="CVV">
           </div>
         </div>
+        <span class="d-none" id="hiddenAmountOwed"></span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
