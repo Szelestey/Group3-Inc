@@ -8,6 +8,11 @@ body {
   vertical-align: text-bottom;
 }
 
+.reportTable th
+{
+  text-align: center;
+}
+
 
 #roomGrid {
   margin-top: 155px;
