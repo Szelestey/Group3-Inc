@@ -3,6 +3,7 @@ const guestService = require('../services/guest.service');
 const reservationService = require('../services/reservation.service');
 const availabilityService = require('../services/availability.service');
 const emailer = require('../services/email.service');
+const billingService = require('../services/billing.service');
 
 
 module.exports = {
@@ -57,11 +58,24 @@ async function createReservation(req, res, next) {
   // Insert reservation
   var reservationId = await reservationService.insertReservation(reservation);
 
-  // TODO: Insert invoice charge
+  // Insert standard room charge
+  await billingService.chargeInvoice({
+    invoiceId: reservationId,
+    amount: cost,
+    reason: "Standard Room Charge"
+  });
 
-  // TODO: Insert payment
+  // Insert payment if applicable
+  if(payment.method === 'CC') {
+    payment.invoiceId = reservationId;
+    payment.amount = cost;
+    var paymentId = await billingService.createCCPayment(payment);
+    res.status(200).json({reservationId: reservationId, paymentId: paymentId});
+  } else {
+    res.status(200).json({reservationId: reservationId});
+  }
 
-  res.status(200).json({id: reservationId});
+
 
   // Compile email info with payment details
   // TODO: finish adding required fields
