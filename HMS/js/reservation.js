@@ -420,7 +420,7 @@ function validateBooking(guest, payment) {
   }
 
   // Validate applicable fields
-  if(!/^\w+[\w-\.]*\@\w+((-\w+)|(\w*))\.[a-z]{2,3}$/.test(guest.email)) invalidArr.push('Email invalid');
+  if(!/^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+(?:[a-zA-Z]{2}|aero|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel)$/.test(guest.email)) invalidArr.push('Email invalid');
   if(!/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/.test(guest.phone)) invalidArr.push('Phone invalid');
   var state = getState(guest.address.state);
   (state) ? guest.address.state = state : invalidArr.push('State not found');
