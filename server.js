@@ -101,6 +101,7 @@ api.use(cors({
 .use('/rooms', routes.roomsRoutes)
 .use('/reservation', routes.reservationRoutes)
 .use('/management', routes.managementRoutes)
+.use('/billing', routes.billingRoutes)
 .use('/users', adminGuard.check(['admin']), routes.usersRoutes)
 .use('/admin', adminGuard.check(['admin']), routes.adminRoutes)
 .use(function(err, req, res, next) {
