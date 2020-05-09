@@ -109,9 +109,14 @@ async function cancelReservation(req, res, next) {
   reservationId = req.body.id;
 
   mgmtService.cancelReservation(reservationId).then(result => {
-    res.status(200).json({message: "reservation cancelled"});
+    if(result) {
+      res.status(200).json({remark: "Cancelled within 24 hours: Cancellation fee applied", fee: 1});
+    } else {
+      res.status(200).json({remark: "No cancellation fee applied", fee: 0});
+    }
   })
   .catch(err => {
+    console.log(err);
     res.status(400).json({error: err});
   })
 }

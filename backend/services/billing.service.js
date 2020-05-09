@@ -10,18 +10,20 @@ module.exports = {
   getDataByParam,
   getReceiptInfo,
   getPayments,
-  getCharges
+  getCharges,
+  zeroCharges,
+  zeroPayments
 };
 
 
 // gets billing table data for invoices with check in or check out with a
 // certain number of days of the current date
 function getInvoicesInInterval() {
-  const query = "SELECT i.invoice_id AS invoiceId, CONCAT(g.guest_firstname,' ',g.guest_lastname) AS name, g.guest_email AS email, g.guest_phone AS phone, i.amount_paid AS amountPaid, i.total_amount AS totalAmount, (i.total_amount - i.amount_paid) AS amountOwed "
+    const query = "SELECT i.invoice_id AS invoiceId, CONCAT(g.guest_firstname,' ',g.guest_lastname) AS name, g.guest_email AS email, g.guest_phone AS phone, i.amount_paid AS amountPaid, i.total_amount AS totalAmount, (i.total_amount - i.amount_paid) AS amountOwed, r.status AS status "
       + "FROM RESERVATION AS r "
       + "INNER JOIN INVOICE AS i ON r.reservation_id=i.invoice_id "
       + "INNER JOIN GUEST AS g ON r.guest_id=g.guest_id "
-      + "WHERE (r.check_in_date <= DATE_ADD(CURRENT_DATE(), INTERVAL 5 DAY) AND r.check_in_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY)) OR (r.check_out_date <= DATE_ADD(CURRENT_DATE(), INTERVAL 5 DAY) AND r.check_out_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY))"
+      + "WHERE ((r.check_in_date <= DATE_ADD(CURRENT_DATE(), INTERVAL 5 DAY) AND r.check_in_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY)) OR (r.check_out_date <= DATE_ADD(CURRENT_DATE(), INTERVAL 5 DAY) AND r.check_out_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 10 DAY))) AND NOT (r.status='cancelled' AND i.total_amount=0.00)"
 
   return new Promise((resolve, reject) => {
     db.query(query, (error, results) => {
@@ -184,7 +186,7 @@ function getDataByParam(tableChar, paramName, paramValue) {
       + "FROM RESERVATION AS r "
       + "INNER JOIN INVOICE AS i ON r.reservation_id=i.invoice_id "
       + "INNER JOIN GUEST AS g ON r.guest_id=g.guest_id "
-      + "WHERE LOWER(??.??) = ?";
+      + "WHERE (LOWER(??.??) = ?) AND NOT (r.status='cancelled' AND i.total_amount=0.00)";
 
   const values = [tableChar, paramName, paramValue];
 
@@ -279,6 +281,37 @@ function getCharges(invoiceId) {
           });
         });
         resolve(arr);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+// Changes all charges to 0
+function zeroCharges(invoiceId) {
+  const query = "UPDATE INVOICECHARGE SET charge_amount=0 WHERE invoice_id=?";
+  return new Promise((resolve, reject) => {
+    db.query(query, [invoiceId], (error, results) => {
+      if(error) reject(error);
+      if(results.affectedRows > 0) {
+        resolve(results.affectedRows);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+
+// changes all payments to 0
+function zeroPayments(invoiceId) {
+  const query = "UPDATE PAYMENT SET payment_amount=0 WHERE invoice_id=?";
+  return new Promise((resolve, reject) => {
+    db.query(query, [invoiceId], (error, results) => {
+      if(error) reject(error);
+      if(results.affectedRows > 0) {
+        resolve(results.affectedRows);
       } else {
         resolve();
       }
