@@ -26,7 +26,7 @@ var transporter = nodemailer.createTransport({
 
 // Create and configure email
 var email = new EmailTemplate({
-  // send: true,
+  send: true,
   message: {
     from: 'myhmsmailer@gmail.com'
   },
@@ -52,7 +52,7 @@ function sendConfirmationEmail(receiverEmail, confirmInfo){
         to: receiverEmail
       },
       locals: {
-        firstname: 'Logan',
+        firstname: confirmInfo.firstname,
         reservationId: confirmInfo.reservation_id,
         checkin: format(new Date(confirmInfo.checkin+" EST"), 'MMMM d, yyyy'),
         checkout: format(new Date(confirmInfo.checkout+" EST"), 'MMMM d, yyyy'),
