@@ -145,6 +145,7 @@ INSERT INTO ROOMTYPE VALUES ('KJ', 'King Jacuzzi Suite', 'Non-smoking room with 
 
 
 
+
 DELIMITER $$
 
 -- Adds a row in the availability table for each room type
@@ -331,6 +332,7 @@ BEGIN
     WHERE invoice_id = new.invoice_id;
 END $$
 
+
 -- Updates amount paid when payment is deleted
 CREATE TRIGGER upd_invoice_after_del_payment AFTER DELETE ON PAYMENT
     FOR EACH ROW
@@ -340,6 +342,40 @@ BEGIN
     WHERE invoice_id = OLD.invoice_id;
 END $$
 
+
+-- Update amount paid when payment is updated
+CREATE TRIGGER upd_invoice_after_upd_payment AFTER UPDATE ON PAYMENT
+    FOR EACH ROW
+BEGIN
+    IF (OLD.payment_amount != NEW.payment_amount) THEN
+        UPDATE INVOICE
+        SET amount_paid = amount_paid - OLD.payment_amount
+        WHERE invoice_id = OLD.invoice_id;
+
+        UPDATE INVOICE
+        SET amount_paid = amount_paid + NEW.payment_amount
+        WHERE invoice_id = NEW.invoice_id;
+    END IF;
+END $$
+
+
+-- Update total amount when charge is updated
+CREATE TRIGGER upd_invoice_after_upd_charge AFTER UPDATE ON INVOICECHARGE
+    FOR EACH ROW
+BEGIN
+    IF (OLD.charge_amount != NEW.charge_amount) THEN
+        UPDATE INVOICE
+        SET total_amount = total_amount - OLD.charge_amount
+        WHERE invoice_id = OLD.invoice_id;
+
+        UPDATE INVOICE
+        SET total_amount = total_amount + NEW.charge_amount
+        WHERE invoice_id = NEW.invoice_id;
+    END IF ;
+END $$
+
+
+
 -- Strip characters from phone numbers
 CREATE TRIGGER strip_chars_from_phone BEFORE INSERT ON GUEST
     FOR EACH ROW
@@ -347,7 +383,9 @@ BEGIN
     SET NEW.guest_phone = REPLACE(REPLACE(REPLACE(REPLACE(NEW.guest_phone,' ',''),'-',''),'(',''),')','');
 END $$
 
+
 DELIMITER ;
+
 
 
 USE HMS_DB;
