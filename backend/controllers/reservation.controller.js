@@ -84,6 +84,7 @@ async function createReservation(req, res, next) {
   // Compile email info with payment details
   var emailInfo = {
     reservation_id: reservationId,
+    firstname: guest.firstname.slice(0,1).toUpperCase() + guest.firstname.slice(1),
     checkin: reservation.checkin,
     checkout: reservation.checkout,
     roomtypeName: roomtypeInfo.type_name,
