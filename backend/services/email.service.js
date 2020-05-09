@@ -68,6 +68,8 @@ function sendConfirmationEmail(receiverEmail, confirmInfo){
 
 // Sends an email using the receipt template
 function sendReceiptEmail(receiverEmail, receiptInfo) {
+  var subject = (receiptInfo.balanceDue) ? "You Have a Balance Due" : "Thank You for Staying with us!";
+
   var endMessage = (receiptInfo.balanceDue) ? "Balance due must be paid within 10 days." :
       "We look forward to seeing you again!";
 
@@ -86,6 +88,7 @@ function sendReceiptEmail(receiverEmail, receiptInfo) {
       payments: receiptInfo.payments,
       totalPaid: receiptInfo.amountPaid,
       balanceDue: receiptInfo.balanceDue,
+      subject: subject,
       endMessage: endMessage
     }
   });
