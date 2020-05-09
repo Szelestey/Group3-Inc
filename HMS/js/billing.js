@@ -1,3 +1,4 @@
+var triggering = false;
 
 $(document).ready(function() {
 
@@ -150,14 +151,12 @@ function addPayment() {
   var url = baseApiUrl + '/billing/payment';
 
   sendPostWithCreds(url, {payment}).then((data,status,jqXHR) => {
-    $('#success-alert').append(getPaymentSuccessHTML(payment));
-    triggerAlert('#success-alert');
+    triggerAlert('#success-alert', getPaymentSuccessHTML(payment));
     $('#makePaymentModal').modal('hide');
     repopulate();
   })
   .fail(data => {
-    $('#failure-alert').append('Payment could not be processed at this time');
-    triggerAlert('#failure-alert');
+    triggerAlert('#failure-alert', 'Payment could not be processed at this time');
     $('#makePaymentModal').modal('hide');
   });
 }
@@ -185,14 +184,12 @@ function addCharge() {
   };
 
   sendPostWithCreds(url, payload).then((data, status, jqXHR) => {
-    $('#success-alert').append(getChargeSuccessHTML(charge));
-    triggerAlert('#success-alert');
+    triggerAlert('#success-alert', getChargeSuccessHTML(charge));
     $('#addChargeModal').modal('hide');
     repopulate();
   })
   .fail(data => {
-    $('#failure-alert').append('Charge could not be processed at this time');
-    triggerAlert('#failure-alert');
+    triggerAlert('#failure-alert', 'Charge could not be processed at this time');
     $('#addChargeModal').modal('hide');
   });
 }
@@ -351,6 +348,11 @@ function populateTable() {
     $('#billing-table').find('tbody').append(html);
     $('#billingHeader').text('Current Invoices');
     $('#showCurrent').prop("disabled", true);
+
+    $('.receipt-bill-button').on('click', function(event) {
+      var invoiceId = $(this).val();
+      emailBillReceipt(invoiceId);
+    });
   })
   .fail((data, status, jqXHR) => {
     $('#billing-wrap').addClass('d-none');
@@ -378,7 +380,7 @@ function buildTableRow(data) {
       + '<td>$&nbsp;'+data.amountPaid.toFixed(2)+'</td>'
       + '<td>$&nbsp;'+data.amountOwed.toFixed(2)+'</td>'
       + '<td>$&nbsp;'+data.totalAmount.toFixed(2)+'</td>'
-      + '<td><button class="btn m-0"><i class="fas fa-file-invoice table-button"></i></button></td>'
+      + '<td><button class="btn m-0 receipt-bill-button" value="'+data.invoiceId+'"><i class="fas fa-file-invoice table-button"></i></button></td>'
       + '<td><button class="btn m-0" '+ disable +' data-toggle="modal" data-target="#makePaymentModal" data-inv="'+data.invoiceId+'" data-amount="'+data.amountOwed+'" data-name="'+data.name+'"><i class="fas fa-hand-holding-usd table-button"></i></button></td>'
       + '<td><button class="btn m-0" data-toggle="modal" data-target="#addChargeModal" data-inv="'+data.invoiceId+'" data-name="'+data.name+'"><i class="fas fa-file-invoice-dollar table-button"></i></button></td>'
       + '</tr>';
@@ -389,7 +391,15 @@ function buildTableRow(data) {
 
 // Alert drops in to screen and stops just below nav bar
 // Fades after 5 seconds
-function triggerAlert(alertId) {
+function triggerAlert(alertId, html) {
+  $(alertId).empty();
+  $(alertId).append(html);
+
+  if(triggering) {
+    return;
+  }
+
+  triggering = true;
   $(alertId).addClass('show');
   var x = -20;
   setInterval(function() {
@@ -400,11 +410,14 @@ function triggerAlert(alertId) {
   }, 2)
   setTimeout(function() {
     $(alertId).removeClass('show');
+
+    setTimeout(function() {
+      $(alertId).css('top', -80);
+      triggering = false;
+    }, 500);
+
   }, 4000);
-  setTimeout(function() {
-    $(alertId).css('top', -80);
-    $(alertId).empty();
-  }, 5000);
+
 }
 
 
@@ -454,6 +467,11 @@ function populateWithSearchResults(results) {
   $('#billing-table').find('tbody').empty();
   $('#billing-table').find('tbody').append(html);
   $('#showCurrent').prop("disabled", false);
+
+  $('.receipt-bill-button').on('click', function(event) {
+    var invoiceId = $(this).val();
+    emailBillReceipt(invoiceId);
+  });
 }
 
 
@@ -466,6 +484,18 @@ function repopulate() {
   } else {
     populateTable();
   }
+
+}
+
+
+function emailBillReceipt(invoiceId) {
+  var url = baseApiUrl + '/billing/send/' + invoiceId;
+  sendGetWithCreds(url).then((data, status, jqXHR) => {
+    triggerAlert('#success-alert', "Email Sent!");
+  })
+  .fail(data => {
+    triggerAlert('#failue-alert', "Error sending email");
+  });
 
 }
 
