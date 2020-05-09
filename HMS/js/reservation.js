@@ -325,7 +325,7 @@ function bookRoom() {
     showBookedModal(data);
   })
   .fail((data, status, jqXHR) => {
-    showErrorModal(JSON.stringify(data));
+    showErrorModal(data.responseJSON.error);
   });
 }
 
