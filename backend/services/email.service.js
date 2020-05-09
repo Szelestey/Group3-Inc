@@ -1,6 +1,6 @@
 
-// TODO: TEST ON AWS
 
+const datefns = require('date-fns');
 var nodemailer = require('nodemailer');
 var EmailTemplate = require('email-templates');
 const format = require('date-fns/format');
@@ -68,10 +68,19 @@ function sendConfirmationEmail(receiverEmail, confirmInfo){
 
 // Sends an email using the receipt template
 function sendReceiptEmail(receiverEmail, receiptInfo) {
-  var subject = (receiptInfo.balanceDue) ? "You Have a Balance Due" : "Thank You for Staying with us!";
+  var subject;
+  var endMessage;
 
-  var endMessage = (receiptInfo.balanceDue) ? "Balance due must be paid within 10 days." :
-      "We look forward to seeing you again!";
+  if(datefns.isAfter(new Date(), new Date(receiptInfo.checkout)) || datefns.isSameDay(new Date(), new Date(receiptInfo.checkout))) {
+    subject = (receiptInfo.balanceDue) ? "You Have a Balance Due" : "Thank You for Staying with us!";
+    endMessage = (receiptInfo.balanceDue) ? "Balance due must be paid within 10 days." :
+        "We look forward to seeing you again!";
+  } else {
+    subject = "We can't wait to see you!";
+    endMessage = (receiptInfo.balanceDue) ? "Balance due must be paid at check out." :
+        "We look forward to your stay!";
+  }
+
 
   return email.send({
     template: 'receipt',
