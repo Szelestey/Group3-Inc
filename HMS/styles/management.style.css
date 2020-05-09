@@ -13,23 +13,6 @@ body {
   text-align: center;
 }
 
-
-#roomGrid {
-  margin-top: 155px;
-  margin-left: -40px;
-}
-#roomGrid .row{
-  height:100%;
-  width: 100%;
-  background-color: #f2f2f2;
-}
-#roomGrid .col-md{
-  width: 220px;
-  height: 170px;
-  text-align: center;
-  font-size:17px;
-  border: 10px solid #ffffff;
-}
 /*
  * Report TABLE
  */
@@ -78,17 +61,8 @@ table.reportTable thead th:first-child {
 }
 
 /*
- * Report TABLE
+ * ROOM TABLE
  */
-#roomsTable
-{
-  position: absolute;
-  top: 170px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  overflow-y: scroll;
-}
 table.roomsTable {
   border: 1px solid #AAAAAA;
   background-color: #FFFFFF;
@@ -98,15 +72,13 @@ table.roomsTable {
 }
 table.roomsTable td, table.roomsTable th {
   border: 1px solid #AAAAAA;
-  padding: 3px 2px;
+  padding: 0.75rem!important;
 }
 table.roomsTable tbody td {
-  font-size: 13px;
+  font-size: 16px;
   color: #000000;
 }
-table.roomsTable tr:nth-child(even) {
-  background: #CCCCCC;
-}
+
 table.roomsTable thead {
   background: #0B98DE;
   background: -moz-linear-gradient(top, #48b2e6 0%, #23a2e1 66%, #0B98DE 100%);
@@ -123,38 +95,13 @@ table.roomsTable thead th {
 table.roomsTable thead th:first-child {
   border-left: none;
 }
-/*
- * Modify TABLE
- */
-#modifyTable
+table.roomsTable tbody tr:hover
 {
-  position: absolute;
-  top: 170px;
-  bottom: 0;
-  right: 0;
-  left: 1500px;
-  overflow-y: scroll;
+  background-color: #DDDDDD!important;
 }
-table.modifyTable {
-  border: 2px solid #0B98DE;
-  background-color: #CCCCCC;
-  width: 220px;
-  text-align: center;
-  border-collapse: collapse;
-}
-table.modifyTable td, table.modifyTable th {
-  border: 2px solid #0B98DE;
-  padding: 2px 2px;
-}
-table.modifyTable tbody td {
-  font-size: 13px;
-  font-weight: bold;
-  color: #000000;
-}
-table.modifyTable button{
-  display: inline-block;
-  width: 190px;
-  background-color: #CCCCCC
+.roomsTable button
+{
+  background-color: #0B98DE!important;
 }
 
 [role="main"] {
@@ -165,3 +112,9 @@ table.modifyTable button{
 {
   min-height: 600px;
 }
+
+
+/*
+ * ROOM PAGE
+ */
+

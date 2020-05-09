@@ -3,13 +3,12 @@ const async = require('async');
 
 const roomtypeTable = "ROOMTYPE";
 
-var inMemoryRoomTypeData = [];
-
 module.exports = {
   getTotalAvailableRoomsOfEachType,
   getAllRoomTypeInfo,
   getTotalAvailableRooms,
-  getRoomTypeInfo
+  getRoomTypeInfo,
+  modifyRoom
 };
 
 
@@ -26,7 +25,7 @@ function getTotalAvailableRoomsOfEachType() {
       types = roomtypes;
       var roomTypeTotals = {};
       for(var i = 0; i < roomtypes.length; i++) {
-        const query = "SELECT roomtype,COUNT(roomtype) AS num FROM ROOM WHERE roomtype=?";
+        const query = "SELECT roomtype,COUNT(roomtype) AS num FROM ROOM WHERE roomtype=? AND room_in_service=true";
         db.query(query, [roomtypes[i]], function(error, results) {
           (error) ? reject(error) : roomTypeTotals[results[0].roomtype] = results[0].num;
           callback(roomTypeTotals);
@@ -88,6 +87,24 @@ function getRoomTypes() {
         roomTypes.push(type.type_id);
       });
       resolve(roomTypes);
+    });
+  });
+}
+
+
+
+function modifyRoom(roomData) {
+  const query = "UPDATE ROOMTYPE SET type_name=?, type_base_price=?, type_description=? WHERE type_id=?";
+  const values = [roomData.name, roomData.price, roomData.description, roomData.type];
+
+  return new Promise((resolve, reject) => {
+    db.query(query, values, (error, results) => {
+      if(error) reject(error);
+      if(results.affectedRows > 0) {
+        resolve("success");
+      } else {
+        resolve();
+      }
     });
   });
 }

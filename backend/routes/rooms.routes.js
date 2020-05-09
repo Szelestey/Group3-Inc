@@ -26,4 +26,11 @@ const roomsController = require('../controllers/rooms.controller');
  */
 router.post('/price', roomsController.changeBasePrice);
 
+
+router.get('/', roomsController.getAllRoomTypeData);
+
+
+router.post('/', roomsController.modifyRoom);
+
+
 module.exports = router;

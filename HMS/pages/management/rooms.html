@@ -48,146 +48,131 @@
 <!---------------------- END NAV BAR -------------------->
 <!---------------------- SIDE BAR ----------------------->
 <section id="sideBar">
-    <div class="col-md-2 d-none d-md-block sidebar">
-        <div class="sidebar-sticky">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">
-                        <span data-feather="home"></span>
-                        Financial Report <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="lookup.html">
-                        <span data-feather="lookup"></span>
-                        Lookup Reservation
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="graph.html">
-                        <span data-feather="file"></span>
-                        Occupancy Graph
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">
-                        <span data-feather="shopping-cart"></span>
-                        Rooms
-                    </a>
-                </li>
-            </ul>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 d-none d-md-block sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                <span data-feather="home"></span>
+                                Financial Report <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="lookup.html">
+                                <span data-feather="lookup"></span>
+                                Lookup Reservation
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="graph.html">
+                                <span data-feather="file"></span>
+                                Occupancy Graph
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">
+                                <span data-feather="shopping-cart"></span>
+                                Rooms
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!------------------------ END SIDE BAR ------------------>
+            <main role="main" class="col-md-10 ml-sm-auto px-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom pt-3 pb-2 mb-3">
+                            <h2>Room Types</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-11 mx-2">
+                        <!---------------- TABLE ------------------->
+                        <table class="roomsTable table-striped" id="roomsTable">
+                            <thead class="text-center">
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Price/night</th>
+                                <th>Description</th>
+                                <th>Number In Service</th>
+                                <th>Modify</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 </section>
-<!------------------------ END SIDE BAR ------------------>
-<!----------------------- Report TABLE ---------------------------------->
-<section id="roomsTable">
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-7">
-            <table class="roomsTable">
-                <thead>
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>Room</th>
-                    <th>Status</th>
-                    <th>Reason</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td style="padding: 3px 0px;vertical-align: middle; text-align: center; width: 100px">
-                        <input type="checkbox" id="1" name="1" value="1">
-                    </td>
-                    <td style="width: 100px">
-                        101
-                    </td>
-                    <td style="width: 200px">&nbsp;
-                        <select id="status1" style="width: 96%">
-                            <option value="Available">Available</option>
-                            <option value="Unavailable">Unavailable</option>
-                        </select>
-                    </td>
-                    <td>&nbsp;
-                        <input id="reason1" style="width: 95%">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 3px 0px;vertical-align: middle; text-align: center; width: 100px">
-                        <input type="checkbox" id="2" name="2" value="2">
-                    </td>
-                    <td style="width: 100px">
-                        102
-                    </td>
-                    <td style="width: 200px">&nbsp;
-                        <select id="status2" style="width: 96%">
-                            <option value="Available">Available</option>
-                            <option value="Unavailable">Unavailable</option>
-                        </select>
-                    </td>
-                    <td>&nbsp;
-                        <input id="reason2" style="width: 95%">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 3px 0px;vertical-align: middle; text-align: center; width: 100px">
-                        <input type="checkbox" id="3" name="3" value="3">
-                    </td>
-                    <td style="width: 100px">
-                        103
-                    </td>
-                    <td style="width: 200px">&nbsp;
-                        <select id="status3" style="width: 96%">
-                            <option value="Available">Available</option>
-                            <option value="Unavailable">Unavailable</option>
-                        </select>
-                    </td>
-                    <td>&nbsp;
-                        <input id="reason3" style="width: 95%">
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 3px 0px;vertical-align: middle; text-align: center; width: 100px">
-                        <input type="checkbox" id="4" name="4" value="4">
-                    </td>
-                    <td style="width: 100px">
-                        104
-                    </td>
-                    <td style="width: 200px">&nbsp;
-                        <select id="status4" style="width: 96%">
-                            <option value="Available">Available</option>
-                            <option value="Unavailable">Unavailable</option>
-                        </select>
-                    </td>
-                    <td>&nbsp;
-                        <input id="reason4" style="width: 95%">
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
 
-        <!----------------------- END TABLE ---------------------------------->
-        <div class="col-md-2">
-            <table class="modifyTable">
-                <tbody>
-                <tr>
-                    <td>&nbsp;<button type="button"><b>New</b></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;<button type="button"><b>Delete</b></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;<button type="button"><b>Edit</b></button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+<!------------------------- MODALS ----------------------------->
+<div class="modal fade" id="modifyRoomModal" tabindex="-1" role="dialog" aria-labelledby="modifyRoomModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    Modify <strong><span id="roomtypeLabel"></span></strong> Room Type
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-2">
+                    <div class="col">
+                        <span style="font-size:14px;"><b>Leave field blank to keep the current value</b></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="currentName" class="col-form-label">Current Name: </label>
+                        <span class="form-control" id="currentName"></span>
+                    </div>
+                    <div class="col">
+                        <label for="newName" class="col-form-label">New Name:</label>
+                        <input type="text" class="form-control" id="newName">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <label for="currentPrice" class="col-form-label">Current Price: </label>
+                        <span class="form-control" id="currentPrice"></span>
+                    </div>
+                    <div class="col">
+                        <label for="newPrice" class="col-form-label">New Price:</label>
+                        <input type="text" class="form-control" id="newPrice">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <label for="currentDescription" class="col-form-label">Current Description: </label>
+                        <p id="currentDescription" class="form-control"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label for="newDescription" class="col-form-label">New Description: </label>
+                        <textarea class="form-control" id="newDescription"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="changeSubmit" onclick="modifyRoom()">Submit</button>
+            </div>
         </div>
     </div>
-</section>
+</div>
+<!----------------------- END MODALS ----------------------->
+
 
 <script src="https://kit.fontawesome.com/8f4261c3af.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -196,5 +181,6 @@
 <script src="/js/nav.js"></script>
 <script src="../../js/http-utils.js"></script>
 <script src="/js/auth.js"></script>
+<script src="/js/rooms.js"></script>
 </body>
 </html>
