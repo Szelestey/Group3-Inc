@@ -1,4 +1,3 @@
-// TODO: Finish adding dynamic email info
 doctype html
 html(lang='en')
     head
@@ -15,21 +14,59 @@ html(lang='en')
             .space-right {
                 padding-right: 50px;
             }
+            .bold {
+                font-weight: bold;
+            }
+
     body
         h1 Lodging Receipt
-        h4 Thank you for staying with us!
+        h4 Thank you for choosing us!
         table
             tr
                 td.space-right Invoice ID:
-                td 12341234Example12341234
+                td #{invoiceId}
+            tr
+                td Guest:
+                td #{lastname}, #{firstname}
             tr
                 td.space-right Check In:
-                td August 20, 2020
+                td #{checkin}
             tr
                 td.space-right Check Out:
-                td August 22, 2020
-            // add all invoice charges and payments
+                td #{checkout}
             tr
-                td.space-right Amount Paid:
-                td $100.00
-        h3 We look forward to seeing you again!
+                td(colspan='2', height=20)
+            tr
+                td.bold Charges:
+                td
+            each charge in charges
+                tr
+                    td=charge.chargeId.slice(charge.chargeId.length - 7)
+                    td="$"+charge.amount.toFixed(2) + " -- Reason: " + charge.reason
+            tr
+                td(colspan='2', height=20)
+            tr
+                td.bold Payments:
+                td
+            each payment in payments
+                tr
+                    td=payment.paymentId.slice(payment.paymentId.length - 6)
+                    td="$"+payment.amount.toFixed(2) + " paid by " + ((payment.method === "CA") ? "cash" : "credit ending in " + payment.creditnumber.slice(payment.creditnumber.length - 4))
+            tr
+                td(colspan='2', height=20)
+            tr
+                td.space-right.bold Total Paid:
+                td $#{totalPaid.toFixed(2)}
+            if (balanceDue > 0)
+                tr
+                    td(colspan='2', height=20)
+                tr
+                    td(colspan='2') ----------------------------------------
+                tr
+                    td.space-right.bold Balance Due:
+                    td $#{balanceDue.toFixed(2)}
+                tr
+                    td(colspan='2') ----------------------------------------
+            tr
+                td(colspan='2', height=20)
+        h3 #{endMessage}
