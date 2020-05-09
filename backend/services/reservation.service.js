@@ -46,7 +46,7 @@ function getReservationByName(name) {
 
 
 function getReservationById(id) {
-  const values = ['r', 'reservation_id', id];
+  const values = ['r', 'reservation_id', id.replace(' ', '')];
 
   return new Promise((resolve, reject) => {
     db.query(reservationSelectQuery, values, (error, results) => {
