@@ -89,7 +89,7 @@ async function createReservation(req, res, next) {
     checkout: reservation.checkout,
     roomtypeName: roomtypeInfo.type_name,
     total: cost,
-    amountPaid: amountPaid.toFixed(2),
+    amountPaid: parseFloat(amountPaid).toFixed(2),
     amountOwed: amountOwed.toFixed(2)
   };
 
