@@ -266,8 +266,6 @@ function searchById(){
         // If their was a response enter if statement, else api timed out
         if(response.responseJSON){
 
-            console.log('response for id is: ', response);
-
             // If the response was there were no rooms=
             if (response.responseJSON.error) {
 
@@ -351,6 +349,7 @@ function cancelReservation(reservationId){
 
     sendPostWithCreds(postURL, { id: reservationId}).then((data, status, jqXHR) => {
         $('.modal').modal('hide');
+        $('#cancel-success-remark').text(data.remark);
         $('#cancel-success-alert-id').text(reservationId);
         triggerAlert('#cancel-success-alert');
     })
@@ -375,8 +374,9 @@ function triggerAlert(alertId) {
     }, 2)
     setTimeout(function() {
         $(alertId).removeClass('show');
+        setTimeout(function() {
+            $(alertId).css('top', -80);
+        }, 500);
     }, 4000);
-    setTimeout(function() {
-        $(alertId).css('top', -80);
-    }, 5000);
+
 }
