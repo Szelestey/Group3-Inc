@@ -68,14 +68,29 @@ function sendConfirmationEmail(receiverEmail, confirmInfo){
 
 // Sends an email using the receipt template
 function sendReceiptEmail(receiverEmail, receiptInfo) {
-  email.send({
+  var endMessage = (receiptInfo.balanceDue) ? "Balance due must be paid within 10 days." :
+      "We look forward to seeing you again!";
+
+  return email.send({
     template: 'receipt',
     message: {
       to: receiverEmail
     },
     locals: {
-      firstname: 'Logan'
+      firstname: receiptInfo.firstname,
+      lastname: receiptInfo.lastname,
+      invoiceId: receiptInfo.invoiceId,
+      checkin: format(new Date(receiptInfo.checkin+" EST"), 'MMMM d, yyyy'),
+      checkout: format(new Date(receiptInfo.checkout+" EST"), 'MMMM d, yyyy'),
+      charges: receiptInfo.charges,
+      payments: receiptInfo.payments,
+      totalPaid: receiptInfo.amountPaid,
+      balanceDue: receiptInfo.balanceDue,
+      endMessage: endMessage
     }
-  })
-  .catch(console.error);
+  });
 }
+
+
+
+

@@ -7,7 +7,10 @@ module.exports = {
   chargeInvoice,
   createCAPayment,
   createCCPayment,
-  getDataByParam
+  getDataByParam,
+  getReceiptInfo,
+  getPayments,
+  getCharges
 };
 
 
@@ -195,6 +198,87 @@ function getDataByParam(tableChar, paramName, paramValue) {
           dataArr.push(row);
         });
         resolve(dataArr);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+
+
+function getReceiptInfo(invoiceId) {
+  const query = "SELECT i.invoice_id AS invoiceId, r.check_in_date AS checkin, r.check_out_date AS checkout"
+      + ", i.total_amount AS totalAmount, i.amount_paid AS amountPaid, g.guest_email AS email, g.guest_firstname AS firstname, g.guest_lastname AS lastname "
+      + "FROM INVOICE AS i "
+      + "INNER JOIN RESERVATION AS r ON i.invoice_id=r.reservation_id "
+      + "INNER JOIN GUEST AS g ON r.guest_id=g.guest_id "
+      + "WHERE i.invoice_id=?";
+
+  return new Promise((resolve, reject) => {
+    db.query(query, [invoiceId], (error, results) => {
+      if(error) reject(error);
+
+      if(results.length > 0) {
+        var info = {
+          invoiceId: invoiceId,
+          checkin: results[0].checkin,
+          checkout: results[0].checkout,
+          totalAmount: results[0].totalAmount,
+          amountPaid: results[0].amountPaid,
+          email: results[0].email,
+          firstname: results[0].firstname,
+          lastname: results[0].lastname
+        };
+        resolve(info);
+      } else {
+        resolve();
+      }
+
+    })
+  })
+}
+
+
+function getPayments(invoiceId) {
+  const query = "SELECT * FROM PAYMENT WHERE invoice_id=?";
+  return new Promise((resolve, reject) => {
+    db.query(query, [invoiceId], (error, results) => {
+      if(error) reject(error);
+      if(results.length > 0) {
+        var arr = [];
+        results.forEach(row => {
+          arr.push({
+            paymentId: row.payment_id,
+            amount: row.payment_amount,
+            method: row.payment_type,
+            creditnumber: row.account_number
+          });
+        });
+        resolve(arr);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
+
+
+function getCharges(invoiceId) {
+  const query = "SELECT * FROM INVOICECHARGE WHERE invoice_id=?";
+  return new Promise((resolve, reject) => {
+    db.query(query, [invoiceId], (error, results) => {
+      if(error) reject(error);
+      if(results.length > 0) {
+        var arr = [];
+        results.forEach(row => {
+          arr.push({
+            chargeId: row.charge_id,
+            amount: row.charge_amount,
+            reason: row.charge_reason
+          });
+        });
+        resolve(arr);
       } else {
         resolve();
       }
