@@ -27,4 +27,7 @@ router.get('/phone/:phone', billingController.getDataByPhone);
 router.get('/id/:id', billingController.getDataById);
 
 
+router.get('/send/:id', billingController.emailInvoice);
+
+
 module.exports = router;

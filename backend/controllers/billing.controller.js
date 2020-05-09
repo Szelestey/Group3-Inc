@@ -1,5 +1,6 @@
 const dateFns = require('date-fns');
 const billingService = require('../services/billing.service');
+const emailService = require('../services/email.service');
 
 
 module.exports = {
@@ -10,7 +11,8 @@ module.exports = {
   getDataByLastName,
   getDataByEmail,
   getDataByPhone,
-  getDataById
+  getDataById,
+  emailInvoice
 }
 
 
@@ -108,6 +110,41 @@ async function getDataByParam(res, tableChar, paramName, paramValue) {
   .catch(err => {
     res.status(400).json({error: "Error searching for invoice"});
   });
+}
+
+
+async function emailInvoice(req, res, next) {
+  var invoiceId = req.params.id;
+
+  var promises = [];
+
+  promises.push(billingService.getReceiptInfo(invoiceId));
+
+  promises.push(billingService.getPayments(invoiceId));
+
+  promises.push(billingService.getCharges(invoiceId));
+
+  Promise.all(promises).then(function(results) {
+    var emailInfo = results[0];
+    emailInfo.payments = results[1];
+    emailInfo.charges = results[2];
+    emailInfo.balanceDue = emailInfo.totalAmount - emailInfo.amountPaid;
+
+    // send receipt
+    emailService.sendReceiptEmail(emailInfo.email, emailInfo).then(() => {
+      res.status(200).json({message: "Email sent successfully"});
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).json({error: "Email failed to send"});
+    });
+
+  })
+  .catch(err => {
+    res.status(400).json({error: "Error sending email"});
+  });
+
+
 }
 
 
