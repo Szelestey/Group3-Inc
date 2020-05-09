@@ -18,7 +18,7 @@ $(document).ready(function() {
       callback: drawChart
     });
 
-  }, 2000);
+  }, 1200);
 
 });
 
