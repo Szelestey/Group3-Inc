@@ -1,8 +1,11 @@
+/*
+ * Handlers for Management related API endpoints:  /management/
+ */
+
 const dateFns = require('date-fns');
 const reservationService = require('../services/reservation.service');
 const roomService = require('../services/rooms.service');
 const mgmtService = require('../services/management.service');
-
 
 
 module.exports = {
@@ -12,17 +15,26 @@ module.exports = {
 }
 
 
-// Retrieves occupancy data to be displayed by a Google line chart
+/*
+ * Retrieves occupancy data to be displayed by a Google line chart
+ */
 async function getOccupancyData(req, res, next) {
   var promises = [];
+
+  // Gets all reservations whose check-in or check-out date resides in the current year
   promises.push(reservationService.getReservationsInCalendarYear());
+
+  // Gets the total number of available rooms
   promises.push(roomService.getTotalAvailableRooms());
 
   Promise.all(promises).then(results => {
     var reservations = results[0];
+
+    // Total possible occupancies in a given week
     var totalRoomsAvailablePerWeek = results[1]*7;
 
     var occupancyArr = generateInitialOccupancyArray();
+
     reservations.forEach(reservation => {
       addReservationToOccupancyData(reservation, occupancyArr);
     });
@@ -52,20 +64,29 @@ function generateInitialOccupancyArray() {
 function addReservationToOccupancyData(reservation, occupancyArr) {
   var checkin = new Date(reservation.check_in_date);
   var currDate = new Date();
-  var weekIndex = getWeek(checkin) - 1;
-  if(checkin > currDate && getWeek(checkin) > getWeek(currDate)) {
-    // check-in date is after current date, add to projected occupancy
-    occupancyArr[weekIndex][1]++;
-  } else if(checkin <= currDate && getWeek(checkin) <= getWeek(currDate)) {
-    // check-in is on or before current date
 
-    // Only add non-cancelled reservations to actual occupancy
-    if(reservation.status !== 'cancelled') {
-      occupancyArr[weekIndex][2]++;
+  var datesOccupied = dateFns.eachDayOfInterval({ start: checkin, end: new Date(reservation.check_out_date)});
+  datesOccupied.pop();
+
+  datesOccupied.forEach(day => {
+    var weekIndex = getWeek(day) - 1;
+
+    if(checkin > currDate && getWeek(checkin) > getWeek(currDate)) {
+      // check-in date is after current date, add to projected occupancy
+      occupancyArr[weekIndex][1]++;
+    } else if(checkin <= currDate && getWeek(checkin) <= getWeek(currDate)) {
+      // check-in is on or before current date
+
+      // Only add non-cancelled reservations to actual occupancy
+      if(reservation.status !== 'cancelled') {
+        occupancyArr[weekIndex][2]++;
+      }
+      // add cancelled and non-cancelled to projected
+      occupancyArr[weekIndex][1]++;
     }
-    // add cancelled and non-cancelled to projected
-    occupancyArr[weekIndex][1]++;
-  }
+
+  });
+
 }
 
 
@@ -75,6 +96,9 @@ function getWeek(date) {
 }
 
 
+/*
+ * Converts the occupancy array to a format usable by the Google line chart
+ */
 function convertOccupancyData(occupancyData, totalRooms) {
   for(var i=0; i<occupancyData.length; i++) {
     var week = occupancyData[i];
@@ -104,7 +128,10 @@ function getWeekTooltip(actual, projected, week, totalRooms) {
 }
 
 
-// Cancels a reservation
+/*
+ * Cancels a reservations by marking it 'cancelled', clearing payments and charges,
+ * and assessing whether a cancellation fee needs applied
+ */
 async function cancelReservation(req, res, next) {
   reservationId = req.body.id;
 
@@ -122,7 +149,9 @@ async function cancelReservation(req, res, next) {
 }
 
 
-// Returns financial data for the current and the previous year
+/*
+ * Returns financial data for the current and the previous year.
+ */
 async function getFinancialReportData(req, res, next) {
   const currYear = new Date().getFullYear();
   var prevYear = new Date();
@@ -142,6 +171,9 @@ async function getFinancialReportData(req, res, next) {
 }
 
 
+/*
+ * Builds a json object of financial data to be used by front-end financial report
+ */
 function buildFinData(data) {
   var finData = {};
 
@@ -163,7 +195,9 @@ function buildFinData(data) {
 
 }
 
-
+/*
+ * Adds a payment to the applicable elements in the financial data.
+ */
 function addPaymentToFinData(payment, yearTitle, finData, currDate) {
   if(!Object.keys(finData).includes(payment.roomtype)) {
     addRoomTypeToFinData(payment.roomtype, payment.roomname, finData);
@@ -205,7 +239,9 @@ function addPaymentToFinData(payment, yearTitle, finData, currDate) {
   }
 }
 
-
+/*
+ * Adds necessary elements to financial data for each room type
+ */
 function addRoomTypeToFinData(type, name, finData) {
   finData[type] = {};
 
