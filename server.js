@@ -1,8 +1,9 @@
 /*
-  This is the backend server.
-  All http requests come in and go through all the middleware before being routed
-  to the proper endpoint.
+ * Execution file for the backend API application.
+ * Creates two Express servers for the front-end files and the API listening on
+ * ports 8080 and 3000 respectively.
  */
+
 var express = require('express');
 var cors = require('cors');
 var parser = require('body-parser');
@@ -19,9 +20,11 @@ var authCtrl = require('./backend/controllers/auth.controller');
 var app = express();
 var api = express();
 
+// Define the ports
 var appPort = 8080;
 var apiPort = 3000;
 
+// Front-end paths excluded from authentication
 const excludedAppPaths = [
     /\S*\/login/,
     /\S*\.css/,
@@ -31,10 +34,12 @@ const excludedAppPaths = [
     /dev\/\S*/
 ];
 
+// API paths excluded from authentication
 const excludedApiPaths = [
     '/auth',
     '/auth/logout'
 ];
+
 
 /////////////////////////// Configure App \\\\\\\\\\\\\\\\\\\\\\\\\
 app.use(cors({
@@ -42,19 +47,33 @@ app.use(cors({
   optionsSuccessStatus: 200,
   credentials: true
 }))
+
+// Parse Json body
 .use(parser.urlencoded({extended: false}))
 .use(parser.json())
+
+// Parse Cookies
 .use(cookieParser())
-.use(/\S*\/login/, function(req, res, next) {     // redirect to home if already logged in
+
+// Redirect to home page if requesting login page and already logged in
+.use(/\S*\/login/, function(req, res, next) {
   serverUtils.loggedInRedirect(req, res, next);
 })
+
+// Validate JWT if applicable
 .use(expressjwt({
       secret: config.secret,
       credentialsRequired: true,
       getToken: function(req) { return req.cookies.auth; }
     }).unless({ path: excludedAppPaths }))
+
+// Refresh JWT
 .use(refreshJwt().unless({ path: excludedAppPaths }))
-.use(/\/pages\/admin\/\S*/, adminGuard.check(['admin']))    // Verify admin privs
+
+// Verify admin privileges if requesting admin pages
+.use(/\/pages\/admin\/\S*/, adminGuard.check(['admin']))
+
+// Error handler
 .use(function(err, req, res, next) {
   // ERROR HANDLER
   if(err.code === 'permission_denied') {    // adminGuard blocked request
@@ -72,7 +91,11 @@ app.use(cors({
 
   }
 })
+
+// Serve static files
 .use(express.static('HMS'))
+
+// Requesting unknown route, redirect to login
 .use(function(req, res, next) {
   res.redirect('/pages/login');
 });
@@ -84,28 +107,54 @@ api.use(cors({
   optionsSuccessStatus: 200,
   credentials: true
 }))
+
+// Parse JSON body
 .use(parser.urlencoded({extended: true}))
 .use(parser.json())
+
+// Parse Cookies
 .use(cookieParser())
+
+// Logout route
 .use(/\S*\/logout/, function(req, res, next) {
   // if logout route, immediately invalidate auth cookie
   res.cookie('auth', 'bad', {httpOnly: true, sameSite: true});
   authCtrl.removeJWT(req.cookies.auth);
   res.send();
 })
+
+// Verify JWT if applicable
 .use(expressjwt({
       secret: config.secret,
       credentialsRequired: true,
       getToken: function(req) { return req.cookies.auth; }
     }).unless({ path: excludedApiPaths}))
+
+// Refresh JWT
 .use(refreshJwt().unless({ path: excludedApiPaths }))
+
+// Authentication routes
 .use('/auth', routes.authRoutes)
+
+// Rooms routes
 .use('/rooms', routes.roomsRoutes)
+
+// Reservation routes
 .use('/reservation', routes.reservationRoutes)
+
+// Management routes
 .use('/management', routes.managementRoutes)
+
+// Billing routes
 .use('/billing', routes.billingRoutes)
+
+// Users routes
 .use('/users', adminGuard.check(['admin']), routes.usersRoutes)
+
+// Admin routes
 .use('/admin', adminGuard.check(['admin']), routes.adminRoutes)
+
+// Error handler
 .use(function(err, req, res, next) {
   // ERROR HANDLER
   if(err.code === 'permission_denied') {
@@ -130,6 +179,7 @@ app.listen(appPort, function() {
 api.listen(apiPort, function() {
   console.log('API listening on port '+ apiPort);
 });
+
 
 module.exports = {
   app,
