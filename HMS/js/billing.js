@@ -277,8 +277,9 @@ function validatePayment(payment) {
   }
 
   // Validate applicable fields
-  var amountOwed = $('#hiddenAmountOwed').val()
-  if(payment.amount > amountOwed) invalidArr.push('Payment amount greater than amount owed');
+  var amountOwed = parseFloat($('#hiddenAmountOwed').val());
+  if(parseFloat(payment.amount) > amountOwed) invalidArr.push('Payment amount greater than amount owed');
+  if(parseFloat(payment.amount) === 0) invalidArr.push('Payment amount must be grater than 0');
   if(!/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(\.[0-9][0-9])?$/.test(payment.amount)) invalidArr.push('Amount invalid');
   if(payment.method === 'CC') {
     if (payment.credit.number.length < 15) invalidArr.push('Card number too short');
