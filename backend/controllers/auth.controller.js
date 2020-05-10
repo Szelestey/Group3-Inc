@@ -1,8 +1,13 @@
 const authService = require('../services/auth.service');
 
+var inMemJWTs = [];
+
 module.exports = {
   authenticate,
-  logout
+  logout,
+  validateJWT,
+  addJWT,
+  removeJWT
 };
 
 // Validates username & password against the database and then issues the user
@@ -15,6 +20,7 @@ async function authenticate(req, res, next) {
       const {username, role, token} = user;
       const cookieConfig = {httpOnly: true, sameSite: true}
       res.cookie('auth', token, cookieConfig);
+      inMemJWTs.push(token);
       res.status(200).json({ 'username': username, 'ad-auth': (role === 'admin') });
       next();
     } else {
@@ -28,4 +34,22 @@ async function authenticate(req, res, next) {
 async function logout(req, res, next) {
   res.cookie('auth', 'bad', {httpOnly: true, sameSite: true});
   res.send();
+}
+
+
+function removeJWT(token) {
+  var index = inMemJWTs.indexOf(token);
+  if(index !== -1) {
+    inMemJWTs.splice(index, 1);
+  }
+}
+
+
+function addJWT(token) {
+  inMemJWTs.push(token);
+}
+
+
+function validateJWT(token) {
+  return inMemJWTs.indexOf(token) >= 0;
 }

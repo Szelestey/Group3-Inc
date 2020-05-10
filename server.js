@@ -13,6 +13,7 @@ var refreshJwt = require('./backend/utils/refreshJwt');
 var config = require('./backend/config.json');
 var serverUtils = require('./backend/utils/server.utils');
 var routes = require('./backend/routes');
+var authCtrl = require('./backend/controllers/auth.controller');
 
 // Create the servers
 var app = express();
@@ -89,6 +90,7 @@ api.use(cors({
 .use(/\S*\/logout/, function(req, res, next) {
   // if logout route, immediately invalidate auth cookie
   res.cookie('auth', 'bad', {httpOnly: true, sameSite: true});
+  authCtrl.removeJWT(req.cookies.auth);
   res.send();
 })
 .use(expressjwt({
@@ -116,20 +118,6 @@ api.use(cors({
   }
 });
 
-
-//////////// TESTING ///////////////////
-
-// var reservation = {
-//   reservation_id: 'TEST_RES_ID',
-//   checkin: '2020-05-10',
-//   checkout: '2020-05-12'
-// };
-//
-// const emailer = require('./backend/services/email.service');
-// emailer.sendConfirmationEmail('fakeemail@scam.com', reservation);
-// emailer.sendReceiptEmail('fakeemail@scam.com', null);
-
-/////////////////////////////////////////
 
 
 
