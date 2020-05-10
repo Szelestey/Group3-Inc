@@ -1,3 +1,6 @@
+/*
+ * Javascript for the home.html page
+ */
 
 $(document).ready(function() {
   checkAdmin();

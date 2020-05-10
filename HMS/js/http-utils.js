@@ -1,3 +1,8 @@
+/*
+ * Contains functions for sending requests to the backend API.
+ * All files sending requests to the API should use these urls and functions
+ */
+
 // Global base urls. All js functions sending http requests should use these urls
 const baseAppUrl = 'http://localhost:8080';
 const baseApiUrl = 'http://localhost:3000';

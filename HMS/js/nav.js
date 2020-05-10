@@ -1,3 +1,8 @@
+/*
+ * Javascript for the nav bar.
+ * Any page with the nav bar should include this file.
+ */
+
 var username = window.localStorage.getItem('username');
 
 $(document).ready(function() {

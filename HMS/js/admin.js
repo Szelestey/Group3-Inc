@@ -1,3 +1,7 @@
+/*
+ * Javascript for the admin/index.html page
+ */
+
 $(document).ready(function() {
   refresh();
 });

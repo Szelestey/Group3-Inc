@@ -12,7 +12,11 @@ module.exports = function() {
     }
     var token = jwt.sign(payload, config.secret, {expiresIn: config.timeout});
     res.cookie('auth', token, {httpOnly: true, sameSite: true});
+
+    // Add the new token to active JWTs
     authCtrl.addJWT(token);
+
+    // Remove the old token from active JWTs
     authCtrl.removeJWT(req.cookies.auth);
     next();
   };

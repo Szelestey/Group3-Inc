@@ -1,3 +1,8 @@
+/*
+ * Javascript for the reservations/index.html page
+ */
+
+
 
 ///////////////////////// Page Config \\\\\\\\\\\\\\\\\\\\\\\\\\
 

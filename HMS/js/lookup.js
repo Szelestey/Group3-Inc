@@ -1,4 +1,6 @@
-
+/*
+ * Javascript for the management/lookup.html page
+ */
 
 function searchByGuest(){
     // Get the value of the of the last name text box

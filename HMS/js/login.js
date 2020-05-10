@@ -1,3 +1,6 @@
+/*
+ * Javascript for the login/index.html page
+ */
 
 // Configure Page
 $(document).ready(function() {

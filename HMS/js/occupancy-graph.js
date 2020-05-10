@@ -1,3 +1,6 @@
+/*
+ * Javascript for the management/graph.html page
+ */
 
 $(document).ready(function() {
 

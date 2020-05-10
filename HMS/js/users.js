@@ -1,3 +1,7 @@
+/*
+ * Javascript for the admin/users.html page
+ */
+
 $(document).ready(function(){
   populateUsersTable();
 

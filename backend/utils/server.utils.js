@@ -6,8 +6,8 @@ module.exports = {
   loggedInRedirect
 };
 
+// Redirect to home page if valid token exists
 function loggedInRedirect(req, res, next) {
-  // Redirect to home page if valid token exists
   var token = req.cookies.auth;
   try {
     jwt.verify(token, config.secret);

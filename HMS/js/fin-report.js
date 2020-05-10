@@ -1,3 +1,7 @@
+/*
+ * Javascript for the management/index.html page
+ */
+
 $(document).ready(function() {
   $('#loadingMessage').text('Loading Financial Data...');
 

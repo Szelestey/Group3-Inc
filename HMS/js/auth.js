@@ -1,4 +1,7 @@
-// REQUIRES http-utils.js INCLUDED IN HTML
+/*
+ * Javascript for authentication.
+ * All pages with logout must include this file.
+ */
 
 $(document).ready(() => {
 

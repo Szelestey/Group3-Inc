@@ -1,3 +1,7 @@
+/*
+ * Javascript for the management/rooms.html page
+ */
+
 $(document).ready(function() {
 
   var modifyRoomModal = $('#modifyRoomModal');

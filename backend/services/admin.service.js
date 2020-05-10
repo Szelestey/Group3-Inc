@@ -4,6 +4,9 @@ module.exports = {
   getDbStatus
 }
 
+/*
+ * Sends a test query to database.
+ */
 function getDbStatus() {
   return new Promise((resolve, reject) => {
     query = "SELECT 'TEST'";

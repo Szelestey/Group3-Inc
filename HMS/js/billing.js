@@ -1,3 +1,7 @@
+/*
+ * Javascript for the billing/index.html
+ */
+
 var triggering = false;
 
 $(document).ready(function() {
@@ -138,7 +142,6 @@ function showErrorModal(text, returnModalClass) {
 }
 
 
-// TODO: Send request to backend, handle response
 // Attempts to apply a payment to the specified invoice
 function addPayment() {
   var payment = getPaymentInfo();
@@ -160,6 +163,7 @@ function addPayment() {
     $('#makePaymentModal').modal('hide');
   });
 }
+
 
 
 function getPaymentSuccessHTML(payment) {
