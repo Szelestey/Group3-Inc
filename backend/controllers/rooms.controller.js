@@ -1,37 +1,19 @@
 /*
-  This is where the http requests for rooms get routed.
-  The controller deconstructs the request body and takes the appropriate action
-  for the request, then returns the appropriate response.
-
-  Functions that receive http requests must be async.
-
-  The appropriate services are used to query databases or perform other actions.
-  'res' is the response object, you can set the status code that you want and then
-  use .json to send a json payload with the response.
-
-  Services will typically return a Promise object. If you want an async function to
-  wait for the Promise to resolve before continuing, use the 'await' keyword.
-
-  Any function you want publicly available for other files that 'require()' this file,
-  the function name must be in the module.exports statement.
+ * Handlers for Room/RoomType related API endpoints:  /rooms/
+ * Also contains related functions.
  */
+
 const roomsService = require('../services/rooms.service');
 
 module.exports = {
-  changeBasePrice,
   getAllRoomTypeData,
   modifyRoom
 };
 
-async function changeBasePrice(req, res, next) {
-  const {roomId,price} = req.body;
-  roomsService.changeBasePrice(roomId, price).then(success => {
-    success ? res.json({message: "Price changed"}) : res.status(404).json({message: "Room could not be found"});
-  })
-  .catch(err => next(err));
-}
 
-
+/*
+ * Retrieves data for each room type.
+ */
 async function getAllRoomTypeData(req, res, next) {
   var promises = [];
   promises.push(roomsService.getAllRoomTypeInfo());
@@ -54,11 +36,14 @@ async function getAllRoomTypeData(req, res, next) {
 
 }
 
-
+/*
+ * Updates a room type with the new name, price, and description.
+ */
 async function modifyRoom(req, res, next) {
   var typeData = req.body;
-  typeData.name = capitalizeEachWord(typeData.name);
+  typeData.name = titleCase(typeData.name);
 
+  // Check that price is valid
   if(isNaN(typeData.price)) {
     res.status(400).json({error: "Price must be a number"});
     return;
@@ -74,8 +59,10 @@ async function modifyRoom(req, res, next) {
 
 }
 
-
-function capitalizeEachWord(string) {
+/*
+ * Capitalizes each word of a string.
+ */
+function titleCase(string) {
   var words = string.split(" ");
   var newStr = '';
   words.forEach(word => {

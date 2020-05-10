@@ -1,3 +1,8 @@
+/*
+ * Handlers for Reservation related API endpoints:  /reservation/
+ * Also contains related functions.
+ */
+
 const dateFns = require('date-fns');
 const guestService = require('../services/guest.service');
 const roomService = require('../services/rooms.service');
@@ -147,19 +152,23 @@ async function getAvailableRooms(req, res, next) {
   var checkin = req.body.checkin;
   var checkout = req.body.checkout;
 
+  // Create date objects in eastern time
   var checkinDate = new Date(checkin + " EST");
   var checkoutDate = new Date(checkout + " EST");
 
+  // Check for valid check-in date
   if(dateFns.isPast(checkinDate) && !dateFns.isSameDay(checkinDate, new Date())){
     res.status(400).json({error: "Invalid check-in date"});
     return;
   }
 
+  // Check for valid interval
   if(dateFns.isAfter(checkinDate, checkoutDate) || dateFns.isSameDay(checkinDate, checkoutDate)) {
    res.status(400).json({error: "Check-in date must be after check-out date"});
    return;
   }
 
+  // Gets room types that are available each day during the interval
   availabilityService.getAvailableRoomsForInterval(checkinDate,checkoutDate).then(results => {
     var commonRooms = compareAvailableRoomsCallback(results);
 

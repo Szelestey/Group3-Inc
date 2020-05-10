@@ -1,19 +1,6 @@
 /*
-  This is where the http requests for users get routed.
-  The controller deconstructs the request body and takes the appropriate action
-  for the request, then returns the appropriate response.
-
-  Functions that receive http requests must be async.
-
-  The appropriate services are used to query databases or perform other actions.
-  'res' is the response object, you can set the status code that you want and then
-  use .json to send a json payload with the response.
-
-  Services will typically return a Promise object. If you want an async function to
-  wait for the Promise to resolve before continuing, use the 'await' keyword.
-
-  Any function you want publicly available for other files that 'require()' this file,
-  the function name must be in the module.exports statement.
+ * Handlers for User related API endpoints:  /user/
+ * Also contains related functions.
  */
 const usersService = require('../services/users.service');
 const authService = require('../services/auth.service');
@@ -49,7 +36,10 @@ async function removeUser(req, res, next) {
 // Updates the users current password
 async function updatePassword(req, res, next) {
   const {username, unhashedPassword} = req.body;
+
+  // Hash new password
   const hashedPassword = authService.hashPassword(unhashedPassword);
+
   if(hashedPassword) {
     usersService.updatePassword(username, hashedPassword).then(success => {
       success ? res.status(200).json({message: "Password updated"}) :
@@ -61,7 +51,9 @@ async function updatePassword(req, res, next) {
   }
 }
 
-
+/*
+ * Creates a new user for the application.
+ */
 async function createUser(req, res, next) {
   const unvalidatedUser = {firstname, lastname, username, unhashedPassword, role} = req.body;
   const hashedPassword = authService.hashPassword(unhashedPassword);
@@ -92,7 +84,9 @@ async function createUser(req, res, next) {
   }
 }
 
-
+/*
+ * Validates fields for new user.
+ */
 function validateInputLength(user) {
   var badParams = {};
 
@@ -115,6 +109,9 @@ function validateInputLength(user) {
   return badParams;
 }
 
+/*
+ * Gets the total number of each user type (admin, user)
+ */
 async function getStatus(req, res, next) {
   usersService.getStatus().then(status => {
     res.status(200).json(status);
