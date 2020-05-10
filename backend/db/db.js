@@ -1,5 +1,5 @@
 /*
-    Creates the mysql connection using the db user with global privileges.
+    Creates the mysql connection pool using the db user with global privileges.
  */
 
 var mysql = require('mysql');
@@ -15,6 +15,7 @@ var db_config = {
 
 var connection = mysql.createPool(db_config);
 
+// Verify database is working
 connection.query('SELECT 1 + 1 AS test', (error, results, fields) => {
   if(error) {
     throw error;

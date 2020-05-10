@@ -1,7 +1,5 @@
 /*
-  Compiles all routes files to simplify the server.js file.
-  For new types of routes, create a new file like the others and then add
-  a 'require()' statement and add the routes variable to the exports.
+   Compiles all routes files to simplify the server.js file.
  */
 
 const authRoutes = require('./auth.routes')

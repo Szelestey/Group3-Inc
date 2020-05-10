@@ -1,7 +1,25 @@
+/*
+ * Reservation API endpoints:  /reservation
+ */
+
 const express = require('express');
 const router = express.Router();
 const reservationController = require('../controllers/reservation.controller');
 
+/**
+ * @api {post} /reservation/
+ * @apiName Create Reservation
+ * @apiPermission User
+ * @apiGroup reservation
+ *
+ * @apiParam {Object} [reservation] Reservation related data
+ * @apiParam {Object} [payment] Payment related data
+ * @apiParam {Object} [guest] Guest related data
+ * @apiParam {String} [comments] Comments for reservation
+ *
+ * @apiSuccess (200) {Object} [reservationId[, paymentId]] ReservationID and if applicable, paymentID
+ * @apiFailure (400) {String} [error] Error message
+ */
 router.post('/', reservationController.createReservation);
 
 /**
@@ -46,7 +64,20 @@ router.get('/name/:name', reservationController.getByName);
  */
 router.get('/room/:room', reservationController.getByRoom);
 
-
+/**
+ * @api {post} /reservation/rooms
+ * @apiName Room Availability for Interval
+ * @apiPermission User
+ * @apiGroup reservation
+ *
+ * @apiParam {String} [checkin] Check In date yyyy-MM-dd
+ * @apiParam {String} [checkout] Check out date yyyy-MM-dd
+ *
+ * @apiSuccess (200) {Object} [rooms] Room types that are available
+ * @apiFailure (404) {Object} [error] No Rooms available
+ * @apiFailure (400) {Object} [error] Error message
+ */
 router.post('/rooms', reservationController.getAvailableRooms);
+
 
 module.exports = router;

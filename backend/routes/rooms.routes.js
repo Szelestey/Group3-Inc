@@ -1,35 +1,31 @@
 /*
-  Routes for rooms.
-
-  To create a new route, use the router object and typically the .post function,
-  though not always.
-
-  router.post('remaining/url', handlerMethod)
-   - the remaining url in this file would be whatever is after 'localhost:3000/rooms'
-
+ * Rooms API endpoints:  /rooms
  */
+
 const express = require('express');
 const router = express.Router();
 const roomsController = require('../controllers/rooms.controller');
 
-
 /**
- * @api {post} /rooms/price
- * @apiName Change room price
+ * @api {get} /rooms/
+ * @apiName Get All Room Type Data
  * @apiPermission User
  * @apiGroup rooms
  *
- * @apiParam {String} [roomId] Room ID
- * @apiParam {String} [price] New price
- *
- * @apiSuccess (200) {String} [message]
+ * @apiSuccess (200) {Object} [roomtypeData] Array of room types and related information
  */
-router.post('/price', roomsController.changeBasePrice);
-
-
 router.get('/', roomsController.getAllRoomTypeData);
 
-
+/**
+ * @api {post} /rooms/
+ * @apiName Modify Room Type
+ * @apiPermission User
+ * @apiGroup rooms
+ *
+ * @apiParam {Object} [typeData] New Name, Price, Description
+ *
+ * @apiSuccess (200) {Object} [message] Success message
+ */
 router.post('/', roomsController.modifyRoom);
 
 
